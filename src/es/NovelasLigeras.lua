@@ -45,6 +45,7 @@ return {
 	name = "Novelas Ligeras",
 	baseURL = baseURL,
 	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/icons/NovelasLigeras.png",
+	imageURL = "https://github.com/khonkhortisan/extensions/raw/novelasligeras.net/icons/NovelasLigeras.png",
 	chapterType = ChapterType.HTML,
 
 	listings = {
