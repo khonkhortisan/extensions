@@ -202,15 +202,15 @@ return {
 	search = function(data)
 		return parseListing(GETDocument(qs({
 			s = data[QUERY],
-			post_type="product",
-			title=1,
-			excerpt=1,
-			content=0,
-			categories=1,
-			attributes=1,
-			tags=1,
-			sku=0,
-			ixwps=1,
+			--post_type="product",
+			--title=1,
+			--excerpt=1,
+			--content=0,
+			--categories=1,
+			--attributes=1,
+			--tags=1,
+			--sku=0,
+			--ixwps=1,
 			orderby = data[ORDER_BY_KEY]
 		}, baseURL .. "")+
 			'&ixwpst[product_cat][]='+data[CATEGORIAS_KEY]+
