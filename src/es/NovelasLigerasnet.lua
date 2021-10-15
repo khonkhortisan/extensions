@@ -1,6 +1,6 @@
 -- {"id":28505740,"ver":"1.0.0","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
 
-local baseURL = "https://novelasligeras.net/"
+local baseURL = "https://www.novelasligeras.net/"
 
 local CATEGORIAS_INT = {
 	[0] =""  , --Cualquier Categoría
@@ -132,12 +132,12 @@ return {
 		--local doc = GETDocument(baseURL.."/index.php/"..url.."/a")
 		--local doc = GETDocument(baseURL..url)
 		local doc = GETDocument(baseURL.."/index.php/producto/"..url.."")
-		error(baseURL..url)
+		--error(baseURL.."/index.php/producto/"..url.."")
 
-		local page = doc:selectFirst(".dt-css-grid")
-		local header = page:selectFirst(".woocom-project")
+		local page = doc:selectFirst(".entry-summary")
+		local header = page:selectFirst(".entry-summary")
 		local title = header:selectFirst(".entry-title")
-		local info = page:selectFirst(".fiction-info")
+		local info = page:selectFirst(".woocommerce-product-details__short-description")
 		local tags = info:selectFirst(".product_meta")
 
 		local s = mapNotNil(tags:children(), function(v)
