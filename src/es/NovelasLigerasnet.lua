@@ -163,7 +163,8 @@ return {
 			imageURL = page:selectFirst(".wp-post-image"):attr("src") or page:selectFirst(".wp-post-image"):attr("srcset"):match("^([^\s]+)") ,
 			description = info:selectFirst(".woocommerce-product-details__short-description"):text(),
 			--tags = map(tags:selectFirst(".product_meta"):select("a"), text),
-			tags = map(tags:select("a"), text) or tags:text(),
+			--tags = map(tags:select("a"), text) or tags:text(),
+			tags = tags:text(),
 			authors = { page:selectFirst(".woocommerce-product-attributes-item woocommerce-product-attributes-item--attribute_pa_escritor a"):text() },
 			artists = { page:selectFirst(".woocommerce-product-attributes-item woocommerce-product-attributes-item--attribute_pa_ilustrador a"):text() },
 			--status = s
