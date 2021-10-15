@@ -164,9 +164,10 @@ return {
 			--description = info:selectFirst(".woocommerce-product-details__short-description"):text(),
 			--tags = map(tags:selectFirst(".product_meta"):select("a"), text),
 			description = tags,
-			tags = map(tags:select("a"), function(v)
-				return v:text()
-			end) or tags:text(), --TODO
+			tags = tags,
+			--tags = map(tags:select("a"), function(v)
+			--	return v:text()
+			--end) or tags:text(), --TODO
 			--tags = tags:text(),
 			authors = { page:selectFirst(".woocommerce-product-attributes-item--attribute_pa_escritor   td p a") and page:selectFirst(".woocommerce-product-attributes-item--attribute_pa_escritor   td p a"):text() or ""}, --TODO
 			artists = { page:selectFirst(".woocommerce-product-attributes-item--attribute_pa_ilustrador td p a") and page:selectFirst(".woocommerce-product-attributes-item--attribute_pa_ilustrador td p a"):text() or ""}, --TODO
