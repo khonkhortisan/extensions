@@ -95,7 +95,7 @@ local function parseListing(doc)
 		--error(a:attr("href"))
 		return Novel {
 			title = a:text(),
-			link = a:attr("href"):match("/index.php/producto/*/.-"),
+			link = a:attr("href"):match("/index.php/producto/(*)/.-"),
 			--link = a:attr("href"), --need partial url because this file goes back and forth between it
 			imageURL = v:selectFirst("img"):attr("src")
 		}
