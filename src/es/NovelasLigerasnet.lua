@@ -97,7 +97,7 @@ local function parseListing(doc)
 			title = a:text(),
 			link = a:attr("href"):match("/index.php/producto/([^/]+)/.-"),
 			--link = a:attr("href"),
-			imageURL = v:selectFirst("img"):attr("src")
+			imageURL = v:selectFirst(".woo-buttons-on-img a img"):attr("src")
 		}
 	end)
 end
@@ -132,7 +132,7 @@ return {
 		--local doc = GETDocument(baseURL.."/index.php/"..url.."/a")
 		--local doc = GETDocument(baseURL..url)
 		local doc = GETDocument(baseURL.."/index.php/producto/"..url.."")
-		--error(baseURL..url)
+		error(baseURL..url)
 
 		local page = doc:selectFirst(".dt-css-grid")
 		local header = page:selectFirst(".woocom-project")
@@ -159,7 +159,7 @@ return {
 			imageURL = header:selectFirst("img"):attr("src"),
 			description = info:selectFirst(".woocommerce-product-details__short-description"):text(),
 			tags = map(tags:selectFirst(".product_meta"):select("a"), text),
-			authors = { title:selectFirst("h4 a"):text() },
+			--authors = { title:selectFirst("h4 a"):text() },
 			status = s
 		}
 
