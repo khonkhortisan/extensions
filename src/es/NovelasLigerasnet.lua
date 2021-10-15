@@ -166,7 +166,7 @@ return {
 			tags = map(tags:selectFirst(".tagged_as"):select("a"), text) or tags:text(),
 			--tags = tags:text(),
 			authors = { page:selectFirst(".woocommerce-product-attributes-item--attribute_pa_escritor td p a"):text() or ""},
-			artists = { page:selectFirst(".woocommerce-product-attributes-item--attribute_pa_ilustrador td p a"):text() ör ""},
+			artists = { page:selectFirst(".woocommerce-product-attributes-item--attribute_pa_ilustrador td p a"):text() or ""},
 			--status = s
 		}
 
