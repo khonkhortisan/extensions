@@ -15,7 +15,7 @@ local CATEGORIAS_INT = {
 	[9]="60", --Seinen
 	[10]="70" --Tragedia
 }
-local CATEGORIAS_KEY = 0
+local CATEGORIAS_KEY = 40
 
 local ORDER_BY_INT = { 
 	[0]="relevance",  --Relevancia
@@ -25,7 +25,7 @@ local ORDER_BY_INT = {
 	[4]="price",      --Ordenar por precio: bajo a alto
 	[5]="price-desc"  --Ordenar por precio: alto a bajo
 }
-local ORDER_BY_KEY = 0
+local ORDER_BY_KEY = 41
 
 local qs = Require("url").querystring
 
