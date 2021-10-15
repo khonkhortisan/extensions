@@ -18,12 +18,12 @@ local CATEGORIAS_INT = {
 local CATEGORIAS_KEY = 0
 
 local ORDER_BY_INT = { 
-	[0]="relevance"  --Relevancia
-	[1]="popularity" --Ordenar por popularidad
-	[2]="rating"     --Ordenar por calificación media
-	[3]="date"       --Ordenar por los últimos
-	[4]="price"      --Ordenar por precio: bajo a alto
-	[5]="price-desc" --Ordenar por precio: alto a bajo
+	[0]="relevance",  --Relevancia
+	[1]="popularity", --Ordenar por popularidad
+	[2]="rating",     --Ordenar por calificación media
+	[3]="date",       --Ordenar por los últimos
+	[4]="price",      --Ordenar por precio: bajo a alto
+	[5]="price-desc"  --Ordenar por precio: alto a bajo
 }
 local ORDER_BY_KEY = 0
 
