@@ -161,7 +161,7 @@ return {
 			title = title:text(),
 			--imageURL = header:selectFirst("img"):attr("src"),
 			imageURL = page:selectFirst(".wp-post-image"):attr("src") or page:selectFirst(".wp-post-image"):attr("srcset"):match("^([^\s]+)") ,
-			description = info:selectFirst(".woocommerce-product-details__short-description"):text(),
+			--description = info:selectFirst(".woocommerce-product-details__short-description"):text(),
 			--tags = map(tags:selectFirst(".product_meta"):select("a"), text),
 			description = tags,
 			tags = map(tags:select("a"), function(v)
