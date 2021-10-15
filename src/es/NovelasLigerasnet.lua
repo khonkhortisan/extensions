@@ -133,7 +133,7 @@ return {
 		--local doc = GETDocument(baseURL.."fiction/"..url.."/a")
 		--local doc = GETDocument(baseURL.."index.php/"..url.."/a")
 		--local doc = GETDocument(baseURL..url)
-		local doc = GETDocument(baseURL.."index.php/producto/"..url.."")
+		local doc = GETDocument(baseURL.."/index.php/producto/"..url.."")
 		--error(baseURL.."index.php/producto/"..url.."")
 
 		local page = doc:selectFirst(".content")
