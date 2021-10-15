@@ -140,7 +140,7 @@ return {
 		local header = page:selectFirst(".entry-summary")
 		local title = header:selectFirst(".entry-title")
 		local info = page:selectFirst(".woocommerce-product-details__short-description")
-		local tags = info:selectFirst(".tagged_as")
+		local tags = header:selectFirst(".product_meta")
 
 		--local s = mapNotNil(tags:children(), function(v)
 		--	local text = v:ownText()
@@ -163,8 +163,8 @@ return {
 			imageURL = page:selectFirst(".wp-post-image"):attr("src") or page:selectFirst(".wp-post-image"):attr("srcset"):match("^([^\s]+)") ,
 			description = info:selectFirst(".woocommerce-product-details__short-description"):text(),
 			--tags = map(tags:selectFirst(".product_meta"):select("a"), text),
-			--tags = map(tags:select("a"), text) or tags:text(),
-			tags = tags:text(),
+			tags = map(tags:selectFirst(".tagged_as"):select("a"), text) or tags:text(),
+			--tags = tags:text(),
 			authors = { page:selectFirst(".woocommerce-product-attributes-item woocommerce-product-attributes-item--attribute_pa_escritor a"):text() },
 			artists = { page:selectFirst(".woocommerce-product-attributes-item woocommerce-product-attributes-item--attribute_pa_ilustrador a"):text() },
 			--status = s
