@@ -157,7 +157,8 @@ return {
 
 		local text = function(v) return v:text() end
 		local novel = NovelInfo {
-			title = title:selectFirst("a"):text(),
+			--title = title:selectFirst("a"):text(),
+			title = title:text(),
 			imageURL = header:selectFirst("img"):attr("src"),
 			description = info:selectFirst(".woocommerce-product-details__short-description"):text(),
 			tags = map(tags:selectFirst(".product_meta"):select("a"), text),
