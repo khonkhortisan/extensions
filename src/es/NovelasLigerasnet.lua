@@ -116,7 +116,7 @@ return {
 	name = "Novelas Ligeras.net",
 	baseURL = baseURL,
 	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/icons/NovelasLigeras.png",
-	imageURL = "https://github.com/khonkhortisan/extensions/raw/novelasligeras.net/icons/NovelasLigeras.png",
+	imageURL = "https://github.com/khonkhortisan/extensions/raw/novelasligeras.net/icons/NovelasLigeras.png", --TODO
 	chapterType = ChapterType.HTML,
 
 	listings = {
@@ -163,17 +163,17 @@ return {
 			imageURL = page:selectFirst(".wp-post-image"):attr("src") or page:selectFirst(".wp-post-image"):attr("srcset"):match("^([^\s]+)") ,
 			description = info:selectFirst(".woocommerce-product-details__short-description"):text(),
 			--tags = map(tags:selectFirst(".product_meta"):select("a"), text),
-			tags = map(tags:selectFirst(".tagged_as"):select("a"), text) or tags:text(),
+			tags = map(tags:selectFirst(".tagged_as"):select("a"), text) or tags:text(), --TODO
 			--tags = tags:text(),
-			authors = { page:selectFirst(".woocommerce-product-attributes-item--attribute_pa_escritor td p a"):text() or ""},
-			artists = { page:selectFirst(".woocommerce-product-attributes-item--attribute_pa_ilustrador td p a"):text() or ""},
+			authors = { page:selectFirst(".woocommerce-product-attributes-item--attribute_pa_escritor td p a"):text() or ""}, --TODO
+			artists = { page:selectFirst(".woocommerce-product-attributes-item--attribute_pa_ilustrador td p a"):text() or ""}, --TODO
 			--status = s
 		}
-
+-- '.wpb_wrapper' has left column whole chapters '.wpb_tabs_nav a' and right column chapter parts '.post-content a'
 		if loadChapters then
 			local i = 0
-			novel:setChapters(AsList(map(doc:selectFirst(".wpb_tabs_nav"):children(), function(v)
-				local a = v:selectFirst("a")
+			novel:setChapters(AsList(map(doc:selectFirst(".wpb_wrapper"):children(), function(v)
+				local a = v:selectFirst(".post-content a")
 				i = i + 1
 				return NovelChapter {
 					order = i,
