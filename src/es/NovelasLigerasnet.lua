@@ -136,7 +136,7 @@ return {
 		local doc = GETDocument(baseURL.."/index.php/producto/"..url.."")
 		--error(baseURL.."/index.php/producto/"..url.."")
 
-		local page = doc:selectFirst(".entry-summary")
+		local page = doc:selectFirst(".content")
 		local header = page:selectFirst(".entry-summary")
 		local title = header:selectFirst(".entry-title")
 		local info = page:selectFirst(".woocommerce-product-details__short-description")
@@ -160,7 +160,7 @@ return {
 			--title = title:selectFirst("a"):text(),
 			title = title:text(),
 			--imageURL = header:selectFirst("img"):attr("src"),
-			imageURL = page:selectFirst("img.wp-post-image"):attr("src"),
+			imageURL = page:selectFirst(".wp-post-image"):attr("src"),
 			description = info:selectFirst(".woocommerce-product-details__short-description"):text(),
 			tags = map(tags:selectFirst(".product_meta"):select("a"), text),
 			authors = { page:selectFirst(".woocommerce-product-attributes-item woocommerce-product-attributes-item--attribute_pa_escritor a"):text() },
