@@ -92,10 +92,11 @@ local function parseListing(doc)
 
 	return map(results:children(), function(v)
 		local a = v:selectFirst(".entry-title a")
+		--error(a:attr("href"))
 		return Novel {
 			title = a:text(),
-			--link = a:attr("href"):match("/index.php/producto/([^/]+)/.-"),
-			link = a:attr("href"),
+			link = a:attr("href"):match("/index.php/producto/*/.-"),
+			--link = a:attr("href"), --need partial url because this file goes back and forth between it
 			imageURL = v:selectFirst("img"):attr("src")
 		}
 	end)
