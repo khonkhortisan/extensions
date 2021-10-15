@@ -61,7 +61,7 @@ end
 
 return {
 	id = 28505740,
-	name = "Novelas Ligeras",
+	name = "Novelas Ligeras.net",
 	baseURL = baseURL,
 	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/icons/NovelasLigeras.png",
 	imageURL = "https://github.com/khonkhortisan/extensions/raw/novelasligeras.net/icons/NovelasLigeras.png",
@@ -80,11 +80,11 @@ return {
 	parseNovel = function(url, loadChapters)
 		local doc = GETDocument(baseURL.."/index.php/"..url.."/a")
 
-		local page = doc:selectFirst(".content")
-		local header = page:selectFirst(".fic-header")
+		local page = doc:selectFirst(".dt-css-grid")
+		local header = page:selectFirst(".woocom-project")
 		local title = header:selectFirst(".entry-title")
-		local info = page:selectFirst(".fiction-info")
-		local tags = info:selectFirst(".margin-bottom-10")
+		--local info = page:selectFirst(".fiction-info")
+		local tags = info:selectFirst(".product_meta")
 
 		local s = mapNotNil(tags:children(), function(v)
 			local text = v:ownText()
@@ -94,24 +94,24 @@ return {
 			return text
 		end)[1]
 
-		s = s and ({
-			ONGOING = NovelStatus.PUBLISHING,
-			COMPLETED = NovelStatus.COMPLETED,
-		})[s] or NovelStatus.UNKNOWN
+		--s = s and ({
+		--	ONGOING = NovelStatus.PUBLISHING,
+		--	COMPLETED = NovelStatus.COMPLETED,
+		--})[s] or NovelStatus.UNKNOWN
 
 		local text = function(v) return v:text() end
 		local novel = NovelInfo {
-			title = title:selectFirst("h1"):text(),
+			title = title:selectFirst("a"):text(),
 			imageURL = header:selectFirst("img"):attr("src"),
-			description = info:selectFirst(".woocommerce-product-details__short-description"):text(),
-			tags = map(tags:selectFirst(".product_meta"):select("a"), text),
-			authors = { title:selectFirst("h4 a"):text() },
-			status = s
+			--description = info:selectFirst(".woocommerce-product-details__short-description"):text(),
+			--tags = map(tags:selectFirst(".product_meta"):select("a"), text),
+			--authors = { title:selectFirst("h4 a"):text() },
+			--status = s
 		}
 
 		if loadChapters then
 			local i = 0
-			novel:setChapters(AsList(map(doc:selectFirst("#chapters tbody"):children(), function(v)
+			novel:setChapters(AsList(map(doc:selectFirst(".wpb_tabs_nav"):children(), function(v)
 				local a = v:selectFirst("a")
 				i = i + 1
 				return NovelChapter {
@@ -126,7 +126,7 @@ return {
 	end,
 
 	getPassage = function(url)
-		return pageOfElem(GETDocument(expandURL(url)):selectFirst(".chapter-content"), true, css)
+		return pageOfElem(GETDocument(expandURL(url)):selectFirst(".wpb_text_column"), true, css)
 	end,
 
 	searchFilters = {
