@@ -129,13 +129,13 @@ return {
 		--local doc = GETDocument(baseURL.."/fiction/"..url.."/a")
 		--local doc = GETDocument(baseURL.."/index.php/"..url.."/a")
 		local doc = GETDocument(baseURL..url)
-		error(baseURL..url)
+		--error(baseURL..url)
 
 		local page = doc:selectFirst(".dt-css-grid")
 		local header = page:selectFirst(".woocom-project")
 		local title = header:selectFirst(".entry-title")
 		--local info = page:selectFirst(".fiction-info")
-		local tags = info:selectFirst(".product_meta")
+		--local tags = info:selectFirst(".product_meta")
 
 		local s = mapNotNil(tags:children(), function(v)
 			local text = v:ownText()
@@ -192,7 +192,19 @@ return {
 	search = function(data)
 		return parseListing(GETDocument(qs({
 			s = data[QUERY],
-			status = data[CATEGORIAS_KEY],
+			post_type=product,
+			title=1,
+			excerpt=1,
+			content=0,
+			categories=1,
+			attributes=1,
+			tags=1,
+			sku=0,
+			ixwps=1,
+			ixwpst[product_cat][] = data[CATEGORIAS_KEY],
+			ixwpst[pa_estado][] = data[ESTADO_KEY],
+			ixwpst[pa_tipo][] = data[TIPO_KEY],
+			ixwpst[pa_pais][] = data[PAIS_KEY],
 			orderby = data[ORDER_BY_KEY]
 		}, baseURL .. "")))
 	end,
