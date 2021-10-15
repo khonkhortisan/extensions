@@ -93,6 +93,7 @@ local function parseListing(doc)
 	return map(results:children(), function(v)
 		local a = v:selectFirst(".entry-title a")
 		--error(a:attr("href"))
+		error(v:selectFirst(".woo-buttons-on-img a img"):attr("src"))
 		return Novel {
 			title = a:text(),
 			link = a:attr("href"):match("/index.php/producto/([^/]+)/.-"),
