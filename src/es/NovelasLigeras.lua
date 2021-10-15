@@ -55,7 +55,7 @@ end
 local function listing(name, inc, url)
 	url = expandURL(url)
 	return Listing(name, inc, function(data)
-		return parseListing(GETDocument(inc and (url.."?page="..data[PAGE]) or url))
+		return parseListing(GETDocument(inc and (url.."/page/"..data[PAGE]) or url))
 	end)
 end
 
