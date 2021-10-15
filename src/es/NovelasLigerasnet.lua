@@ -79,6 +79,8 @@ local qs = Require("url").querystring
 
 local css = Require("CommonCSS").table
 
+local img_src = Require("Madara").img_src
+
 local function shrinkURL(url)
 	return url:gsub("^.-novelasligeras%.net/?", "")
 end
@@ -98,7 +100,8 @@ local function parseListing(doc)
 			title = a:text(),
 			link = a:attr("href"):match("(index.php/producto/[^/]+)/.-"),
 			--link = a:attr("href"),
-			imageURL = v:selectFirst("img"):attr("src")
+			--imageURL = v:selectFirst("img"):attr("src") --TODO load images from listing
+			imageURL = img_src(v:selectFirst("img")) --TODO load images from listing
 			--imageURL = v:selectFirst("img"):attr("srcset"):match("^([^\s]+)") --doesn't load?
 		}
 	end)
