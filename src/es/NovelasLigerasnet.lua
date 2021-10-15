@@ -165,8 +165,8 @@ return {
 			--tags = map(tags:selectFirst(".product_meta"):select("a"), text),
 			tags = map(tags:selectFirst(".tagged_as"):select("a"), text) or tags:text(), --TODO
 			--tags = tags:text(),
-			authors = { page:selectFirst(".woocommerce-product-attributes-item--attribute_pa_escritor td p a"):text() or ""}, --TODO
-			artists = { page:selectFirst(".woocommerce-product-attributes-item--attribute_pa_ilustrador td p a"):text() or ""}, --TODO
+			authors = { page:selectFirst(".woocommerce-product-attributes-item--attribute_pa_escritor   td p a") and page:selectFirst(".woocommerce-product-attributes-item--attribute_pa_escritor   td p a"):text() or ""}, --TODO
+			artists = { page:selectFirst(".woocommerce-product-attributes-item--attribute_pa_ilustrador td p a") and page:selectFirst(".woocommerce-product-attributes-item--attribute_pa_ilustrador td p a"):text() or ""}, --TODO
 			--status = s
 		}
 -- '.wpb_wrapper' has left column whole chapters '.wpb_tabs_nav a' and right column chapter parts '.post-content a'
