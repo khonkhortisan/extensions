@@ -3,10 +3,10 @@
 local baseURL = "https://novelasligeras.net/"
 
 local ORDER_BY_INT = { ["relevance"]="Relevancia", ["popularity"]="Ordenar por popularidad", ["rating"]="Ordenar por calificación media", ["date"]="Ordenar por los últimos", ["price"]="Ordenar por precio: bajo a alto", ["price-desc"]="Ordenar por precio: alto a bajo" }
-local ORDER_BY_INT = "relevance"
+local ORDER_BY_KEY = "relevance"
 
-local CATEGORIAS_INT = { [0]="Cualquier Categoría", [40]="Acción", [53]="Adulto", [41]="Aventura", [59]="Ciencia Ficción", [44]="Drama", [46]="Fantasía", [48]="Harem", [55]="Misterio", [60]="Seinen", [70]="Tragedia" }
-local CATEGORIAS_KEY = 40
+local CATEGORIAS_INT = { [39]="Cualquier Categoría", [40]="Acción", [53]="Adulto", [41]="Aventura", [59]="Ciencia Ficción", [44]="Drama", [46]="Fantasía", [48]="Harem", [55]="Misterio", [60]="Seinen", [70]="Tragedia" }
+local CATEGORIAS_KEY = 39
 
 local qs = Require("url").querystring
 
@@ -111,9 +111,9 @@ return {
 	end,
 
 	searchFilters = {
-		--
-		--DropdownFilter(CATEGORIAS_KEY, "Categorías", { "Cualquier Categoría", "Acción", "Adulto", "Aventura", "Ciencia Ficción", "Drama", "Fantasía", "Harem", "Misterio", "Seinen", "Tragedia" }),
-		--DropdownFilter(ORDER_BY_KEY, "Pedido de la tienda", { "Relevancia", "Ordenar por popularidad", "Ordenar por calificación media", "Ordenar por los últimos", "Ordenar por precio: bajo a alto", "Ordenar por precio: alto a bajo" })
+		--NovelasLigeras using invalid  filterID {0}
+		DropdownFilter(CATEGORIAS_KEY, "Categorías", { "Cualquier Categoría", "Acción", "Adulto", "Aventura", "Ciencia Ficción", "Drama", "Fantasía", "Harem", "Misterio", "Seinen", "Tragedia" }),
+		DropdownFilter(ORDER_BY_KEY, "Pedido de la tienda", { "Relevancia", "Ordenar por popularidad", "Ordenar por calificación media", "Ordenar por los últimos", "Ordenar por precio: bajo a alto", "Ordenar por precio: alto a bajo" })
 	},
 
 	search = function(data)
