@@ -126,7 +126,9 @@ return {
 	expandURL = expandURL,
 
 	parseNovel = function(url, loadChapters)
-		local doc = GETDocument(baseURL.."/index.php/"..url.."/a")
+		--local doc = GETDocument(baseURL.."/fiction/"..url.."/a")
+		--local doc = GETDocument(baseURL.."/index.php/"..url.."/a")
+		local doc = GETDocument(self.baseURL..url)
 
 		local page = doc:selectFirst(".dt-css-grid")
 		local header = page:selectFirst(".woocom-project")
