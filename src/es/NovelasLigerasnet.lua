@@ -159,7 +159,7 @@ return {
 			imageURL = header:selectFirst("img"):attr("src"),
 			description = info:selectFirst(".woocommerce-product-details__short-description"):text(),
 			tags = map(tags:selectFirst(".product_meta"):select("a"), text),
-			--authors = { title:selectFirst("h4 a"):text() },
+			authors = { title:selectFirst(".woocommerce-product-attributes-item woocommerce-product-attributes-item--attribute_pa_escritor a"):text() },
 			status = s
 		}
 
