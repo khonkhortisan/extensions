@@ -1,6 +1,9 @@
--- {"id":36834,"ver":"1.0.0","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
+-- {"id":28505740,"ver":"1.0.0","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
 
 local baseURL = "https://novelasligeras.net/"
+
+local ORDER_BY_INT = { ["relevance"]="Relevancia", ["popularity"]="Ordenar por popularidad", ["rating"]="Ordenar por calificación media", ["date"]="Ordenar por los últimos", ["price"]="Ordenar por precio: bajo a alto", ["price-desc"]="Ordenar por precio: alto a bajo" }
+local ORDER_BY_INT = 39
 
 local CATEGORIAS_INT = { [0]="Cualquier Categoría", [40]="Acción", [53]="Adulto", [41]="Aventura", [59]="Ciencia Ficción", [44]="Drama", [46]="Fantasía", [48]="Harem", [55]="Misterio", [60]="Seinen", [70]="Tragedia" }
 local CATEGORIAS_KEY = 40
@@ -38,8 +41,8 @@ local function listing(name, inc, url)
 end
 
 return {
-	id = 36834,
-	name = "NovelasLigeras (customcss)",
+	id = 28505740,
+	name = "Novelas Ligeras",
 	baseURL = baseURL,
 	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/icons/NovelasLigeras.png",
 	chapterType = ChapterType.HTML,
@@ -107,12 +110,14 @@ return {
 	end,
 
 	searchFilters = {
-		DropdownFilter(CATEGORIAS_KEY, "Categorías", { "Cualquier Categoría", "Acción", "Adulto", "Aventura", "Ciencia Ficción", "Drama", "Fantasía", "Harem", "Misterio", "Seinen", "Tragedia" })
+		DropdownFilter(CATEGORIAS_KEY, "Categorías", { "Cualquier Categoría", "Acción", "Adulto", "Aventura", "Ciencia Ficción", "Drama", "Fantasía", "Harem", "Misterio", "Seinen", "Tragedia" }),
+		DropdownFilter(ORDER_BY_KEY, "Pedido de la tienda", { "Relevancia", "Ordenar por popularidad", "Ordenar por calificación media", "Ordenar por los últimos", "Ordenar por precio: bajo a alto", "Ordenar por precio: alto a bajo" })
 	}
 	search = function(data)
 		return parseListing(GETDocument(qs({
 			s = data[QUERY],
-			status = data[CATEGORIAS_KEY]
+			status = data[CATEGORIAS_KEY],
+			orderby = data[ORDER_BY_KEY]
 		}, baseURL .. "")))
 	end,
 	isSearchIncrementing = false
