@@ -2,30 +2,78 @@
 
 local baseURL = "https://novelasligeras.net/"
 
-local CATEGORIAS_INT = { 
-	[0]="",   --Cualquier Categoría
-	[1]="40", --Acción
-	[2]="53", --Adulto
-	[3]="41", --Aventura
-	[4]="59", --Ciencia Ficción
-	[5]="44", --Drama
-	[6]="46", --Fantasía
-	[7]="48", --Harem
-	[8]="55", --Misterio
-	[9]="60", --Seinen
-	[10]="70" --Tragedia
+local CATEGORIAS_INT = {
+	[0] =""  , --Cualquier Categoría
+	[1] ="40", --Acción
+	[2] ="53", --Adulto
+	[3] ="52", --Artes Marciales
+	[4] ="41", --Aventura
+	[5] ="59", --Ciencia Ficción
+	[6] ="43", --Comedia
+	[7] ="68", --Deportes
+	[8] ="44", --Drama
+	[9] ="45", --Ecchi
+	[10]="46", --Fantasía
+	[11]="47", --Gender Bender
+	[12]="48", --Harem
+	[13]="49", --Histórico
+	[14]="50", --Horror
+	[15]="54", --Mechas (Robots Gigantes)
+	[16]="55", --Misterio
+	[17]="56", --Psicológico
+	[18]="66", --Recuentos de la Vida
+	[19]="57", --Romance
+	[20]="60", --Seinen
+	[21]="62", --Shojo
+	[22]="63", --Shojo Ai
+	[23]="64", --Shonen
+	[24]="69", --Sobrenatural
+	[25]="70", --Tragedia
+	[26]="58", --Vida Escolar
+	[27]="73"  --Xuanhuan
 }
 local CATEGORIAS_KEY = 40
 
-local ORDER_BY_INT = { 
-	[0]="relevance",  --Relevancia
+local ESTADO_INT = {
+	[0]=""   , --Cualquiera
+	[1]="407", --Completado
+	[2]="16" , --En Proceso
+	[3]="17"   --Pausado
+}
+local ESTADO_KEY = 41
+
+local TIPO_INT = {
+	[0]=""  , --Cualquier
+	[1]="23", --Novela Ligera
+	[2]="24"  --Novela Web
+}
+local TIPO_KEY = 42
+
+local PAIS_INT = {
+	[0] =""    , --Cualquiera
+	[1] ="1865", --Argentina
+	[2] ="1749", --Chile
+	[3] ="20"  , --China
+	[4] ="4184", --Colombia
+	[5] ="22"  , --Corea
+	[6] ="1792", --Ecuador
+	[7] ="21"  , --Japón
+	[8] ="1704", --México
+	[9] ="1657", --Nicaragua
+	[10]="4341", --Perú
+	[11]="2524"  --Venezuela
+}
+local PAIS_KEY = 43
+
+local ORDER_BY_INT = {
+	[0]="relevance" , --Relevancia
 	[1]="popularity", --Ordenar por popularidad
-	[2]="rating",     --Ordenar por calificación media
-	[3]="date",       --Ordenar por los últimos
-	[4]="price",      --Ordenar por precio: bajo a alto
+	[2]="rating"    , --Ordenar por calificación media
+	[3]="date"      , --Ordenar por los últimos
+	[4]="price"     , --Ordenar por precio: bajo a alto
 	[5]="price-desc"  --Ordenar por precio: alto a bajo
 }
-local ORDER_BY_KEY = 41
+local ORDER_BY_KEY = 44
 
 local qs = Require("url").querystring
 
@@ -131,7 +179,10 @@ return {
 
 	searchFilters = {
 		--NovelasLigeras using invalid  filterID {0}
-		DropdownFilter(CATEGORIAS_KEY, "Categorías", { "Cualquier Categoría", "Acción", "Adulto", "Aventura", "Ciencia Ficción", "Drama", "Fantasía", "Harem", "Misterio", "Seinen", "Tragedia" }),
+		DropdownFilter(CATEGORIAS_KEY, "Categorías", {"Cualquier Categoría","Acción","Adulto","Artes Marciales","Aventura","Ciencia Ficción","Comedia","Deportes","Drama","Ecchi","Fantasía","Gender Bender","Harem","Histórico","Horror","Mechas (Robots Gigantes)","Misterio","Psicológico","Recuentos de la Vida","Romance","Seinen","Shojo","Shojo Ai","Shonen","Sobrenatural","Tragedia","Vida Escolar","Xuanhuan"}}),
+		DropdownFilter(ESTADO_KEY, "Estado", {"Cualquiera","Completado","En Proceso","Pausado"}),
+		DropdownFilter(TIPO_KEY, "Tipo", {"Cualquiera","Novela Ligera","Novela Web"}),
+		DropdownFilter(PAIS_KEY, "País". {"Cualquiera","Argentina","Chile","China","Colombia","Corea","Ecuador","Japón","México","Nicaragua","Perú","Venezuela"}),
 		DropdownFilter(ORDER_BY_KEY, "Pedido de la tienda", { "Relevancia", "Ordenar por popularidad", "Ordenar por calificación media", "Ordenar por los últimos", "Ordenar por precio: bajo a alto", "Ordenar por precio: alto a bajo" })
 	},
 
