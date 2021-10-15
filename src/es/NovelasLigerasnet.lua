@@ -89,7 +89,7 @@ end
 
 local function parseListing(doc)
 	local results = doc:selectFirst(".dt-css-grid")
-	error(results.children():selectFirst(".woo-buttons-on-img a img"):attr("src"))
+	--error(results.children():selectFirst(".woo-buttons-on-img a img"):attr("src"))
 
 	return map(results:children(), function(v)
 		local a = v:selectFirst(".entry-title a")
@@ -98,7 +98,7 @@ local function parseListing(doc)
 			title = a:text(),
 			link = a:attr("href"):match("/index.php/producto/([^/]+)/.-"),
 			--link = a:attr("href"),
-			imageURL = v:selectFirst(".woo-buttons-on-img a img"):attr("src")
+			imageURL = a:selectFirst("img"):attr("src")
 		}
 	end)
 end
