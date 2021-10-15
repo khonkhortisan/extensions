@@ -211,12 +211,12 @@ return {
 			tags=1,
 			sku=0,
 			ixwps=1,
-			product_cat = data[CATEGORIAS_KEY],
-			pa_estado = data[ESTADO_KEY],
-			pa_tipo = data[TIPO_KEY],
-			pa_pais = data[PAIS_KEY],
+			--product_cat = data[CATEGORIAS_KEY],
+			--pa_estado = data[ESTADO_KEY],
+			--pa_tipo = data[TIPO_KEY],
+			--pa_pais = data[PAIS_KEY],
 			orderby = data[ORDER_BY_KEY]
 		}, baseURL .. "")))
 	end,
-	isSearchIncrementing = false
+	--isSearchIncrementing = false
 }
