@@ -289,6 +289,16 @@
       "ver": "1.0.1",
       "libVer": "1.0.0",
       "md5": ""
+    },
+    {
+      "name": "Novelas Ligeras",
+      "fileName": "NovelasLigeras",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/NovelasLigeras.png",
+      "id": 36834,
+      "lang": "es",
+      "ver": "1.0.0",
+      "libVer": "1.0.0",
+      "md5": ""
     }
   ]
 }
