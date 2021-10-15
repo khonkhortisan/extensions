@@ -177,7 +177,7 @@ return {
 				i = i + 1
 				return NovelChapter {
 					order = i,
-					title = a and a:text() or "",
+					title = a and a:text() or "", --TODO have 0 chapters when there are 0 instead of 1
 					link = (a and a:attr("href")) or ""
 				}
 			end)))
@@ -211,11 +211,11 @@ return {
 			tags=1,
 			sku=0,
 			ixwps=1,
-			--"ixwpst[product_cat][]" = data[CATEGORIAS_KEY],
-			--"ixwpst[pa_estado][]" = data[ESTADO_KEY],
-			--"ixwpst[pa_tipo][]" = data[TIPO_KEY],
-			--"ixwpst[pa_pais][]" = data[PAIS_KEY],
-			--orderby = data[ORDER_BY_KEY]
+			ixwpst[product_cat] = data[CATEGORIAS_KEY],
+			ixwpst[pa_estado] = data[ESTADO_KEY],
+			ixwpst[pa_tipo] = data[TIPO_KEY],
+			ixwpst[pa_pais] = data[PAIS_KEY],
+			orderby = data[ORDER_BY_KEY]
 		}, baseURL .. "")))
 	end,
 	isSearchIncrementing = false
