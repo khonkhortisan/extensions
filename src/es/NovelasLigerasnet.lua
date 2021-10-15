@@ -178,7 +178,7 @@ return {
 				return NovelChapter {
 					order = i,
 					title = a and a:text() or "",
-					link = a and a:attr("href") or ""
+					link = (a and a:attr("href")) or ""
 				}
 			end)))
 		end
