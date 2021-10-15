@@ -27,9 +27,6 @@ local ORDER_BY_INT = {
 }
 local ORDER_BY_KEY = 0
 
-		DropdownFilter(ORDER_BY_KEY, "Pedido de la tienda", { "Relevancia", "Ordenar por popularidad", "Ordenar por calificación media", "Ordenar por los últimos", "Ordenar por precio: bajo a alto", "Ordenar por precio: alto a bajo" })
-	},
-
 local qs = Require("url").querystring
 
 local css = Require("CommonCSS").table
