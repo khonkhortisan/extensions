@@ -96,7 +96,7 @@ local function parseListing(doc)
 		return Novel {
 			title = a:text(),
 			link = a:attr("href"):match("/index.php/producto/([^/]+)/.-"),
-			--link = a:attr("href"), --need partial url because this file goes back and forth between it
+			--link = a:attr("href"),
 			imageURL = v:selectFirst("img"):attr("src")
 		}
 	end)
@@ -130,7 +130,8 @@ return {
 	parseNovel = function(url, loadChapters)
 		--local doc = GETDocument(baseURL.."/fiction/"..url.."/a")
 		--local doc = GETDocument(baseURL.."/index.php/"..url.."/a")
-		local doc = GETDocument(baseURL..url)
+		--local doc = GETDocument(baseURL..url)
+		local doc = GETDocument(baseURL.."/index.php/producto/"..url.."")
 		--error(baseURL..url)
 
 		local page = doc:selectFirst(".dt-css-grid")
