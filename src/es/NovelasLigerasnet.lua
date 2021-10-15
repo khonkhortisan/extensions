@@ -166,7 +166,7 @@ return {
 			--tags = map(tags:selectFirst(".product_meta"):select("a"), text),
 			genres = map(genres:get(1):select("a"), function(v)
 			return v:text()
-		end)
+		end),
 			tags = map(tags:get(1):select("a"), function(v)
 			return v:text()
 		end),
