@@ -94,7 +94,8 @@ local function parseListing(doc)
 		local a = v:selectFirst(".entry-title a")
 		return Novel {
 			title = a:text(),
-			link = a:attr("href"), --:match("/index.php/producto/([^/]+)/.-"),
+			--link = a:attr("href"):match("/index.php/producto/([^/]+)/.-"),
+			link = a:attr("href"),
 			imageURL = v:selectFirst("img"):attr("src")
 		}
 	end)
@@ -134,8 +135,8 @@ return {
 		local page = doc:selectFirst(".dt-css-grid")
 		local header = page:selectFirst(".woocom-project")
 		local title = header:selectFirst(".entry-title")
-		--local info = page:selectFirst(".fiction-info")
-		--local tags = info:selectFirst(".product_meta")
+		local info = page:selectFirst(".fiction-info")
+		local tags = info:selectFirst(".product_meta")
 
 		local s = mapNotNil(tags:children(), function(v)
 			local text = v:ownText()
@@ -145,19 +146,19 @@ return {
 			return text
 		end)[1]
 
-		--s = s and ({
-		--	ONGOING = NovelStatus.PUBLISHING,
-		--	COMPLETED = NovelStatus.COMPLETED,
-		--})[s] or NovelStatus.UNKNOWN
+		s = s and ({
+			ONGOING = NovelStatus.PUBLISHING,
+			COMPLETED = NovelStatus.COMPLETED,
+		})[s] or NovelStatus.UNKNOWN
 
 		local text = function(v) return v:text() end
 		local novel = NovelInfo {
 			title = title:selectFirst("a"):text(),
 			imageURL = header:selectFirst("img"):attr("src"),
-			--description = info:selectFirst(".woocommerce-product-details__short-description"):text(),
-			--tags = map(tags:selectFirst(".product_meta"):select("a"), text),
-			--authors = { title:selectFirst("h4 a"):text() },
-			--status = s
+			description = info:selectFirst(".woocommerce-product-details__short-description"):text(),
+			tags = map(tags:selectFirst(".product_meta"):select("a"), text),
+			authors = { title:selectFirst("h4 a"):text() },
+			status = s
 		}
 
 		if loadChapters then
