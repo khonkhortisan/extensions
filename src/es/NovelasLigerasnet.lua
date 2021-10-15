@@ -88,10 +88,10 @@ local function expandURL(url)
 end
 
 local function parseListing(doc)
-	local results = doc:selectFirst(".fiction-list")
+	local results = doc:selectFirst(".dt-css-grid")
 
 	return map(results:children(), function(v)
-		local a = v:selectFirst(".fiction-title a")
+		local a = v:selectFirst(".entry-title a")
 		return Novel {
 			title = a:text(),
 			link = a:attr("href"):match("/index.php/producto/([^/]+)/.-"),
@@ -192,7 +192,7 @@ return {
 	search = function(data)
 		return parseListing(GETDocument(qs({
 			s = data[QUERY],
-			post_type=product,
+			post_type="product",
 			title=1,
 			excerpt=1,
 			content=0,
@@ -201,11 +201,11 @@ return {
 			tags=1,
 			sku=0,
 			ixwps=1,
-			"ixwpst[product_cat][]" = data[CATEGORIAS_KEY],
-			"ixwpst[pa_estado][]" = data[ESTADO_KEY],
-			"ixwpst[pa_tipo][]" = data[TIPO_KEY],
-			"ixwpst[pa_pais][]" = data[PAIS_KEY],
-			orderby = data[ORDER_BY_KEY]
+			--"ixwpst[product_cat][]" = data[CATEGORIAS_KEY],
+			--"ixwpst[pa_estado][]" = data[ESTADO_KEY],
+			--"ixwpst[pa_tipo][]" = data[TIPO_KEY],
+			--"ixwpst[pa_pais][]" = data[PAIS_KEY],
+			--orderby = data[ORDER_BY_KEY]
 		}, baseURL .. "")))
 	end,
 	isSearchIncrementing = false
