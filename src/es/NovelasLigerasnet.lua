@@ -1,6 +1,6 @@
 -- {"id":28505740,"ver":"1.0.0","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
 
-local baseURL = "https://www.novelasligeras.net/"
+local baseURL = "https://www.novelasligeras.net"
 
 local CATEGORIAS_INT = {
 	[0] =""  , --Cualquier Categoría
