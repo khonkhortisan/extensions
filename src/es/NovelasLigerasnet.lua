@@ -159,7 +159,8 @@ return {
 		local novel = NovelInfo {
 			--title = title:selectFirst("a"):text(),
 			title = title:text(),
-			imageURL = header:selectFirst("img"):attr("src"),
+			--imageURL = header:selectFirst("img"):attr("src"),
+			imageURL = page:selectFirst("img.wp-post-image"):attr("src"),
 			description = info:selectFirst(".woocommerce-product-details__short-description"):text(),
 			tags = map(tags:selectFirst(".product_meta"):select("a"), text),
 			authors = { page:selectFirst(".woocommerce-product-attributes-item woocommerce-product-attributes-item--attribute_pa_escritor a"):text() },
