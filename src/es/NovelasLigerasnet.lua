@@ -35,10 +35,10 @@ local CATEGORIAS_INT = {
 local CATEGORIAS_KEY = 40
 
 local ESTADO_INT = {
-	[0]=""   , --Cualquiera
-	[1]="407", --Completado
-	[2]="16" , --En Proceso
-	[3]="17"   --Pausado
+	[0]=""   , --Cualquiera --NovelStatus.UNKNOWN
+	[1]="407", --Completado --NovelStatus.COMPLETED
+	[2]="16" , --En Proceso --NovelStatus.PUBLISHING
+	[3]="17"   --Pausado    --            On Hold/haitus
 }
 local ESTADO_KEY = 41
 
@@ -164,6 +164,7 @@ return {
 			authors = { page:selectFirst(".woocommerce-product-attributes-item--attribute_pa_escritor   td p a") and page:selectFirst(".woocommerce-product-attributes-item--attribute_pa_escritor   td p a"):text() or ""},
 			artists = { page:selectFirst(".woocommerce-product-attributes-item--attribute_pa_ilustrador td p a") and page:selectFirst(".woocommerce-product-attributes-item--attribute_pa_ilustrador td p a"):text() or ""},
 			status = { page:selectFirst(".woocommerce-product-attributes-item--attribute_pa_estado      td p a") and page:selectFirst(".woocommerce-product-attributes-item--attribute_pa_estado     td p a"):text() or ""},
+			status = NovelStatus(status == "Completado" and 1 or status == "Pausado" and 2 or status == "En Proceso" and 0 or 3),
 			genres = map(genres:select("a"), text),
 			tags = map(tags:select("a"), text),
 			description = page:selectFirst(".woocommerce-product-details__short-description"):text(),
