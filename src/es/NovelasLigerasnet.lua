@@ -162,11 +162,9 @@ return {
 			title = title:text(),
 			--imageURL = header:selectFirst("img"):attr("src"),
 			imageURL = page:selectFirst(".wp-post-image"):attr("src") or page:selectFirst(".wp-post-image"):attr("srcset"):match("^([^\s]+)"),
-			--description = info:selectFirst(".woocommerce-product-details__short-description"):text(),
-			--tags = map(tags:selectFirst(".product_meta"):select("a"), text),
 			genres = map(genres:select("a"), text),
 			tags = map(tags:select("a"), text),
-			description = map(genres:select("a"), text),
+			description = info:selectFirst(".woocommerce-product-details__short-description"):text(),
 			--tags = map(tags:select("a"), function(v)
 			--	return v:text()
 			--end) or tags:text(), --TODO
