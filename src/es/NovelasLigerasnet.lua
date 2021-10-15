@@ -94,7 +94,7 @@ local function parseListing(doc)
 		local a = v:selectFirst(".entry-title a")
 		return Novel {
 			title = a:text(),
-			link = a:attr("href") --:match("/index.php/producto/([^/]+)/.-"),
+			link = a:attr("href"), --:match("/index.php/producto/([^/]+)/.-"),
 			imageURL = v:selectFirst("img"):attr("src")
 		}
 	end)
