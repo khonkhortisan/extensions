@@ -142,18 +142,18 @@ return {
 		local info = page:selectFirst(".woocommerce-product-details__short-description")
 		local tags = info:selectFirst(".product_meta")
 
-		local s = mapNotNil(tags:children(), function(v)
-			local text = v:ownText()
-			if text == "" or text ~= text:upper() then
-				return
-			end
-			return text
-		end)[1]
+		--local s = mapNotNil(tags:children(), function(v)
+		--	local text = v:ownText()
+		--	if text == "" or text ~= text:upper() then
+		--		return
+		--	end
+		--	return text
+		--end)[1]
 
-		s = s and ({
-			ONGOING = NovelStatus.PUBLISHING,
-			COMPLETED = NovelStatus.COMPLETED,
-		})[s] or NovelStatus.UNKNOWN
+		--s = s and ({
+		--	ONGOING = NovelStatus.PUBLISHING,
+		--	COMPLETED = NovelStatus.COMPLETED,
+		--})[s] or NovelStatus.UNKNOWN
 
 		local text = function(v) return v:text() end
 		local novel = NovelInfo {
@@ -162,7 +162,7 @@ return {
 			description = info:selectFirst(".woocommerce-product-details__short-description"):text(),
 			tags = map(tags:selectFirst(".product_meta"):select("a"), text),
 			authors = { title:selectFirst(".woocommerce-product-attributes-item woocommerce-product-attributes-item--attribute_pa_escritor a"):text() },
-			status = s
+			--status = s
 		}
 
 		if loadChapters then
