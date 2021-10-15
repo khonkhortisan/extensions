@@ -132,7 +132,7 @@ return {
 	parseNovel = function(url, loadChapters)
 		--local doc = GETDocument(baseURL.."fiction/"..url.."/a")
 		--local doc = GETDocument(baseURL.."index.php/"..url.."/a")
-		local doc = GETDocument(baseURL..'/'..url.."")
+		local doc = GETDocument(baseURL..'/'..url.."") -- the quotes at the end matter
 		--local doc = GETDocument(baseURL.."/index.php/producto/"..url.."")
 		
 		--error(baseURL.."index.php/producto/"..url.."")
@@ -164,7 +164,7 @@ return {
 			title = title:text(),
 			authors = { page:selectFirst(".woocommerce-product-attributes-item--attribute_pa_escritor   td p a") and page:selectFirst(".woocommerce-product-attributes-item--attribute_pa_escritor   td p a"):text() or ""},
 			artists = { page:selectFirst(".woocommerce-product-attributes-item--attribute_pa_ilustrador td p a") and page:selectFirst(".woocommerce-product-attributes-item--attribute_pa_ilustrador td p a"):text() or ""},
-			status = { page:selectFirst(".woocommerce-product-attributes-item--attribute_pa_estado      td p a") and page:selectFirst(".woocommerce-product-attributes-item--attribute_pa_estado     td p a"):text() or ""},
+			status  =   page:selectFirst(".woocommerce-product-attributes-item--attribute_pa_estado     td p a") and page:selectFirst(".woocommerce-product-attributes-item--attribute_pa_estado     td p a"):text() or "",
 			status = NovelStatus(status == "Completado" and 1 or status == "Pausado" and 2 or status == "En Proceso" and 0 or 3),
 			genres = map(genres:select("a"), text),
 			tags = map(tags:select("a"), text),
