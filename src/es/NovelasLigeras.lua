@@ -78,11 +78,11 @@ return {
 	expandURL = expandURL,
 
 	parseNovel = function(url, loadChapters)
-		local doc = GETDocument(baseURL.."/fiction/"..url.."/a")
+		local doc = GETDocument(baseURL.."/index.php/"..url.."/a")
 
-		local page = doc:selectFirst(".page-content-inner")
+		local page = doc:selectFirst(".content")
 		local header = page:selectFirst(".fic-header")
-		local title = header:selectFirst(".fic-title")
+		local title = header:selectFirst(".entry-title")
 		local info = page:selectFirst(".fiction-info")
 		local tags = info:selectFirst(".margin-bottom-10")
 
@@ -103,8 +103,8 @@ return {
 		local novel = NovelInfo {
 			title = title:selectFirst("h1"):text(),
 			imageURL = header:selectFirst("img"):attr("src"),
-			description = info:selectFirst(".description .hidden-content"):text(),
-			tags = map(tags:selectFirst(".tags"):select("a"), text),
+			description = info:selectFirst(".woocommerce-product-details__short-description"):text(),
+			tags = map(tags:selectFirst(".product_meta"):select("a"), text),
 			authors = { title:selectFirst("h4 a"):text() },
 			status = s
 		}
