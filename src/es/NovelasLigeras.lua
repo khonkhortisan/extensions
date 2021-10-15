@@ -2,11 +2,33 @@
 
 local baseURL = "https://novelasligeras.net/"
 
-local ORDER_BY_INT = { ["relevance"]="Relevancia", ["popularity"]="Ordenar por popularidad", ["rating"]="Ordenar por calificación media", ["date"]="Ordenar por los últimos", ["price"]="Ordenar por precio: bajo a alto", ["price-desc"]="Ordenar por precio: alto a bajo" }
-local ORDER_BY_KEY = "relevance"
+local CATEGORIAS_INT = { 
+	[0]="",   --Cualquier Categoría
+	[1]="40", --Acción
+	[2]="53", --Adulto
+	[3]="41", --Aventura
+	[4]="59", --Ciencia Ficción
+	[5]="44", --Drama
+	[6]="46", --Fantasía
+	[7]="48", --Harem
+	[8]="55", --Misterio
+	[9]="60", --Seinen
+	[10]="70" --Tragedia
+}
+local CATEGORIAS_KEY = 0
 
-local CATEGORIAS_INT = { [39]="Cualquier Categoría", [40]="Acción", [53]="Adulto", [41]="Aventura", [59]="Ciencia Ficción", [44]="Drama", [46]="Fantasía", [48]="Harem", [55]="Misterio", [60]="Seinen", [70]="Tragedia" }
-local CATEGORIAS_KEY = 39
+local ORDER_BY_INT = { 
+	[0]="relevance"  --Relevancia
+	[1]="popularity" --Ordenar por popularidad
+	[2]="rating"     --Ordenar por calificación media
+	[3]="date"       --Ordenar por los últimos
+	[4]="price"      --Ordenar por precio: bajo a alto
+	[5]="price-desc" --Ordenar por precio: alto a bajo
+}
+local ORDER_BY_KEY = 0
+
+		DropdownFilter(ORDER_BY_KEY, "Pedido de la tienda", { "Relevancia", "Ordenar por popularidad", "Ordenar por calificación media", "Ordenar por los últimos", "Ordenar por precio: bajo a alto", "Ordenar por precio: alto a bajo" })
+	},
 
 local qs = Require("url").querystring
 
