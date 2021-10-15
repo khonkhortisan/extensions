@@ -164,7 +164,7 @@ return {
 			imageURL = page:selectFirst(".wp-post-image"):attr("src") or page:selectFirst(".wp-post-image"):attr("srcset"):match("^([^\s]+)"),
 			genres = map(genres:select("a"), text),
 			tags = map(tags:select("a"), text),
-			description = info:text(),
+			description = page:selectFirst(".woocommerce-product-details__short-description"):text(),
 			--tags = map(tags:select("a"), function(v)
 			--	return v:text()
 			--end) or tags:text(), --TODO
