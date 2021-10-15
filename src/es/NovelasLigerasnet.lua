@@ -98,7 +98,8 @@ local function parseListing(doc)
 			title = a:text(),
 			link = a:attr("href"):match("/index.php/producto/([^/]+)/.-"),
 			--link = a:attr("href"),
-			imageURL = a:selectFirst("img"):attr("src")
+			--imageURL = v:selectFirst("img"):attr("src")
+			imageURL = v:selectFirst("img"):attr("srcset"):match("^([^\s]+)")
 		}
 	end)
 end
