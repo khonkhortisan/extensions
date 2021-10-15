@@ -113,7 +113,8 @@ return {
 	searchFilters = {
 		DropdownFilter(CATEGORIAS_KEY, "Categorías", { "Cualquier Categoría", "Acción", "Adulto", "Aventura", "Ciencia Ficción", "Drama", "Fantasía", "Harem", "Misterio", "Seinen", "Tragedia" }),
 		DropdownFilter(ORDER_BY_KEY, "Pedido de la tienda", { "Relevancia", "Ordenar por popularidad", "Ordenar por calificación media", "Ordenar por los últimos", "Ordenar por precio: bajo a alto", "Ordenar por precio: alto a bajo" })
-	}
+	},
+
 	search = function(data)
 		return parseListing(GETDocument(qs({
 			s = data[QUERY],
