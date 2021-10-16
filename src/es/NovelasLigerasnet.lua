@@ -263,13 +263,13 @@ return {
 			(data[ESTADO_KEY]~="" and                     "&ixwpst[pa_estado][]="..data[ESTADO_KEY]                               or "")..
 			(data[TIPO_KEY]~="" and                       "&ixwpst[pa_tipo][]="..data[TIPO_KEY]                                   or "")..
 			(data[PAIS_KEY]~="" and                       "&ixwpst[pa_pais][]="..data[PAIS_KEY]                                   or "")..
-			(issearchingorfiltering and                  "&title=1"                                                               or "")..
-			(issearchingorfiltering and                  "&excerpt=1"                                                             or "")..
-			(issearchingorfiltering and                  "&content="..(isfiltering and 1 or 0)                                    or "")..
-			(issearchingorfiltering and                  "&categories=1"                                                          or "")..
-			(issearchingorfiltering and                  "&attributes=1"                                                          or "")..
-			(issearchingorfiltering and                  "&tags=1"                                                                or "")..
-			(issearchingorfiltering and                  "&sku="..(isfiltering and 1 or 0)                                        or "")..
+			(issearchingorfiltering and                   "&title=1"                                                              or "")..
+			(issearchingorfiltering and                   "&excerpt=1"                                                            or "")..
+			(issearchingorfiltering and                   "&content="..(isfiltering and 1 or 0)                                   or "")..
+			(issearchingorfiltering and                   "&categories=1"                                                         or "")..
+			(issearchingorfiltering and                   "&attributes=1"                                                         or "")..
+			(issearchingorfiltering and                   "&tags=1"                                                               or "")..
+			(issearchingorfiltering and                   "&sku="..(isfiltering and 1 or 0)                                       or "")..
 			(isfiltering and                              "&ixwpsf[taxonomy][product_cat][show]=set"                                    ..
 			                                              "&ixwpsf[taxonomy][product_cat][multiple]=0"                                  ..
 			                                              "&ixwpsf[taxonomy][product_cat][filter]=1"                                    ..
