@@ -66,12 +66,13 @@ local PAIS_INT = {
 local PAIS_KEY = 43
 
 local ORDER_BY_INT = {
-	[0]="relevance" , --Relevancia
-	[1]="popularity", --Ordenar por popularidad
-	[2]="rating"    , --Ordenar por calificación media
-	[3]="date"      , --Ordenar por los últimos
-	[4]="price"     , --Ordenar por precio: bajo a alto
-	[5]="price-desc"  --Ordenar por precio: alto a bajo
+	[0]="relevance" , --Orden por defecto
+	[1]="title-DESC", --Relevancia (during a search)
+	[2]="popularity", --Ordenar por popularidad
+	[3]="rating"    , --Ordenar por calificación media
+	[4]="date"      , --Ordenar por los últimos
+	[5]="price"     , --Ordenar por precio: bajo a alto
+	[6]="price-desc"  --Ordenar por precio: alto a bajo
 }
 local ORDER_BY_KEY = 44
 
@@ -241,40 +242,77 @@ return {
 		DropdownFilter(ESTADO_KEY, "Estado", {"Cualquiera","Completado","En Proceso","Pausado"}),
 		DropdownFilter(TIPO_KEY, "Tipo", {"Cualquiera","Novela Ligera","Novela Web"}),
 		DropdownFilter(PAIS_KEY, "País", {"Cualquiera","Argentina","Chile","China","Colombia","Corea","Ecuador","Japón","México","Nicaragua","Perú","Venezuela"}),
-		DropdownFilter(ORDER_BY_KEY, "Pedido de la tienda", { "Relevancia", "Ordenar por popularidad", "Ordenar por calificación media", "Ordenar por los últimos", "Ordenar por precio: bajo a alto", "Ordenar por precio: alto a bajo" })
+		DropdownFilter(ORDER_BY_KEY, "Pedido de la tienda", { "Orden por defecto", "Relevancia", "Ordenar por popularidad", "Ordenar por calificación media", "Ordenar por los últimos", "Ordenar por precio: bajo a alto", "Ordenar por precio: alto a bajo" })
 	},
 
 	search = function(data)
-		return parseListing(GETDocument(qs({
-			s = data[QUERY],
-			post_type="product",
-			title=1,
-			excerpt=1,
-			content=0,
-			categories=1,
-			attributes=1,
-			tags=1,
-			sku=0,
-			ixwps=1,
-			orderby = data[ORDER_BY_KEY]
-		}, baseURL .. "")..
-			"&ixwpst[product_cat][]="..data[CATEGORIAS_KEY]..
-			"&ixwpst[pa_estado][]="..data[ESTADO_KEY]..
-			"&ixwpst[pa_tipo][]="..data[TIPO_KEY]..
-			"&ixwpst[pa_pais][]="..data[PAIS_KEY]..
-			"&ixwpsf[taxonomy][product_cat][show]=set"..
-			"&ixwpsf[taxonomy][product_cat][multiple]=0"..
-			"&ixwpsf[taxonomy][product_cat][filter]=1"..
-			"&ixwpsf[taxonomy][pa_estado][show]=set"..
-			"&ixwpsf[taxonomy][pa_estado][multiple]=0"..
-			"&ixwpsf[taxonomy][pa_estado][filter]=1"..
-			"&ixwpsf[taxonomy][pa_tipo][show]=set"..
-			"&ixwpsf[taxonomy][pa_tipo][multiple]=0"..
-			"&ixwpsf[taxonomy][pa_tipo][filter]=1"..
-			"&ixwpsf[taxonomy][pa_pais][show]=set"..
-			"&ixwpsf[taxonomy][pa_pais][multiple]=0"..
-			"&ixwpsf[taxonomy][pa_pais][filter]=1"
+		--try to match how the website does it, including not putting down some queries in the string
+		--qs() can't use [], %5B%5D may work
+		local issearching=data[QUERY]~=""
+		local isfiltering=data[CATEGORIAS_KEY]~="" and data[ESTADO_KEY]~="" and data[TIPO_KEY]~="" and data[PAIS_KEY]~=""
+		local isordering=data[ORDER_BY_KEY]~=""
+		local issearchingorfiltering=issearching or isfiltering
+		local issfo=issearching or isfiltering or isordering
+		return parseListing(GETDocument(                  baseURL.."/"..
+			(issearching and                              "?s="..data[QUERY]..
+			                                              "&post_type=product" or "")..
+			(isordering and (issearching and "&" or "?").."orderby="..data[ORDER_BY_KEY] or issearching and "&orderby=title-DESC" or "")..
+			(isordering and                               "&paged=1" or "")..
+			(issearchingorfiltering and                   "&ixwps=1" or "")..
+			(data[CATEGORIAS_KEY]~="" and                 "&ixwpst[product_cat][]="..data[CATEGORIAS_KEY] or "")..
+			(data[ESTADO_KEY]~="" and                     "&ixwpst[pa_estado][]="..data[ESTADO_KEY] or "")..
+			(data[TIPO_KEY]~="" and                       "&ixwpst[pa_tipo][]="..data[TIPO_KEY] or "")..
+			(data[PAIS_KEY]~="" and                       "&ixwpst[pa_pais][]="..data[PAIS_KEY] or "")..
+			(issearchingorfiltereing and                  "&title=1" or "")..
+			(issearchingorfiltereing and                  "&excerpt=1" or "")..
+			(issearchingorfiltereing and                  "&content="..(isfiltering and 1 or 0) or "")..
+			(issearchingorfiltereing and                  "&categories=1" or "")..
+			(issearchingorfiltereing and                  "&attributes=1" or "")..
+			(issearchingorfiltereing and                  "&tags=1" or "")..
+			(issearchingorfiltereing and                  "&sku="..(isfiltering and 1 or 0)..
+			(isfiltering and                              "&ixwpsf[taxonomy][product_cat][show]=set"..
+			                                              "&ixwpsf[taxonomy][product_cat][multiple]=0"..
+			                                              "&ixwpsf[taxonomy][product_cat][filter]=1"..
+			                                              "&ixwpsf[taxonomy][pa_estado][show]=set"..
+			                                              "&ixwpsf[taxonomy][pa_estado][multiple]=0"..
+			                                              "&ixwpsf[taxonomy][pa_estado][filter]=1"..
+			                                              "&ixwpsf[taxonomy][pa_tipo][show]=set"..
+			                                              "&ixwpsf[taxonomy][pa_tipo][multiple]=0"..
+			                                              "&ixwpsf[taxonomy][pa_tipo][filter]=1"..
+			                                              "&ixwpsf[taxonomy][pa_pais][show]=set"..
+			                                              "&ixwpsf[taxonomy][pa_pais][multiple]=0"..
+			                                              "&ixwpsf[taxonomy][pa_pais][filter]=1" or "")
 		))
+--		return parseListing(GETDocument(qs({
+--			s = data[QUERY],
+--			post_type="product",
+--			title=1,
+--			excerpt=1,
+--			content=0,
+--			categories=1,
+--			attributes=1,
+--			tags=1,
+--			sku=0,
+--			ixwps=1,
+--			orderby = data[ORDER_BY_KEY]
+--		}, baseURL .. "")..
+--			"&ixwpst[product_cat][]="..data[CATEGORIAS_KEY]..
+--			"&ixwpst[pa_estado][]="..data[ESTADO_KEY]..
+--			"&ixwpst[pa_tipo][]="..data[TIPO_KEY]..
+--			"&ixwpst[pa_pais][]="..data[PAIS_KEY]..
+--			"&ixwpsf[taxonomy][product_cat][show]=set"..
+--			"&ixwpsf[taxonomy][product_cat][multiple]=0"..
+--			"&ixwpsf[taxonomy][product_cat][filter]=1"..
+--			"&ixwpsf[taxonomy][pa_estado][show]=set"..
+--			"&ixwpsf[taxonomy][pa_estado][multiple]=0"..
+--			"&ixwpsf[taxonomy][pa_estado][filter]=1"..
+--			"&ixwpsf[taxonomy][pa_tipo][show]=set"..
+--			"&ixwpsf[taxonomy][pa_tipo][multiple]=0"..
+--			"&ixwpsf[taxonomy][pa_tipo][filter]=1"..
+--			"&ixwpsf[taxonomy][pa_pais][show]=set"..
+--			"&ixwpsf[taxonomy][pa_pais][multiple]=0"..
+--			"&ixwpsf[taxonomy][pa_pais][filter]=1"
+--		))
 	end,
 	--isSearchIncrementing = false
 }
