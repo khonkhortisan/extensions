@@ -225,7 +225,8 @@ return {
 	end,
 
 	getPassage = function(url)
-		return pageOfElem(GETDocument(expandURL(url)):selectFirst(".wpb_text_column wpb_wrapper"), true, css)
+		return pageOfElem(GETDocument(expandURL(url)):selectFirst(".wpb_text_column wpb_wrapper"):text(), true, css)
+		
 	end,
 
 	searchFilters = {
