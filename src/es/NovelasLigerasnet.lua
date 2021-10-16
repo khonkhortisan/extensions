@@ -253,35 +253,35 @@ return {
 		local isordering=data[ORDER_BY_KEY]~=""
 		local issearchingorfiltering=issearching or isfiltering
 		local issfo=issearching or isfiltering or isordering
-		return parseListing(GETDocument(                  baseURL.."/"..
-			(issearching and                              "?s="..data[QUERY]..
-			                                              "&post_type=product" or "")..
+		return parseListing(GETDocument(                  baseURL.."/"                                                                  ..
+			(issearching and                              "?s="..data[QUERY]                                                            ..
+			                                              "&post_type=product" "                                                  or "")..
 			(isordering and (issearching and "&" or "?").."orderby="..data[ORDER_BY_KEY] or issearching and "&orderby=title-DESC" or "")..
-			(isordering and                               "&paged=1" or "")..
-			(issearchingorfiltering and                   "&ixwps=1" or "")..
-			(data[CATEGORIAS_KEY]~="" and                 "&ixwpst[product_cat][]="..data[CATEGORIAS_KEY] or "")..
-			(data[ESTADO_KEY]~="" and                     "&ixwpst[pa_estado][]="..data[ESTADO_KEY] or "")..
-			(data[TIPO_KEY]~="" and                       "&ixwpst[pa_tipo][]="..data[TIPO_KEY] or "")..
-			(data[PAIS_KEY]~="" and                       "&ixwpst[pa_pais][]="..data[PAIS_KEY] or "")..
-			(issearchingorfiltereing and                  "&title=1" or "")..
-			(issearchingorfiltereing and                  "&excerpt=1" or "")..
-			(issearchingorfiltereing and                  "&content="..(isfiltering and 1 or 0) or "")..
-			(issearchingorfiltereing and                  "&categories=1" or "")..
-			(issearchingorfiltereing and                  "&attributes=1" or "")..
-			(issearchingorfiltereing and                  "&tags=1" or "")..
-			(issearchingorfiltereing and                  "&sku="..(isfiltering and 1 or 0))..
-			(isfiltering and                              "&ixwpsf[taxonomy][product_cat][show]=set"..
-			                                              "&ixwpsf[taxonomy][product_cat][multiple]=0"..
-			                                              "&ixwpsf[taxonomy][product_cat][filter]=1"..
-			                                              "&ixwpsf[taxonomy][pa_estado][show]=set"..
-			                                              "&ixwpsf[taxonomy][pa_estado][multiple]=0"..
-			                                              "&ixwpsf[taxonomy][pa_estado][filter]=1"..
-			                                              "&ixwpsf[taxonomy][pa_tipo][show]=set"..
-			                                              "&ixwpsf[taxonomy][pa_tipo][multiple]=0"..
-			                                              "&ixwpsf[taxonomy][pa_tipo][filter]=1"..
-			                                              "&ixwpsf[taxonomy][pa_pais][show]=set"..
-			                                              "&ixwpsf[taxonomy][pa_pais][multiple]=0"..
-			                                              "&ixwpsf[taxonomy][pa_pais][filter]=1" or "")
+			(isordering and                               "&paged=1"                                                              or "")..
+			(issearchingorfiltering and                   "&ixwps=1"                                                              or "")..
+			(data[CATEGORIAS_KEY]~="" and                 "&ixwpst[product_cat][]="..data[CATEGORIAS_KEY]                         or "")..
+			(data[ESTADO_KEY]~="" and                     "&ixwpst[pa_estado][]="..data[ESTADO_KEY]                               or "")..
+			(data[TIPO_KEY]~="" and                       "&ixwpst[pa_tipo][]="..data[TIPO_KEY]                                   or "")..
+			(data[PAIS_KEY]~="" and                       "&ixwpst[pa_pais][]="..data[PAIS_KEY]                                   or "")..
+			(issearchingorfiltering and                  "&title=1"                                                              or "")..
+			(issearchingorfiltering and                  "&excerpt=1"                                                            or "")..
+			(issearchingorfiltering and                  "&content="..(isfiltering and 1 or 0)                                   or "")..
+			(issearchingorfiltering and                  "&categories=1"                                                         or "")..
+			(issearchingorfiltering and                  "&attributes=1"                                                         or "")..
+			(issearchingorfiltering and                  "&tags=1"                                                               or "")..
+			(issearchingorfiltering and                  "&sku="..(isfiltering and 1 or 0)                                       or "")..
+			(isfiltering and                              "&ixwpsf[taxonomy][product_cat][show]=set"                                    ..
+			                                              "&ixwpsf[taxonomy][product_cat][multiple]=0"                                  ..
+			                                              "&ixwpsf[taxonomy][product_cat][filter]=1"                                    ..
+			                                              "&ixwpsf[taxonomy][pa_estado][show]=set"                                      ..
+			                                              "&ixwpsf[taxonomy][pa_estado][multiple]=0"                                    ..
+			                                              "&ixwpsf[taxonomy][pa_estado][filter]=1"                                      ..
+			                                              "&ixwpsf[taxonomy][pa_tipo][show]=set"                                        ..
+			                                              "&ixwpsf[taxonomy][pa_tipo][multiple]=0"                                      ..
+			                                              "&ixwpsf[taxonomy][pa_tipo][filter]=1"                                        ..
+			                                              "&ixwpsf[taxonomy][pa_pais][show]=set"                                        ..
+			                                              "&ixwpsf[taxonomy][pa_pais][multiple]=0"                                      ..
+			                                              "&ixwpsf[taxonomy][pa_pais][filter]=1"                                  or "")
 		))
 --		return parseListing(GETDocument(qs({
 --			s = data[QUERY],
