@@ -316,4 +316,9 @@ return {
 --		))
 	end,
 	--isSearchIncrementing = false
+	
+	setSettings = function(s) settings = s end,
+	updateSetting = function(id, value)
+		settings[id] = value
+	end
 }
