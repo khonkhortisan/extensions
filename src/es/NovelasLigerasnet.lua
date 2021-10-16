@@ -218,6 +218,7 @@ return {
 					title = a and a:text() or "", --TODO have 0 chapters when there are 0 instead of 1
 					link = (a and a:attr("href")) or "",
 					release = (v:selectFirst("time") and (v:selectFirst("time"):attr("datetime") or v:selectFirst("time"):text())) or ""
+					--UNIQUE constraint failed: chapters.url, chapters.formatterID (code 2067 SQLITE_CONSTRAINT_UNIQUE[2067]) https://novelasligeras.net/index.php/producto/arifureta-zero-novela-ligera/
 				}
 			end)))
 		end
