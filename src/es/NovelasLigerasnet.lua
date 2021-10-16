@@ -225,8 +225,13 @@ return {
 	end,
 
 	getPassage = function(url)
-		return pageOfElem(GETDocument(expandURL(url)):selectFirst(".wpb_text_column wpb_wrapper"):text(), true, css)
-		
+		error(expandURL(url))
+		--return pageOfElem(GETDocument(expandURL(url)):selectFirst(".chapter-content"), false, css)
+		return pageOfElem(GETDocument(expandURL(url)):selectFirst(".wpb_text_column .wpb_wrapper"), true, css)
+		--return pageOfElem(GETDocument(expandURL(url)):selectFirst(".wpb_text_column .wpb_wrapper"):text(), true, css)
+		--return table.concat(map(GETDocument(baseURL .. url):select("div.box-player"):select("p"), function(v)
+		--	return v:text()
+		--end), "\n")
 	end,
 
 	searchFilters = {
