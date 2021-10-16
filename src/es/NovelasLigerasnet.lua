@@ -32,7 +32,7 @@ local CATEGORIAS_INT = {
 	[26]="58", --Vida Escolar
 	[27]="73"  --Xuanhuan
 }
-local CATEGORIAS_KEY = ""
+local CATEGORIAS_KEY = 40
 
 local ESTADO_INT = {
 	[0]=""   , --Cualquiera --NovelStatus.UNKNOWN
@@ -40,14 +40,14 @@ local ESTADO_INT = {
 	[2]="16" , --En Proceso --NovelStatus.PUBLISHING
 	[3]="17"   --Pausado    --            On Hold/haitus
 }
-local ESTADO_KEY = ""
+local ESTADO_KEY = 41
 
 local TIPO_INT = {
 	[0]=""  , --Cualquier
 	[1]="23", --Novela Ligera
 	[2]="24"  --Novela Web
 }
-local TIPO_KEY = ""
+local TIPO_KEY = 42
 
 local PAIS_INT = {
 	[0] =""    , --Cualquiera
@@ -63,7 +63,7 @@ local PAIS_INT = {
 	[10]="4341", --Perú
 	[11]="2524"  --Venezuela
 }
-local PAIS_KEY = ""
+local PAIS_KEY = 43
 
 local ORDER_BY_INT = {
 	[0]="relevance" , --Relevancia
