@@ -247,21 +247,33 @@ return {
 	search = function(data)
 		return parseListing(GETDocument(qs({
 			s = data[QUERY],
-			--post_type="product",
-			--title=1,
-			--excerpt=1,
-			--content=0,
-			--categories=1,
-			--attributes=1,
-			--tags=1,
-			--sku=0,
-			--ixwps=1,
+			post_type="product",
+			title=1,
+			excerpt=1,
+			content=0,
+			categories=1,
+			attributes=1,
+			tags=1,
+			sku=0,
+			ixwps=1,
 			orderby = data[ORDER_BY_KEY]
-		}, baseURL .. "")+
-			'&ixwpst[product_cat][]='+data[CATEGORIAS_KEY]+
-			'&ixwpst[pa_estado][]='+data[ESTADO_KEY]+
-			'&ixwpst[pa_tipo][]='+data[TIPO_KEY]+
-			'&ixwpst[pa_pais][]='+data[PAIS_KEY]
+		}, baseURL .. "")..
+			"&ixwpst[product_cat][]="..data[CATEGORIAS_KEY]..
+			"&ixwpst[pa_estado][]="..data[ESTADO_KEY]..
+			"&ixwpst[pa_tipo][]="..data[TIPO_KEY]..
+			"&ixwpst[pa_pais][]="..data[PAIS_KEY]..
+			"&ixwpsf[taxonomy][product_cat][show]=set"..
+			"&ixwpsf[taxonomy][product_cat][multiple]=0"..
+			"&ixwpsf[taxonomy][product_cat][filter]=1"..
+			"&ixwpsf[taxonomy][pa_estado][show]=set"..
+			"&ixwpsf[taxonomy][pa_estado][multiple]=0"..
+			"&ixwpsf[taxonomy][pa_estado][filter]=1"..
+			"&ixwpsf[taxonomy][pa_tipo][show]=set"..
+			"&ixwpsf[taxonomy][pa_tipo][multiple]=0"..
+			"&ixwpsf[taxonomy][pa_tipo][filter]=1"..
+			"&ixwpsf[taxonomy][pa_pais][show]=set"..
+			"&ixwpsf[taxonomy][pa_pais][multiple]=0"..
+			"&ixwpsf[taxonomy][pa_pais][filter]=1"
 		))
 	end,
 	--isSearchIncrementing = false
