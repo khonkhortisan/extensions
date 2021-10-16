@@ -216,8 +216,7 @@ return {
 					order = i,
 					title = a and a:text() or "", --TODO have 0 chapters when there are 0 instead of 1
 					link = (a and a:attr("href")) or "",
-					--release = v:selectFirst("time.text-secondary"):text()
-					release = v:selectFirst("time"):attr("datetime")
+					release = v:selectFirst("time") and v:selectFirst("time"):attr("datetime") or v:selectFirst("time"):text() or ""
 				}
 			end)))
 		end
