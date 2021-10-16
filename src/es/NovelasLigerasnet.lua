@@ -255,7 +255,7 @@ return {
 		local issfo=issearching or isfiltering or isordering
 		return parseListing(GETDocument(                  baseURL.."/"                                                                  ..
 			(issearching and                              "?s="..data[QUERY]                                                            ..
-			                                              "&post_type=product" "                                                  or "")..
+			                                              "&post_type=product"                                                    or "")..
 			(isordering and (issearching and "&" or "?").."orderby="..data[ORDER_BY_KEY] or issearching and "&orderby=title-DESC" or "")..
 			(isordering and                               "&paged=1"                                                              or "")..
 			(issearchingorfiltering and                   "&ixwps=1"                                                              or "")..
