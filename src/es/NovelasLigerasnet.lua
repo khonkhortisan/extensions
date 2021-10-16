@@ -225,7 +225,7 @@ return {
 	end,
 
 	getPassage = function(url)
-		error(expandURL(url))
+		--error(expandURL(url)) --doesn't show
 		--return pageOfElem(GETDocument(expandURL(url)):selectFirst(".chapter-content"), false, css)
 		return pageOfElem(GETDocument(expandURL(url)):selectFirst(".wpb_text_column .wpb_wrapper"), true, css)
 		--return pageOfElem(GETDocument(expandURL(url)):selectFirst(".wpb_text_column .wpb_wrapper"):text(), true, css)
