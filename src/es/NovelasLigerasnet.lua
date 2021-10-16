@@ -190,7 +190,7 @@ return {
 		--})[s] or NovelStatus.UNKNOWN
 		
 		local text = function(v) return v:text() end
-		status  =   page:selectFirst(".woocommerce-product-attributes-item--attribute_pa_estado     td p a") and page:selectFirst(".woocommerce-product-attributes-item--attribute_pa_estado     td p a"):text() or ""
+		local status  =   page:selectFirst(".woocommerce-product-attributes-item--attribute_pa_estado     td p a") and page:selectFirst(".woocommerce-product-attributes-item--attribute_pa_estado     td p a"):text() or ""
 		status = NovelStatus(status == "Completado" and 1 or status == "Pausado" and 2 or status == "En Proceso" and 0 or 3)
 		local novel = NovelInfo {
 			--imageURL = header:selectFirst("img"):attr("src"),
