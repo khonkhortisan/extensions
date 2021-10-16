@@ -269,7 +269,7 @@ return {
 			(issearchingorfiltereing and                  "&categories=1" or "")..
 			(issearchingorfiltereing and                  "&attributes=1" or "")..
 			(issearchingorfiltereing and                  "&tags=1" or "")..
-			(issearchingorfiltereing and                  "&sku="..(isfiltering and 1 or 0)..
+			(issearchingorfiltereing and                  "&sku="..(isfiltering and 1 or 0))..
 			(isfiltering and                              "&ixwpsf[taxonomy][product_cat][show]=set"..
 			                                              "&ixwpsf[taxonomy][product_cat][multiple]=0"..
 			                                              "&ixwpsf[taxonomy][product_cat][filter]=1"..
