@@ -207,8 +207,10 @@ return {
 -- '.wpb_wrapper' has left column whole chapters '.wpb_tabs_nav a' and right column chapter parts '.post-content a'
 		if loadChapters then
 			local i = 0
-			novel:setChapters(AsList(map(doc:selectFirst(".wpb_wrapper"):children(), function(v)
-				local a = v:selectFirst(".post-content a")
+			--novel:setChapters(AsList(map(doc:selectFirst(".wpb_wrapper"):children(), function(v)
+			--	local a = v:selectFirst(".post-content a")
+			novel:setChapters(AsList(map(doc:select(".post-content"), function(v)
+				local a = v:selectFirst("a")
 				i = i + 1
 				return NovelChapter {
 					order = i,
