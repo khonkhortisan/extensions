@@ -215,7 +215,8 @@ return {
 				return NovelChapter {
 					order = i,
 					title = a and a:text() or "", --TODO have 0 chapters when there are 0 instead of 1
-					link = (a and a:attr("href")) or ""
+					link = (a and a:attr("href")) or "",
+					release = v:selectFirst("time.text-secondary"):text()
 				}
 			end)))
 		end
@@ -224,7 +225,7 @@ return {
 	end,
 
 	getPassage = function(url)
-		return pageOfElem(GETDocument(expandURL(url)):selectFirst(".wpb_text_column"), true, css)
+		return pageOfElem(GETDocument(expandURL(url)):selectFirst(".wpb_text_column wpb_wrapper"), true, css)
 	end,
 
 	searchFilters = {
