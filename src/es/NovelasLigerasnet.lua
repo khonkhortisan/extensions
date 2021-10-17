@@ -32,7 +32,7 @@ local CATEGORIAS_INT = {
 	[26]="58", --Vida Escolar
 	[27]="73"  --Xuanhuan
 }
-local CATEGORIAS_KEY = 40
+local CATEGORIAS_KEY = 40 --using invalid  filterID {0}
 
 local ESTADO_INT = {
 	[0]=""   , --Cualquiera --NovelStatus.UNKNOWN
@@ -217,9 +217,10 @@ return {
 				i = i + 1
 				return NovelChapter {
 					order = i,
-					title = a and a:text() or "", --TODO have 0 chapters when there are 0 instead of 1
-					link = (a and a:attr("href")) or "",
-					release = (v:selectFirst("time") and (v:selectFirst("time"):attr("datetime") or v:selectFirst("time"):text())) or ""
+					title = a and a:text() or i, --TODO have 0 chapters when there are 0 instead of 1
+					link = (a and a:attr("href")) or i,
+					release = (v:selectFirst("time") and (v:selectFirst("time"):attr("datetime") or v:selectFirst("time"):text())) or i
+					--TODO: fix
 					--UNIQUE constraint failed: chapters.url, chapters.formatterID (code 2067 SQLITE_CONSTRAINT_UNIQUE[2067]) https://novelasligeras.net/index.php/producto/arifureta-zero-novela-ligera/
 				}
 			end)))
@@ -232,15 +233,15 @@ return {
 		--error(expandURL(url)) --doesn't show
 		--return pageOfElem(GETDocument(expandURL(url)):selectFirst(".chapter-content"), false, css)
 		--return pageOfElem(GETDocument(expandURL(url)):selectFirst(".wpb_text_column .wpb_wrapper"), true, css)
-		return pageOfElem(GETDocument(url):selectFirst(".wpb_text_column .wpb_wrapper"), true, css)
 		--return pageOfElem(GETDocument(expandURL(url)):selectFirst(".wpb_text_column .wpb_wrapper"):text(), true, css)
 		--return table.concat(map(GETDocument(baseURL .. url):select("div.box-player"):select("p"), function(v)
 		--	return v:text()
 		--end), "\n")
+		return pageOfElem(GETDocument(url):selectFirst(".wpb_text_column .wpb_wrapper"), true, css)
+		--TODO: block Publicidad Y-AR?
 	end,
 
 	searchFilters = {
-		--NovelasLigeras using invalid  filterID {0}
 		DropdownFilter(CATEGORIAS_KEY, "Categorías", {"Cualquier Categoría","Acción","Adulto","Artes Marciales","Aventura","Ciencia Ficción","Comedia","Deportes","Drama","Ecchi","Fantasía","Gender Bender","Harem","Histórico","Horror","Mechas (Robots Gigantes)","Misterio","Psicológico","Recuentos de la Vida","Romance","Seinen","Shojo","Shojo Ai","Shonen","Sobrenatural","Tragedia","Vida Escolar","Xuanhuan"}),
 		DropdownFilter(ESTADO_KEY, "Estado", {"Cualquiera","Completado","En Proceso","Pausado"}),
 		DropdownFilter(TIPO_KEY, "Tipo", {"Cualquiera","Novela Ligera","Novela Web"}),
