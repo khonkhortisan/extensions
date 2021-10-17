@@ -214,8 +214,11 @@ return {
 			local i = 0
 			--novel:setChapters(AsList(map(doc:selectFirst(".wpb_wrapper"):children(), function(v)
 			--	local a = v:selectFirst(".post-content a")
-			novel:setChapters(AsList(map(doc:select(".post-content"), function(v)
-				local a = v:selectFirst("a")
+			--novel:setChapters(AsList(map(doc:select(".post-content"), function(v)
+			--the prologue link isn't contained by .post-content https://novelasligeras.net/index.php/producto/86-eighty-six-novela-ligera/ 
+			--.wpb_test-column.wpb_content_element .wpb_wrapper (.wf-cell.wf-1 .post-format-standard .post-content) p a
+			novel:setChapters(AsList(map(doc:select(".wpb_text_column.wpb_content_element .wpb_wrapper"), function(v)
+				local a = v:selectFirst("p a")
 				i = i + 1
 				return NovelChapter {
 					order = i,
