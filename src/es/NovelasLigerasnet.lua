@@ -111,7 +111,7 @@ local function img_src(image_element)
 	-- Default to src (the most likely place to be loaded via script):
 	return image_element:attr("src")
 end
-function createSearchString(tbl)
+local function createSearchString(tbl)
 	local query = tbl[QUERY]
 	local orderBy = tbl[ORDER_BY_FILTER_KEY]
 	local cat = tbl[CATEGORIAS_FILTER_KEY]
