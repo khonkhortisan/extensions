@@ -158,7 +158,8 @@ local function createSearchString(tbl)
 	--	url = url .. "&op=" .. (tbl[self.searchOperId] and "0" or "1")
 	--end
 
-	return self.appendToSearchURL(url, tbl)
+	--return self.appendToSearchURL(url, tbl)
+	return url
 end
 
 local function shrinkURL(url)
