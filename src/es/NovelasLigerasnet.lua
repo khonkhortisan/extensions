@@ -1,4 +1,5 @@
--- {"id":28505740,"ver":"1.0.0","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0","Madara>=2.2.0"]}
+-- {"id":28505740,"ver":"1.0.0","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
+--,"Madara>=2.2.0"]}
 
 local baseURL = "https://www.novelasligeras.net"
 
@@ -144,8 +145,8 @@ local function listing(name, inc, url)
 	end)
 end
 
---return {
-return Require("Madara")(baseURL, { --luafunc(map): 10 attempt to index ? (a nil value)
+return {
+--return Require("Madara")(baseURL, { --luafunc(map): 10 attempt to index ? (a nil value)
 	id = 28505740,
 	name = "Novelas Ligeras.net",
 	baseURL = baseURL,
@@ -325,5 +326,5 @@ return Require("Madara")(baseURL, { --luafunc(map): 10 attempt to index ? (a nil
 	updateSetting = function(id, value)
 		settings[id] = value
 	end
---}
-})
+}
+--})
