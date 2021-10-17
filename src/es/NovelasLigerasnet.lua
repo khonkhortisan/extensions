@@ -3,7 +3,7 @@
 
 local baseURL = "https://www.novelasligeras.net"
 
-local CATEGORIAS_INT = {
+local CATEGORIAS_FILTER_INT = {
 	[0] =""  , --Cualquier Categoría
 	[1] ="40", --Acción
 	[2] ="53", --Adulto
@@ -33,24 +33,24 @@ local CATEGORIAS_INT = {
 	[26]="58", --Vida Escolar
 	[27]="73"  --Xuanhuan
 }
-local CATEGORIAS_KEY = 40 --using invalid  filterID {0}
+local CATEGORIAS_FILTER_KEY = 40 --using invalid  filterID {0}
 
-local ESTADO_INT = {
+local ESTADO_FILTER_INT = {
 	[0]=""   , --Cualquiera --NovelStatus.UNKNOWN
 	[1]="407", --Completado --NovelStatus.COMPLETED
 	[2]="16" , --En Proceso --NovelStatus.PUBLISHING
 	[3]="17"   --Pausado    --            On Hold/haitus
 }
-local ESTADO_KEY = 41
+local ESTADO_FILTER_KEY = 41
 
-local TIPO_INT = {
+local TIPO_FILTER_INT = {
 	[0]=""  , --Cualquier
 	[1]="23", --Novela Ligera
 	[2]="24"  --Novela Web
 }
-local TIPO_KEY = 42
+local TIPO_FILTER_KEY = 42
 
-local PAIS_INT = {
+local PAIS_FILTER_INT = {
 	[0] =""    , --Cualquiera
 	[1] ="1865", --Argentina
 	[2] ="1749", --Chile
@@ -64,10 +64,10 @@ local PAIS_INT = {
 	[10]="4341", --Perú
 	[11]="2524"  --Venezuela
 }
-local PAIS_KEY = 43
+local PAIS_FILTER_KEY = 43
 
-local ORDER_BY_INT = {
-	[0]="relevance" , --Orden por defecto
+local ORDER_BY_FILTER_INT = {
+	[0]="relevance" , --Orden por defecto (not during a search)
 	[1]="title-DESC", --Relevancia (during a search)
 	[2]="popularity", --Ordenar por popularidad
 	[3]="rating"    , --Ordenar por calificación media
@@ -75,7 +75,7 @@ local ORDER_BY_INT = {
 	[5]="price"     , --Ordenar por precio: bajo a alto
 	[6]="price-desc"  --Ordenar por precio: alto a bajo
 }
-local ORDER_BY_KEY = 44
+local ORDER_BY_FILTER_KEY = 44
 
 local qs = Require("url").querystring
 
@@ -111,6 +111,92 @@ local function img_src(image_element)
 	-- Default to src (the most likely place to be loaded via script):
 	return image_element:attr("src")
 end
+function createSearchString(tbl)
+	local query = tbl[QUERY]
+	local orderBy = tbl[ORDER_BY_FILTER_KEY]
+	local cat = tbl[CATEGORIAS_FILTER_KEY]
+	local estado = tbl[ESTADO_FILTER_KEY]
+	local tipo = tbl[TIPO_FILTER_KEY]
+	local pais = tbl[PAIS_FILTER_KEY]
+
+	local url = self.baseURL .. "/?s=" .. encode(query) .. "&post_type=product" ..
+			"&ixwpst[product_cat][]="..encode(cat) ..
+			"&ixwpst[pa_estado][]="..encode(estado) ..
+			"&ixwpst[pa_tipo][]="..encode(tipo) ..
+			"&ixwpst[pa_pais][]="..encode(pais)
+
+	if orderBy ~= nil then
+		url = url .. "&orderby=" .. ({
+			[0]="relevance" , --Orden por defecto (not during a search)
+			[1]="title-DESC", --Relevancia (during a search)
+			[2]="popularity", --Ordenar por popularidad
+			[3]="rating"    , --Ordenar por calificación media
+			[4]="date"      , --Ordenar por los últimos
+			[5]="price"     , --Ordenar por precio: bajo a alto
+			[6]="price-desc"  --Ordenar por precio: alto a bajo
+		})[orderBy]
+	end
+	--if tbl[STATUS_FILTER_KEY_COMPLETED] then
+	--	url = url .. "&status[]=end"
+	--end
+	--if tbl[STATUS_FILTER_KEY_ONGOING] then
+	--	url = url .. "&status[]=on-going"
+	--end
+	--if tbl[STATUS_FILTER_KEY_CANCELED] then
+	--	url = url .. "&status[]=canceled"
+	--end
+	--if tbl[STATUS_FILTER_KEY_ON_HOLD] then
+	--	url = url .. "&status[]=on-hold"
+	--end
+	--for key, value in pairs(self.genres_map) do
+	--	if tbl[key] then
+	--		url = url .. "&genre[]=" .. value
+	--	end
+	--end
+
+	--if self.searchHasOper then
+	--	url = url .. "&op=" .. (tbl[self.searchOperId] and "0" or "1")
+	--end
+
+	return self.appendToSearchURL(url, tbl)
+end
+------------deletethis
+local issearching=data[QUERY]~=""
+		local isfiltering=data[CATEGORIAS_KEY]~="" and data[ESTADO_KEY]~="" and data[TIPO_KEY]~="" and data[PAIS_KEY]~=""
+		local isordering=data[ORDER_BY_KEY]~=""
+		local issearchingorfiltering=issearching or isfiltering
+		local issfo=issearching or isfiltering or isordering
+		return parseListing(GETDocument(                  baseURL.."/"                                                                  ..
+			(issearching and                              "?s="..data[QUERY]                                                            ..
+			                                              "&post_type=product"                                                    or "")..
+			(isordering and (issearching and "&" or "?").."orderby="..data[ORDER_BY_KEY] or issearching and "&orderby=title-DESC" or "")..
+			(isordering and                               "&paged=1"                                                              or "")..
+			(issearchingorfiltering and                   "&ixwps=1"                                                              or "")..
+			(data[CATEGORIAS_KEY]~="" and                 "&ixwpst[product_cat][]="..data[CATEGORIAS_KEY]                         or "")..
+			(data[ESTADO_KEY]~="" and                     "&ixwpst[pa_estado][]="..data[ESTADO_KEY]                               or "")..
+			(data[TIPO_KEY]~="" and                       "&ixwpst[pa_tipo][]="..data[TIPO_KEY]                                   or "")..
+			(data[PAIS_KEY]~="" and                       "&ixwpst[pa_pais][]="..data[PAIS_KEY]                                   or "")..
+			(issearchingorfiltering and                   "&title=1"                                                              or "")..
+			(issearchingorfiltering and                   "&excerpt=1"                                                            or "")..
+			(issearchingorfiltering and                   "&content="..(isfiltering and 1 or 0)                                   or "")..
+			(issearchingorfiltering and                   "&categories=1"                                                         or "")..
+			(issearchingorfiltering and                   "&attributes=1"                                                         or "")..
+			(issearchingorfiltering and                   "&tags=1"                                                               or "")..
+			(issearchingorfiltering and                   "&sku="..(isfiltering and 1 or 0)                                       or "")..
+			(isfiltering and                              "&ixwpsf[taxonomy][product_cat][show]=set"                                    ..
+			                                              "&ixwpsf[taxonomy][product_cat][multiple]=0"                                  ..
+			                                              "&ixwpsf[taxonomy][product_cat][filter]=1"                                    ..
+			                                              "&ixwpsf[taxonomy][pa_estado][show]=set"                                      ..
+			                                              "&ixwpsf[taxonomy][pa_estado][multiple]=0"                                    ..
+			                                              "&ixwpsf[taxonomy][pa_estado][filter]=1"                                      ..
+			                                              "&ixwpsf[taxonomy][pa_tipo][show]=set"                                        ..
+			                                              "&ixwpsf[taxonomy][pa_tipo][multiple]=0"                                      ..
+			                                              "&ixwpsf[taxonomy][pa_tipo][filter]=1"                                        ..
+			                                              "&ixwpsf[taxonomy][pa_pais][show]=set"                                        ..
+			                                              "&ixwpsf[taxonomy][pa_pais][multiple]=0"                                      ..
+			                                              "&ixwpsf[taxonomy][pa_pais][filter]=1"                                  or "")
+		))
+----------------------
 
 local function shrinkURL(url)
 	return url:gsub("^.-novelasligeras%.net/?", "")
@@ -247,51 +333,56 @@ return {
 	end,
 
 	searchFilters = {
-		DropdownFilter(CATEGORIAS_KEY, "Categorías", {"Cualquier Categoría","Acción","Adulto","Artes Marciales","Aventura","Ciencia Ficción","Comedia","Deportes","Drama","Ecchi","Fantasía","Gender Bender","Harem","Histórico","Horror","Mechas (Robots Gigantes)","Misterio","Psicológico","Recuentos de la Vida","Romance","Seinen","Shojo","Shojo Ai","Shonen","Sobrenatural","Tragedia","Vida Escolar","Xuanhuan"}),
-		DropdownFilter(ESTADO_KEY, "Estado", {"Cualquiera","Completado","En Proceso","Pausado"}),
-		DropdownFilter(TIPO_KEY, "Tipo", {"Cualquiera","Novela Ligera","Novela Web"}),
-		DropdownFilter(PAIS_KEY, "País", {"Cualquiera","Argentina","Chile","China","Colombia","Corea","Ecuador","Japón","México","Nicaragua","Perú","Venezuela"}),
-		DropdownFilter(ORDER_BY_KEY, "Pedido de la tienda", { "Orden por defecto", "Relevancia", "Ordenar por popularidad", "Ordenar por calificación media", "Ordenar por los últimos", "Ordenar por precio: bajo a alto", "Ordenar por precio: alto a bajo" })
+		DropdownFilter(CATEGORIAS_FILTER_KEY, "Categorías", {"Cualquier Categoría","Acción","Adulto","Artes Marciales","Aventura","Ciencia Ficción","Comedia","Deportes","Drama","Ecchi","Fantasía","Gender Bender","Harem","Histórico","Horror","Mechas (Robots Gigantes)","Misterio","Psicológico","Recuentos de la Vida","Romance","Seinen","Shojo","Shojo Ai","Shonen","Sobrenatural","Tragedia","Vida Escolar","Xuanhuan"}),
+		DropdownFilter(ESTADO_FILTER_KEY, "Estado", {"Cualquiera","Completado","En Proceso","Pausado"}),
+		DropdownFilter(TIPO_FILTER_KEY, "Tipo", {"Cualquiera","Novela Ligera","Novela Web"}),
+		DropdownFilter(PAIS_FILTER_KEY, "País", {"Cualquiera","Argentina","Chile","China","Colombia","Corea","Ecuador","Japón","México","Nicaragua","Perú","Venezuela"}),
+		DropdownFilter(ORDER_BY_FILTER_KEY, "Pedido de la tienda", { "Orden por defecto", "Relevancia", "Ordenar por popularidad", "Ordenar por calificación media", "Ordenar por los últimos", "Ordenar por precio: bajo a alto", "Ordenar por precio: alto a bajo" })
 	},
 
+	
 	search = function(data)
-		--try to match how the website does it, including not putting down some queries in the string
-		--qs() can't use [], %5B%5D may work
-		local issearching=data[QUERY]~=""
-		local isfiltering=data[CATEGORIAS_KEY]~="" and data[ESTADO_KEY]~="" and data[TIPO_KEY]~="" and data[PAIS_KEY]~=""
-		local isordering=data[ORDER_BY_KEY]~=""
-		local issearchingorfiltering=issearching or isfiltering
-		local issfo=issearching or isfiltering or isordering
-		return parseListing(GETDocument(                  baseURL.."/"                                                                  ..
-			(issearching and                              "?s="..data[QUERY]                                                            ..
-			                                              "&post_type=product"                                                    or "")..
-			(isordering and (issearching and "&" or "?").."orderby="..data[ORDER_BY_KEY] or issearching and "&orderby=title-DESC" or "")..
-			(isordering and                               "&paged=1"                                                              or "")..
-			(issearchingorfiltering and                   "&ixwps=1"                                                              or "")..
-			(data[CATEGORIAS_KEY]~="" and                 "&ixwpst[product_cat][]="..data[CATEGORIAS_KEY]                         or "")..
-			(data[ESTADO_KEY]~="" and                     "&ixwpst[pa_estado][]="..data[ESTADO_KEY]                               or "")..
-			(data[TIPO_KEY]~="" and                       "&ixwpst[pa_tipo][]="..data[TIPO_KEY]                                   or "")..
-			(data[PAIS_KEY]~="" and                       "&ixwpst[pa_pais][]="..data[PAIS_KEY]                                   or "")..
-			(issearchingorfiltering and                   "&title=1"                                                              or "")..
-			(issearchingorfiltering and                   "&excerpt=1"                                                            or "")..
-			(issearchingorfiltering and                   "&content="..(isfiltering and 1 or 0)                                   or "")..
-			(issearchingorfiltering and                   "&categories=1"                                                         or "")..
-			(issearchingorfiltering and                   "&attributes=1"                                                         or "")..
-			(issearchingorfiltering and                   "&tags=1"                                                               or "")..
-			(issearchingorfiltering and                   "&sku="..(isfiltering and 1 or 0)                                       or "")..
-			(isfiltering and                              "&ixwpsf[taxonomy][product_cat][show]=set"                                    ..
-			                                              "&ixwpsf[taxonomy][product_cat][multiple]=0"                                  ..
-			                                              "&ixwpsf[taxonomy][product_cat][filter]=1"                                    ..
-			                                              "&ixwpsf[taxonomy][pa_estado][show]=set"                                      ..
-			                                              "&ixwpsf[taxonomy][pa_estado][multiple]=0"                                    ..
-			                                              "&ixwpsf[taxonomy][pa_estado][filter]=1"                                      ..
-			                                              "&ixwpsf[taxonomy][pa_tipo][show]=set"                                        ..
-			                                              "&ixwpsf[taxonomy][pa_tipo][multiple]=0"                                      ..
-			                                              "&ixwpsf[taxonomy][pa_tipo][filter]=1"                                        ..
-			                                              "&ixwpsf[taxonomy][pa_pais][show]=set"                                        ..
-			                                              "&ixwpsf[taxonomy][pa_pais][multiple]=0"                                      ..
-			                                              "&ixwpsf[taxonomy][pa_pais][filter]=1"                                  or "")
-		))
+		local url = self.createSearchString(data)
+		return self.parse(GETDocument(url), true)
+	end,
+--	search = function(data)
+--		--try to match how the website does it, including not putting down some queries in the string
+--		--qs() can't use [], %5B%5D may work
+--		local issearching=data[QUERY]~=""
+--		local isfiltering=data[CATEGORIAS_KEY]~="" and data[ESTADO_KEY]~="" and data[TIPO_KEY]~="" and data[PAIS_KEY]~=""
+--		local isordering=data[ORDER_BY_KEY]~=""
+--		local issearchingorfiltering=issearching or isfiltering
+--		local issfo=issearching or isfiltering or isordering
+--		return parseListing(GETDocument(                  baseURL.."/"                                                                  ..
+--			(issearching and                              "?s="..data[QUERY]                                                            ..
+--			                                              "&post_type=product"                                                    or "")..
+--			(isordering and (issearching and "&" or "?").."orderby="..data[ORDER_BY_KEY] or issearching and "&orderby=title-DESC" or "")..
+--			(isordering and                               "&paged=1"                                                              or "")..
+--			(issearchingorfiltering and                   "&ixwps=1"                                                              or "")..
+--			(data[CATEGORIAS_KEY]~="" and                 "&ixwpst[product_cat][]="..data[CATEGORIAS_KEY]                         or "")..
+--			(data[ESTADO_KEY]~="" and                     "&ixwpst[pa_estado][]="..data[ESTADO_KEY]                               or "")..
+--			(data[TIPO_KEY]~="" and                       "&ixwpst[pa_tipo][]="..data[TIPO_KEY]                                   or "")..
+--			(data[PAIS_KEY]~="" and                       "&ixwpst[pa_pais][]="..data[PAIS_KEY]                                   or "")..
+--			(issearchingorfiltering and                   "&title=1"                                                              or "")..
+--			(issearchingorfiltering and                   "&excerpt=1"                                                            or "")..
+--			(issearchingorfiltering and                   "&content="..(isfiltering and 1 or 0)                                   or "")..
+--			(issearchingorfiltering and                   "&categories=1"                                                         or "")..
+--			(issearchingorfiltering and                   "&attributes=1"                                                         or "")..
+--			(issearchingorfiltering and                   "&tags=1"                                                               or "")..
+--			(issearchingorfiltering and                   "&sku="..(isfiltering and 1 or 0)                                       or "")..
+--			(isfiltering and                              "&ixwpsf[taxonomy][product_cat][show]=set"                                    ..
+--			                                              "&ixwpsf[taxonomy][product_cat][multiple]=0"                                  ..
+--			                                              "&ixwpsf[taxonomy][product_cat][filter]=1"                                    ..
+--			                                              "&ixwpsf[taxonomy][pa_estado][show]=set"                                      ..
+--			                                              "&ixwpsf[taxonomy][pa_estado][multiple]=0"                                    ..
+--			                                              "&ixwpsf[taxonomy][pa_estado][filter]=1"                                      ..
+--			                                              "&ixwpsf[taxonomy][pa_tipo][show]=set"                                        ..
+--			                                              "&ixwpsf[taxonomy][pa_tipo][multiple]=0"                                      ..
+--			                                              "&ixwpsf[taxonomy][pa_tipo][filter]=1"                                        ..
+--			                                              "&ixwpsf[taxonomy][pa_pais][show]=set"                                        ..
+--			                                              "&ixwpsf[taxonomy][pa_pais][multiple]=0"                                      ..
+--			                                              "&ixwpsf[taxonomy][pa_pais][filter]=1"                                  or "")
+--		))
 --		return parseListing(GETDocument(qs({
 --			s = data[QUERY],
 --			post_type="product",
@@ -322,7 +413,16 @@ return {
 --			"&ixwpsf[taxonomy][pa_pais][multiple]=0"..
 --			"&ixwpsf[taxonomy][pa_pais][filter]=1"
 --		))
-	end,
+--	end,
+	
+	--filters = _self.appendToSearchFilters(filters)
+	--_self["searchFilters"] = filters
+	_self["baseURL"] = baseURL
+	--_self["listings"] = { Listing("Default", true, _self.latest) }
+	_self["updateSetting"] = function(id, value)
+		settings[id] = value
+	end
+	
 	--isSearchIncrementing = false
 	
 	setSettings = function(s) settings = s end,
