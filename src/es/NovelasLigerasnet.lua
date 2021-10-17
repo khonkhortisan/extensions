@@ -125,7 +125,8 @@ local function createSearchString(tbl)
 	local tipo = tbl[TIPO_FILTER_KEY]
 	local pais = tbl[PAIS_FILTER_KEY]
 
-	local url = self.baseURL .. "/?s=" .. encode(query) .. "&post_type=product" ..
+	--baseURL..listing.."?s="..encode([QUERY]).."&ixwpst[product_cat][]="..encode(data[CATEGORIA_FILTER_KEY])
+	local url = self.baseURL .. "".."index.php/lista-de-novela-ligera-novela-web".."/?s=" .. encode(query) .. "&post_type=product" ..
 			"&ixwpst[product_cat][]="..encode(cat) ..
 			"&ixwpst[pa_estado][]="..encode(estado) ..
 			"&ixwpst[pa_tipo][]="..encode(tipo) ..
