@@ -81,6 +81,12 @@ local qs = Require("url").querystring
 
 local css = Require("CommonCSS").table
 
+local encode = Require("url").encode
+local text = function(v)
+	return v:text()
+end
+local settings = {}
+
 --local img_src = Require("Madara").img_src
 ---@param image_element Element An img element of which the biggest image shall be selected.
 ---@return string A link to the biggest image of the image_element.
