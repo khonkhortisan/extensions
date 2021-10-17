@@ -325,4 +325,4 @@ return Require("Madara")(baseURL, {
 	updateSetting = function(id, value)
 		settings[id] = value
 	end
-}
+})
