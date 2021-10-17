@@ -1,4 +1,4 @@
--- {"id":278,"ver":"1.0.3","libVer":"1.0.0","author":"TechnoJo4","dep":["NovelFull>=2.0.2"]}
+-- {"id":278,"ver":"2.0.2","libVer":"1.0.0","author":"TechnoJo4","dep":["NovelFull>=2.0.2"]}
 
 return Require("NovelFull")("https://readnovelfull.com", {
 	id = 278,

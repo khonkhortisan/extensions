@@ -56,7 +56,27 @@
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/NovelFull.png",
       "id": 1,
       "lang": "en",
-      "ver": "2.0.1",
+      "ver": "2.0.2",
+      "libVer": "1.0.0",
+      "md5": "0d6ee346459e8bf848bbac0fb6939e09"
+    },
+    {
+      "name": "ReadNovelFull",
+      "fileName": "ReadNovelFull",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/ReadNovelFull.png",
+      "id": 278,
+      "lang": "en",
+      "ver": "2.0.2",
+      "libVer": "1.0.0",
+      "md5": "0d6ee346459e8bf848bbac0fb6939e09"
+    },
+    {
+      "name": "MNovelFree",
+      "fileName": "MNovelFree",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/MNovelFree.png",
+      "id": 249,
+      "lang": "en",
+      "ver": "2.0.2",
       "libVer": "1.0.0",
       "md5": "0d6ee346459e8bf848bbac0fb6939e09"
     },

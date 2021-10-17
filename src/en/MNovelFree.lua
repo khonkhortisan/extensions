@@ -1,4 +1,4 @@
--- {"id":,"ver":"1.0.1","libVer":"1.0.0","author":"","dep":["NovelFull>=2.0.2"]}
+-- {"id":"249","ver":"2.0.2","libVer":"1.0.0","author":"","dep":["NovelFull>=2.0.2"]}
 
 return Require("NovelFull")("https://mnovelfree.com", {
 	id = 249,
