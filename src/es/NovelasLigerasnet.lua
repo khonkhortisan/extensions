@@ -306,7 +306,7 @@ return {
 	
 	search = function(data)
 		local url = self.createSearchString(data)
-		return self.parse(GETDocument(url), true)
+		return self.parseListing(GETDocument(url), true)
 	end,
 --	search = function(data)
 --		--try to match how the website does it, including not putting down some queries in the string
@@ -380,11 +380,11 @@ return {
 	
 	--filters = _self.appendToSearchFilters(filters)
 	--_self["searchFilters"] = filters
-	_self["baseURL"] = baseURL
+--	_self["baseURL"] = baseURL
 	--_self["listings"] = { Listing("Default", true, _self.latest) }
-	_self["updateSetting"] = function(id, value)
-		settings[id] = value
-	end
+--	_self["updateSetting"] = function(id, value)
+--		settings[id] = value
+--	end
 	
 	--isSearchIncrementing = false
 	
