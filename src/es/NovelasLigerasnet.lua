@@ -144,7 +144,8 @@ local function listing(name, inc, url)
 	end)
 end
 
-return {
+--return {
+return Require("Madara")(baseURL, {
 	id = 28505740,
 	name = "Novelas Ligeras.net",
 	baseURL = baseURL,
@@ -217,11 +218,11 @@ return {
 				i = i + 1
 				return NovelChapter {
 					order = i,
-					title = a and a:text() or i, --TODO have 0 chapters when there are 0 instead of 1
-					link = (a and a:attr("href")) or i,
-					release = (v:selectFirst("time") and (v:selectFirst("time"):attr("datetime") or v:selectFirst("time"):text())) or i
-					--TODO: fix
-					--UNIQUE constraint failed: chapters.url, chapters.formatterID (code 2067 SQLITE_CONSTRAINT_UNIQUE[2067]) https://novelasligeras.net/index.php/producto/arifureta-zero-novela-ligera/
+					title = a and a:text() or nil, --TODO have 0 chapters when there are 0 instead of 1
+					link = (a and a:attr("href")) or nil,
+					release = (v:selectFirst("time") and (v:selectFirst("time"):attr("datetime") or v:selectFirst("time"):text())) or nil
+					--TODO: fix by changing "" to i or nil
+					--UNIQUE constraint failed: chapters.url, chapters.formatterID (code 2067 SQLITE_CONSTRAINT_UNIQUE[2067]) https://novelasligeras.net/index.php/producto/arifureta-zero-novela-ligera/ https://novelasligeras.net/index.php/producto/c3-cube-x-cursed-x-curious-novela-ligera/
 				}
 			end)))
 		end
