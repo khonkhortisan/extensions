@@ -1,4 +1,4 @@
--- {"id":28505740,"ver":"1.0.3","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
+-- {"id":28505740,"ver":"1.0.4","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
 --,"Madara>=2.2.0"]}
 
 local baseURL = "https://www.novelasligeras.net"
@@ -196,10 +196,14 @@ local function parseListing(doc)
 	end)
 end
 
+--function defaults:latest(data)
+--	return self.parse(GETDocument(self.baseURL .. "/" .. self.novelListingURLPath .. "/page/" .. data[PAGE] .. "/?m_orderby=latest"))
+--end
+
 local function listing(name, inc, url)
 	url = expandURL(url)
 	return Listing(name, inc, function(data)
-		return parseListing(GETDocument(inc and (url.."/page/"..data[PAGE]) or url))
+		return parseListing(GETDocument(inc and (url.."/page/"..data[PAGE] .. "/") or url))
 	end)
 end
 
@@ -219,6 +223,10 @@ return {
 		listing("Novelas Completados", false, "index.php/filtro/estado/completado"),
 		listing("Autores Hispanos", false, "index.php/etiqueta-novela/autor-hispano")
 	},
+	
+	--listings = { 
+	--	Listing("Default", true, _self.latest)
+	--}
 
 	shrinkURL = shrinkURL,
 	expandURL = expandURL,
