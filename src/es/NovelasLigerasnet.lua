@@ -215,8 +215,8 @@ return {
 	listings = {
 		listing("Lista de Novelas", true, "index.php/lista-de-novela-ligera-novela-web"),
 		listing("Novelas Exclusivas", false, "index.php/etiqueta-novela/novela-exclusiva"),
-		listing("Novelas Completados", true, "index.php/filtro/estado/completado"),
-		listing("Autores Hispanos", true, "index.php/etiqueta-novela/autor-hispano")
+		listing("Novelas Completados", false, "index.php/filtro/estado/completado"),
+		listing("Autores Hispanos", false, "index.php/etiqueta-novela/autor-hispano")
 	},
 
 	shrinkURL = shrinkURL,
