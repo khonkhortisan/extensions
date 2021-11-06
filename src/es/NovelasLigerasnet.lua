@@ -210,6 +210,7 @@ return {
 	baseURL = baseURL,
 	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/icons/NovelasLigeras.png",
 	imageURL = "https://github.com/khonkhortisan/extensions/raw/novelasligeras.net/icons/NovelasLigeras.png", --TODO
+	hasSearch = true,
 	chapterType = ChapterType.HTML,
 
 	listings = {
