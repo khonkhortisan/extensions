@@ -395,7 +395,7 @@ return {
 --		settings[id] = value
 --	end
 	
-	--isSearchIncrementing = false
+	isSearchIncrementing = false,
 	
 	setSettings = function(s) settings = s end,
 	updateSetting = function(id, value)
