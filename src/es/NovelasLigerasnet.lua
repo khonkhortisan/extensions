@@ -301,7 +301,15 @@ return {
 		--return table.concat(map(GETDocument(baseURL .. url):select("div.box-player"):select("p"), function(v)
 		--	return v:text()
 		--end), "\n")
-		return pageOfElem(GETDocument(url):selectFirst(".wpb_text_column .wpb_wrapper"), true, css)
+		
+		local adblock = true
+		if adblock then
+			local doc = GETDocument(url)
+			doc:select(".wpb_text_column .wpb_wrapper div center"):remove()
+			return pageOfElem(doc:selectFirst(".wpb_text_column .wpb_wrapper"), true, css)
+		else
+			return pageOfElem(GETDocument(url):selectFirst(".wpb_text_column .wpb_wrapper"), true, css)
+		end
 		--TODO: block Publicidad Y-AR?
 	end,
 
