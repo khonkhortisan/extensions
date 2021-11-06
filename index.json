@@ -300,17 +300,6 @@
       "ver": "1.0.4",
       "libVer": "1.0.0",
       "md5": ""
-    },
-    {
-      "name": "Novelas Ligeras.net Madara",
-      "fileName": "NovelasLigerasnetMadara",
-      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/NovelasLigeras.png",
-      "imageURL": "https://github.com/khonkhortisan/extensions/raw/novelasligeras.net/icons/NovelasLigeras.png",
-      "id": 28505741,
-      "lang": "es",
-      "ver": "1.0.0",
-      "libVer": "1.0.0",
-      "md5": ""
     }
   ]
 }
