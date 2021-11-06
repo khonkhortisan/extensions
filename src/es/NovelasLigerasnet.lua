@@ -131,7 +131,7 @@ local function createSearchString(tbl)
 			"&ixwpst[pa_estado][]="..encode(estado) ..
 			"&ixwpst[pa_tipo][]="..encode(tipo) ..
 			"&ixwpst[pa_pais][]="..encode(pais)
-	error(url)
+	--error(url)
 
 	if orderBy ~= nil then
 		url = url .. "&orderby=" .. ({
