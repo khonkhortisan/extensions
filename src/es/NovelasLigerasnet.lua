@@ -1,4 +1,4 @@
--- {"id":28505740,"ver":"1.0.8","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
+-- {"id":28505740,"ver":"1.0.9","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
 --,"Madara>=2.2.0"]}
 
 local baseURL = "https://www.novelasligeras.net"
@@ -305,7 +305,8 @@ return {
 				--local a = v:selectFirst("p a") --misses prologue on A Monster Who Levels Up
 			--novel:setChapters(AsList(map(doc:select(".wpb_tab:nth-child(2)"), function(v) --only prologue?
 				--local a = v:selectFirst("a")
-			novel:setChapters(AsList(map(doc:select(".wpb_tab:nth-child(2) a"), function(v) --only prologue?
+			--novel:setChapters(AsList(map(doc:select(".wpb_tab:nth-child(2) a"), function(v) --only prologue?
+			novel:setChapters(AsList(map(doc:select(".wpb_tab a"), function(v) --each volume has multiple tabs, each tab has one or more a, each a is a chapter title/link/before time
 				local a = v
 				i = i + 1
 				return NovelChapter {
