@@ -1,4 +1,4 @@
--- {"id":28505740,"ver":"1.0.12","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
+-- {"id":28505740,"ver":"1.0.13","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
 --,"Madara>=2.2.0"]}
 
 local baseURL = "https://www.novelasligeras.net"
@@ -357,7 +357,7 @@ return {
 	search = function(data)
 		--local url = self.createSearchString(data)
 		--local url = baseURL .. "/" .. "index.php/lista-de-novela-ligera-novela-web" .. "/"""?s=" .. encode(query)
-		local url = "https://novelasligeras.net/?s="..encode(data[QUERY]).."&post_type=product&title=1&excerpt=1&content=0&categories=1&attributes=1&tags=1&sku=0&orderby=title-DESC&ixwps=1"
+		local url = "https://www.novelasligeras.net/?s="..encode(data[QUERY]).."&post_type=product&title=1&excerpt=1&content=0&categories=1&attributes=1&tags=1&sku=0&orderby=title-DESC&ixwps=1"
 		--return self.parseListing(GETDocument(url), true)
 		return self.parseListing(GETDocument(url))
 	end,
