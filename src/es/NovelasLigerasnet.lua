@@ -1,4 +1,4 @@
--- {"id":28505740,"ver":"1.0.17","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
+-- {"id":28505740,"ver":"1.0.18","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
 --,"Madara>=2.2.0"]}
 
 local baseURL = "https://www.novelasligeras.net"
@@ -204,10 +204,7 @@ end
 local function listing(name, inc, url)
 	url = expandURL(url)
 	return Listing(name, inc, function(data)
-		if data[PAGE] == 0 then
-			data[PAGE] = 1
-		end
-		return parseListing(GETDocument(inc and (url .. "/page/" .. data[PAGE] .. "/") or url))
+		return parseListing(GETDocument(inc and (url .. "/page/" .. data[PAGE]+1 .. "/") or url))
 	end)
 end
 
