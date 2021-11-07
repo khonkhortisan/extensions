@@ -1,4 +1,4 @@
--- {"id":28505740,"ver":"1.0.7","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
+-- {"id":28505740,"ver":"1.0.8","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
 --,"Madara>=2.2.0"]}
 
 local baseURL = "https://www.novelasligeras.net"
@@ -301,10 +301,12 @@ return {
 --	<div class="dt-fancy-separator h3-size style-thick accent-title-color accent-border-color" style="width: 100%;"><div class="dt-fancy-title"><span class="separator-holder separator-left"></span>El Campo de Batalla con Cero Muertos<span class="separator-holder separator-right"></span></div></div>
 --	<div class="wpb_text_column wpb_content_element ">
 			
-			--novel:setChapters(AsList(map(doc:select(".wpb_text_column.wpb_content_element .wpb_wrapper"), function(v)
-			novel:setChapters(AsList(map(doc:select(".wpb_tab:nth-child(2)"), function(v)
+			--novel:setChapters(AsList(map(doc:select(".wpb_text_column.wpb_content_element .wpb_wrapper"), function(v) --missing some chapters
 				--local a = v:selectFirst("p a") --misses prologue on A Monster Who Levels Up
-				local a = v:selectFirst("a")
+			--novel:setChapters(AsList(map(doc:select(".wpb_tab:nth-child(2)"), function(v) --only prologue?
+				--local a = v:selectFirst("a")
+			novel:setChapters(AsList(map(doc:select(".wpb_tab:nth-child(2) a"), function(v) --only prologue?
+				local a = v
 				i = i + 1
 				return NovelChapter {
 					order = i,
