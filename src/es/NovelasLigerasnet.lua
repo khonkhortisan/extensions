@@ -1,4 +1,4 @@
--- {"id":28505740,"ver":"1.0.9","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
+-- {"id":28505740,"ver":"1.0.10","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
 --,"Madara>=2.2.0"]}
 
 local baseURL = "https://www.novelasligeras.net"
@@ -308,12 +308,14 @@ return {
 			--novel:setChapters(AsList(map(doc:select(".wpb_tab:nth-child(2) a"), function(v) --only prologue?
 			novel:setChapters(AsList(map(doc:select(".wpb_tab a"), function(v) --each volume has multiple tabs, each tab has one or more a, each a is a chapter title/link/before time
 				local a = v
+				local a_time = a:lastElementSibling()
 				i = i + 1
 				return NovelChapter {
 					order = i,
 					title = a and a:text() or nil, --TODO have 0 chapters when there are 0 instead of 1
 					link = (a and a:attr("href")) or nil,
-					release = (v:selectFirst("time") and (v:selectFirst("time"):attr("datetime") or v:selectFirst("time"):text())) or nil
+					--release = (v:selectFirst("time") and (v:selectFirst("time"):attr("datetime") or v:selectFirst("time"):text())) or nil
+					release = (a_time and (a_time:attr("datetime") or a_time:text())) or nil
 					--TODO: fix by changing "" to i or nil
 					--UNIQUE constraint failed: chapters.url, chapters.formatterID (code 2067 SQLITE_CONSTRAINT_UNIQUE[2067]) https://novelasligeras.net/index.php/producto/arifureta-zero-novela-ligera/ https://novelasligeras.net/index.php/producto/c3-cube-x-cursed-x-curious-novela-ligera/
 				}
