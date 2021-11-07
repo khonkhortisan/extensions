@@ -1,4 +1,4 @@
--- {"id":28505740,"ver":"1.0.5","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
+-- {"id":28505740,"ver":"1.0.6","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
 --,"Madara>=2.2.0"]}
 
 local baseURL = "https://www.novelasligeras.net"
@@ -283,9 +283,10 @@ return {
 			--	local a = v:selectFirst(".post-content a")
 			--novel:setChapters(AsList(map(doc:select(".post-content"), function(v)
 			--the prologue link isn't contained by .post-content https://novelasligeras.net/index.php/producto/86-eighty-six-novela-ligera/ 
-			--.wpb_test-column.wpb_content_element .wpb_wrapper (.wf-cell.wf-1 .post-format-standard .post-content) p a
+			--.wpb_text_column.wpb_content_element .wpb_wrapper (.wf-cell wf-1 post-format-standard post-content) (p) a
 			novel:setChapters(AsList(map(doc:select(".wpb_text_column.wpb_content_element .wpb_wrapper"), function(v)
-				local a = v:selectFirst("p a")
+				--local a = v:selectFirst("p a") --misses prologue on A Monster Who Levels Up
+				local a = v:selectFirst("a")
 				i = i + 1
 				return NovelChapter {
 					order = i,
