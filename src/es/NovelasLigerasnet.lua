@@ -1,4 +1,4 @@
--- {"id":28505740,"ver":"1.0.6","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
+-- {"id":28505740,"ver":"1.0.7","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
 --,"Madara>=2.2.0"]}
 
 local baseURL = "https://www.novelasligeras.net"
@@ -282,9 +282,27 @@ return {
 			--novel:setChapters(AsList(map(doc:selectFirst(".wpb_wrapper"):children(), function(v)
 			--	local a = v:selectFirst(".post-content a")
 			--novel:setChapters(AsList(map(doc:select(".post-content"), function(v)
-			--the prologue link isn't contained by .post-content https://novelasligeras.net/index.php/producto/86-eighty-six-novela-ligera/ 
-			--.wpb_text_column.wpb_content_element .wpb_wrapper (.wf-cell wf-1 post-format-standard post-content) (p) a
-			novel:setChapters(AsList(map(doc:select(".wpb_text_column.wpb_content_element .wpb_wrapper"), function(v)
+			
+--  R sidebar|:nth-child(2)                          List of chapters|individual chapters                                             |title without time
+--div.wpb_tab div.wpb_text_column.wpb_content_element div.wpb_wrapper                                                                p a	- 86 prologue chapter
+--div.wpb_tab div.wpb_text_column.wpb_content_element div.wpb_wrapper div.wf-cell.wf-1 article.post-format-standard div.post-content p a	- 86 other chapters
+--div.wpb_tab div.wpb_text_column.wpb_content_element div.wpb_wrapper div.wf-cell.wf-1 article.post-format-standard div.post-content   a	- A Monster Who Levels Up prologue chapter
+--div.wpb_tab div.wpb_text_column.wpb_content_element div.wpb_wrapper div.wf-cell.wf-1 article.post-format-standard div.post-content p a	- A Monster Who Levels Up other chapters
+--div.wpb_tab section.items-grid.wf-container                         div.wf-cell.wf-1 article.post-format-standard div.post-content   a	- Abyss (NH), 10 nen 
+			
+			--div.wpb_tab.ui-tabs-panel.wpb_ui-tabs-hide.vc_clearfix.ui-corner-bottom.ui-widget-content --right sidebar of single volume/section of chapters, including label
+			--div.dt-fancy-separator.h3-size.style-thick.accent-title-color.accent-border-color         --                                                              label
+			--section.items-grid.wf-container OR div.wpb_text_column.wpb_content_element div.wpb_wrapper--                               section of chapters
+			
+			--<div id="tab-1528139322102-1-10" class="wpb_tab ui-tabs-panel wpb_ui-tabs-hide vc_clearfix ui-corner-bottom ui-widget-content--" aria-labelledby="ui-id-2" role="tabpanel" style="display: none;" aria-hidden="true">
+			
+			
+--<div id="tab-1528139322102-1-10" class="wpb_tab ui-tabs-panel wpb_ui-tabs-hide vc_clearfix ui-corner-bottom ui-widget-content" aria-labelledby="ui-id-2" role="tabpanel" style="display: none;" aria-hidden="true">
+--	<div class="dt-fancy-separator h3-size style-thick accent-title-color accent-border-color" style="width: 100%;"><div class="dt-fancy-title"><span class="separator-holder separator-left"></span>El Campo de Batalla con Cero Muertos<span class="separator-holder separator-right"></span></div></div>
+--	<div class="wpb_text_column wpb_content_element ">
+			
+			--novel:setChapters(AsList(map(doc:select(".wpb_text_column.wpb_content_element .wpb_wrapper"), function(v)
+			novel:setChapters(AsList(map(doc:select(".wpb_tab:nth-child(2)"), function(v)
 				--local a = v:selectFirst("p a") --misses prologue on A Monster Who Levels Up
 				local a = v:selectFirst("a")
 				i = i + 1
