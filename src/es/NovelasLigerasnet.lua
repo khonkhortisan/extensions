@@ -120,7 +120,7 @@ local function img_src(image_element)
 	return image_element:attr("src")
 end
 local function createFilterString(data)
-	return "&orderby="                                                  ..encode(ORDER_BY_FILTER_INT[data[ORDER_BY_FILTER_KEY]])..
+	return "orderby="                                                  ..encode(ORDER_BY_FILTER_INT[data[ORDER_BY_FILTER_KEY]])..
 		(data[CATEGORIAS_FILTER_KEY]~=0 and "&ixwpst[product_cat][]="..encode(CATEGORIAS_FILTER_INT[data[CATEGORIAS_FILTER_KEY]]) or "")..
 		(data[CATEGORIAS_FILTER_KEY]~=0 and "&ixwpst[pa_estado][]="  ..encode(ESTADO_FILTER_INT[data[ESTADO_FILTER_KEY]])         or "")..
 		(data[CATEGORIAS_FILTER_KEY]~=0 and "&ixwpst[pa_tipo][]="    ..encode(TIPO_FILTER_INT[data[TIPO_FILTER_KEY]])             or "")..
@@ -132,8 +132,8 @@ local function createSearchString(tbl)
 	--local url = baseURL .. "/" .. "index.php/lista-de-novela-ligera-novela-web" .. "/"""?s=" .. encode(query)
 	--local url = "https://novelasligeras.net/?s="..encode(data[QUERY]).."&post_type=product&title=1&excerpt=1&content=0&categories=1&attributes=1&tags=1&sku=0&orderby=title-DESC&ixwps=1"
 	
-	return "https://novelasligeras.net/?s="..encode(data[QUERY])..
-	"&post_type=product".. --this keeps it from searching individual chapters and hiding search filter boxes
+	return "https://novelasligeras.net/?s="..encode(data[QUERY]).."&post_type=product&"..createFilterString(data)
+	--"&post_type=product".. --this keeps it from searching individual chapters and hiding search filter boxes
 	--"&title=1"..
 	--"&excerpt=1"..
 	--"&content=0"..
@@ -142,7 +142,6 @@ local function createSearchString(tbl)
 	--"&tags=1"..
 	--"&sku=0"..
 	--"&ixwps=1"..
-	createFilterString(data)
 end
 
 local function shrinkURL(url)
