@@ -1,20 +1,45 @@
--- {"id":28505740,"ver":"1.0.25","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
+-- {"id":28505740,"ver":"1.0.26","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
 --,"Madara>=2.2.0"]}
 
 --WordPress site, plugins: WooCommerce, Yoast SEO, js_composer, user_verificat_front, avatar-privacy
 
 local baseURL = "https://novelasligeras.net"
 
+local ORDER_BY_FILTER_EXT = { "Orden por defecto", "Relevancia", "Ordenar por popularidad", "Ordenar por calificación media", "Ordenar por los últimos", "Ordenar por precio: bajo a alto", "Ordenar por id", "Ordenar por slug", "Ordenar por include" }
 local ORDER_BY_FILTER_INT = {
-	[0]="relevance" , --Orden por defecto (not during a search)
-	[1]="title-DESC", --Relevancia (during a search)
+	[0]="title" , --Orden por defecto (not during a search)
+	[1]="relevance", --Relevancia (option Relevancia/title-DESC exists after searching, but selecting something else then coming back to it, it's Relevancia/relevance? )
 	[2]="popularity", --Ordenar por popularidad
 	[3]="rating"    , --Ordenar por calificación media
 	[4]="date"      , --Ordenar por los últimos
 	[5]="price"     , --Ordenar por precio: bajo a alto
-	[6]="price-desc"  --Ordenar por precio: alto a bajo
+	[6]="id"        , --id is different from slug
+	[7]="slug"      ,
+	[8]="include"     --is what?
+	--how many of these can be -DESC? All of them, so I can add a switch to the search filters, or some of them so I have to add (-ASC) and -DESC to this list?
+	--what should the default novel sort be instead of alphabetical?
+	--what should the default search sort be instead of alphabtical descending?
+	
+	--menu_order, popularity, rating, date, price, price-desc             --novel listing orderby
+	--title-DESC → relevance, popularity, rating, date, price, price-desc --search orderby
+	--date, id, include, title, slug, price, popularity and rating        --https://woocommerce.github.io/woocommerce-rest-api-docs/#list-all-products
+	
+	
+	--DropdownFilter(ORDER_BY_FILTER_KEY, "Pedido de la tienda", ORDER_BY_FILTER_EXT),
+	
+--	[0]="relevance" , --Orden por defecto (not during a search)
+--	--="menu_order", --clicking Orden por defecto makes it be this one??
+--	--="title", --equivalent to title-ASC
+--	--="title-ASC", --missing from drop-down, but works, and is actual default when not searching? equivalent to menu_order??
+--	[1]="title-DESC", --Relevancia (option Relevancia/title-DESC exists after searching, but selecting something else then coming back to it, it's Relevancia/relevance? )
+--	[2]="popularity", --Ordenar por popularidad
+--	[3]="rating"    , --Ordenar por calificación media
+--	[4]="date"      , --Ordenar por los últimos
+--	[5]="price"     , --Ordenar por precio: bajo a alto
+--	[6]="price-desc"  --Ordenar por precio: alto a bajo
 }
 local ORDER_BY_FILTER_KEY = 40
+local ORDER_FILTER_KEY = 41
 
 local CATEGORIAS_FILTER_INT = {
 	[0] =""  , --Cualquier Categoría
@@ -46,7 +71,7 @@ local CATEGORIAS_FILTER_INT = {
 	[26]="58", --Vida Escolar
 	[27]="73"  --Xuanhuan
 }
-local CATEGORIAS_FILTER_KEY = 41 --using invalid  filterID {0}
+local CATEGORIAS_FILTER_KEY = 42 --using invalid  filterID {0}
 
 local ESTADO_FILTER_INT = {
 	[0]=""   , --Cualquiera --NovelStatus.UNKNOWN
@@ -54,14 +79,14 @@ local ESTADO_FILTER_INT = {
 	[2]="16" , --En Proceso --NovelStatus.PUBLISHING
 	[3]="17"   --Pausado    --            On Hold/haitus
 }
-local ESTADO_FILTER_KEY = 42
+local ESTADO_FILTER_KEY = 43
 
 local TIPO_FILTER_INT = {
 	[0]=""  , --Cualquier
 	[1]="23", --Novela Ligera
 	[2]="24"  --Novela Web
 }
-local TIPO_FILTER_KEY = 43
+local TIPO_FILTER_KEY = 44
 
 local PAIS_FILTER_INT = {
 	[0] =""    , --Cualquiera
@@ -77,7 +102,7 @@ local PAIS_FILTER_INT = {
 	[10]="4341", --Perú
 	[11]="2524"  --Venezuela
 }
-local PAIS_FILTER_KEY = 44
+local PAIS_FILTER_KEY = 45
 
 local qs = Require("url").querystring
 
@@ -120,7 +145,7 @@ local function img_src(image_element)
 	return image_element:attr("src")
 end
 local function createFilterString(data)
-	return "orderby="                                                ..encode(ORDER_BY_FILTER_INT[data[ORDER_BY_FILTER_KEY]])..
+	return "orderby="                 ..encode(ORDER_BY_FILTER_INT[data[ORDER_BY_FILTER_KEY]])..(ORDER_FILTER_KEY = 1 and "-desc" or "")..
 		(data[CATEGORIAS_FILTER_KEY]~=0 and "&ixwpst[product_cat][]="..encode(CATEGORIAS_FILTER_INT[data[CATEGORIAS_FILTER_KEY]]) or "")..
 		(data[CATEGORIAS_FILTER_KEY]~=0 and "&ixwpst[pa_estado][]="  ..encode(ESTADO_FILTER_INT[data[ESTADO_FILTER_KEY]])         or "")..
 		(data[CATEGORIAS_FILTER_KEY]~=0 and "&ixwpst[pa_tipo][]="    ..encode(TIPO_FILTER_INT[data[TIPO_FILTER_KEY]])             or "")..
@@ -315,7 +340,8 @@ return {
 	end,
 
 	searchFilters = {
-		DropdownFilter(ORDER_BY_FILTER_KEY, "Pedido de la tienda", { "Orden por defecto", "Relevancia", "Ordenar por popularidad", "Ordenar por calificación media", "Ordenar por los últimos", "Ordenar por precio: bajo a alto", "Ordenar por precio: alto a bajo" }),
+		DropdownFilter(ORDER_BY_FILTER_KEY, "Pedido de la tienda", ORDER_BY_FILTER_EXT),
+		SwitchFilter(ORDER_FILTER_KEY, "ASC/DESC"),
 		DropdownFilter(CATEGORIAS_FILTER_KEY, "Categorías", {"Cualquier Categoría","Acción","Adulto","Artes Marciales","Aventura","Ciencia Ficción","Comedia","Deportes","Drama","Ecchi","Fantasía","Gender Bender","Harem","Histórico","Horror","Mechas (Robots Gigantes)","Misterio","Psicológico","Recuentos de la Vida","Romance","Seinen","Shojo","Shojo Ai","Shonen","Sobrenatural","Tragedia","Vida Escolar","Xuanhuan"}),
 		DropdownFilter(ESTADO_FILTER_KEY, "Estado", {"Cualquiera","Completado","En Proceso","Pausado"}),
 		DropdownFilter(TIPO_FILTER_KEY, "Tipo", {"Cualquiera","Novela Ligera","Novela Web"}),
