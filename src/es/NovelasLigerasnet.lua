@@ -1,11 +1,12 @@
--- {"id":28505740,"ver":"1.0.29","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
+-- {"id":28505740,"ver":"1.0.30","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
 --,"Madara>=2.2.0"]}
 
 --WordPress site, plugins: WooCommerce, Yoast SEO, js_composer, user_verificat_front, avatar-privacy
 
 local baseURL = "https://novelasligeras.net"
 
-local ORDER_BY_FILTER_EXT = { "Orden por defecto", "Relevancia", "Ordenar por popularidad", "Ordenar por calificación media", "Ordenar por los últimos", "Ordenar por precio: bajo a alto", "Ordenar por id", "Ordenar por slug", "Ordenar por include" }
+--local ORDER_BY_FILTER_EXT = { "Orden por defecto", "Relevancia", "Ordenar por popularidad", "Ordenar por calificación media", "Ordenar por los últimos", "Ordenar por precio: bajo a alto", "Ordenar por id", "Ordenar por slug", "Ordenar por include" }
+local ORDER_BY_FILTER_EXT = { "Orden por defecto", "Relevancia", "Ordenar por popularidad", "Ordenar por calificación media", "Ordenar por los últimos", "Ordenar por precio: bajo a alto"}
 local ORDER_BY_FILTER_INT = {
 	[0]="title" , --Orden por defecto (not during a search)
 	[1]="relevance", --Relevancia (option Relevancia/title-DESC exists after searching, but selecting something else then coming back to it, it's Relevancia/relevance? )
@@ -341,7 +342,7 @@ return {
 
 	searchFilters = {
 		DropdownFilter(ORDER_BY_FILTER_KEY, "Pedido de la tienda", ORDER_BY_FILTER_EXT),
-		SwitchFilter(ORDER_FILTER_KEY, "ASC/DESC"),
+		SwitchFilter(ORDER_FILTER_KEY, "Ascendiendo / Descendiendo"),
 		DropdownFilter(CATEGORIAS_FILTER_KEY, "Categorías", {"Cualquier Categoría","Acción","Adulto","Artes Marciales","Aventura","Ciencia Ficción","Comedia","Deportes","Drama","Ecchi","Fantasía","Gender Bender","Harem","Histórico","Horror","Mechas (Robots Gigantes)","Misterio","Psicológico","Recuentos de la Vida","Romance","Seinen","Shojo","Shojo Ai","Shonen","Sobrenatural","Tragedia","Vida Escolar","Xuanhuan"}),
 		DropdownFilter(ESTADO_FILTER_KEY, "Estado", {"Cualquiera","Completado","En Proceso","Pausado"}),
 		DropdownFilter(TIPO_FILTER_KEY, "Tipo", {"Cualquiera","Novela Ligera","Novela Web"}),
