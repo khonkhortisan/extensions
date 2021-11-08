@@ -5,6 +5,17 @@
 
 local baseURL = "https://novelasligeras.net"
 
+local ORDER_BY_FILTER_INT = {
+	[0]="relevance" , --Orden por defecto (not during a search)
+	[1]="title-DESC", --Relevancia (during a search)
+	[2]="popularity", --Ordenar por popularidad
+	[3]="rating"    , --Ordenar por calificación media
+	[4]="date"      , --Ordenar por los últimos
+	[5]="price"     , --Ordenar por precio: bajo a alto
+	[6]="price-desc"  --Ordenar por precio: alto a bajo
+}
+local ORDER_BY_FILTER_KEY = 40
+
 local CATEGORIAS_FILTER_INT = {
 	[0] =""  , --Cualquier Categoría
 	[1] ="40", --Acción
@@ -35,7 +46,7 @@ local CATEGORIAS_FILTER_INT = {
 	[26]="58", --Vida Escolar
 	[27]="73"  --Xuanhuan
 }
-local CATEGORIAS_FILTER_KEY = 40 --using invalid  filterID {0}
+local CATEGORIAS_FILTER_KEY = 41 --using invalid  filterID {0}
 
 local ESTADO_FILTER_INT = {
 	[0]=""   , --Cualquiera --NovelStatus.UNKNOWN
@@ -43,14 +54,14 @@ local ESTADO_FILTER_INT = {
 	[2]="16" , --En Proceso --NovelStatus.PUBLISHING
 	[3]="17"   --Pausado    --            On Hold/haitus
 }
-local ESTADO_FILTER_KEY = 41
+local ESTADO_FILTER_KEY = 42
 
 local TIPO_FILTER_INT = {
 	[0]=""  , --Cualquier
 	[1]="23", --Novela Ligera
 	[2]="24"  --Novela Web
 }
-local TIPO_FILTER_KEY = 42
+local TIPO_FILTER_KEY = 43
 
 local PAIS_FILTER_INT = {
 	[0] =""    , --Cualquiera
@@ -66,18 +77,7 @@ local PAIS_FILTER_INT = {
 	[10]="4341", --Perú
 	[11]="2524"  --Venezuela
 }
-local PAIS_FILTER_KEY = 43
-
-local ORDER_BY_FILTER_INT = {
-	[0]="relevance" , --Orden por defecto (not during a search)
-	[1]="title-DESC", --Relevancia (during a search)
-	[2]="popularity", --Ordenar por popularidad
-	[3]="rating"    , --Ordenar por calificación media
-	[4]="date"      , --Ordenar por los últimos
-	[5]="price"     , --Ordenar por precio: bajo a alto
-	[6]="price-desc"  --Ordenar por precio: alto a bajo
-}
-local ORDER_BY_FILTER_KEY = 44
+local PAIS_FILTER_KEY = 44
 
 local qs = Require("url").querystring
 
@@ -120,7 +120,7 @@ local function img_src(image_element)
 	return image_element:attr("src")
 end
 local function createFilterString(data)
-	return "orderby="                                                  ..encode(ORDER_BY_FILTER_INT[data[ORDER_BY_FILTER_KEY]])..
+	return "orderby="                                                ..encode(ORDER_BY_FILTER_INT[data[ORDER_BY_FILTER_KEY]])..
 		(data[CATEGORIAS_FILTER_KEY]~=0 and "&ixwpst[product_cat][]="..encode(CATEGORIAS_FILTER_INT[data[CATEGORIAS_FILTER_KEY]]) or "")..
 		(data[CATEGORIAS_FILTER_KEY]~=0 and "&ixwpst[pa_estado][]="  ..encode(ESTADO_FILTER_INT[data[ESTADO_FILTER_KEY]])         or "")..
 		(data[CATEGORIAS_FILTER_KEY]~=0 and "&ixwpst[pa_tipo][]="    ..encode(TIPO_FILTER_INT[data[TIPO_FILTER_KEY]])             or "")..
