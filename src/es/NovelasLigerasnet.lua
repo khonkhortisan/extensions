@@ -127,7 +127,7 @@ local function createFilterString(data)
 		(data[CATEGORIAS_FILTER_KEY]~=0 and "&ixwpst[pa_pais][]="    ..encode(PAIS_FILTER_INT[data[PAIS_FILTER_KEY]])             or "")
 		--other than orderby, filteres in url must not be empty
 end
-local function createSearchString(tbl)
+local function createSearchString(data)
 	--local url = self.createSearchString(data)
 	--local url = baseURL .. "/" .. "index.php/lista-de-novela-ligera-novela-web" .. "/"""?s=" .. encode(query)
 	--local url = "https://novelasligeras.net/?s="..encode(data[QUERY]).."&post_type=product&title=1&excerpt=1&content=0&categories=1&attributes=1&tags=1&sku=0&orderby=title-DESC&ixwps=1"
