@@ -1,4 +1,4 @@
--- {"id":28505740,"ver":"1.0.23","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
+-- {"id":28505740,"ver":"1.0.24","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
 --,"Madara>=2.2.0"]}
 
 --WordPress site, plugins: WooCommerce, Yoast SEO, js_composer, user_verificat_front, avatar-privacy
@@ -363,12 +363,22 @@ return {
 		--local url = "https://novelasligeras.net/?s="..encode(data[QUERY]).."&post_type=product&title=1&excerpt=1&content=0&categories=1&attributes=1&tags=1&sku=0&orderby=title-DESC&ixwps=1"
 		
 		local url = "https://novelasligeras.net/?s="..encode(data[QUERY])..
-		"&orderby="              ..ORDER_BY_FILTER_INT[data[ORDER_BY_FILTER_KEY]]..
-		"&ixwpst[product_cat][]="..CATEGORIAS_FILTER_INT[data[CATEGORIAS_FILTER_KEY]]..
-		"&ixwpst[pa_estado][]="  ..ESTADO_FILTER_INT[data[ESTADO_FILTER_KEY]]..
-		"&ixwpst[pa_tipo][]="    ..TIPO_FILTER_INT[data[TIPO_FILTER_KEY]]..
-		"&ixwpst[pa_pais][]="    ..PAIS_FILTER_INT[data[PAIS_FILTER_KEY]]
-
+		"&post_type=product".. --this keeps it from searching individual chapters and hiding search filter boxes
+		--"&title=1"..
+		--"&excerpt=1"..
+		--"&content=0"..
+		--"&categories=1"..
+		--"&attributes=1"..
+		--"&tags=1"..
+		--"&sku=0"..
+		--"&ixwps=1"..
+		"&orderby="                                                    ..encode(ORDER_BY_FILTER_INT[data[ORDER_BY_FILTER_KEY]])..
+		(data[CATEGORIAS_FILTER_KEY]~=0 and "&ixwpst[product_cat][]="..encode(CATEGORIAS_FILTER_INT[data[CATEGORIAS_FILTER_KEY]]) or "")..
+		(data[CATEGORIAS_FILTER_KEY]~=0 and "&ixwpst[pa_estado][]="  ..encode(ESTADO_FILTER_INT[data[ESTADO_FILTER_KEY]])         or "")..
+		(data[CATEGORIAS_FILTER_KEY]~=0 and "&ixwpst[pa_tipo][]="    ..encode(TIPO_FILTER_INT[data[TIPO_FILTER_KEY]])             or "")..
+		(data[CATEGORIAS_FILTER_KEY]~=0 and "&ixwpst[pa_pais][]="    ..encode(PAIS_FILTER_INT[data[PAIS_FILTER_KEY]])             or "")
+		--other than orderby, filteres in url must not be empty
+		
 		return parseListing(GETDocument(url))
 	end,
 --	search = function(data)
