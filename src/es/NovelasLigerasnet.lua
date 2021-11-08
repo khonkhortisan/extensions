@@ -1,4 +1,4 @@
--- {"id":28505740,"ver":"1.0.24","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
+-- {"id":28505740,"ver":"1.0.25","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
 --,"Madara>=2.2.0"]}
 
 --WordPress site, plugins: WooCommerce, Yoast SEO, js_composer, user_verificat_front, avatar-privacy
@@ -119,57 +119,30 @@ local function img_src(image_element)
 	-- Default to src (the most likely place to be loaded via script):
 	return image_element:attr("src")
 end
+local function createFilterString(data)
+	return "&orderby="                                                  ..encode(ORDER_BY_FILTER_INT[data[ORDER_BY_FILTER_KEY]])..
+		(data[CATEGORIAS_FILTER_KEY]~=0 and "&ixwpst[product_cat][]="..encode(CATEGORIAS_FILTER_INT[data[CATEGORIAS_FILTER_KEY]]) or "")..
+		(data[CATEGORIAS_FILTER_KEY]~=0 and "&ixwpst[pa_estado][]="  ..encode(ESTADO_FILTER_INT[data[ESTADO_FILTER_KEY]])         or "")..
+		(data[CATEGORIAS_FILTER_KEY]~=0 and "&ixwpst[pa_tipo][]="    ..encode(TIPO_FILTER_INT[data[TIPO_FILTER_KEY]])             or "")..
+		(data[CATEGORIAS_FILTER_KEY]~=0 and "&ixwpst[pa_pais][]="    ..encode(PAIS_FILTER_INT[data[PAIS_FILTER_KEY]])             or "")
+		--other than orderby, filteres in url must not be empty
+end
 local function createSearchString(tbl)
-	local query = tbl[QUERY]
-	local orderBy = tbl[ORDER_BY_FILTER_KEY]
-	local cat = tbl[CATEGORIAS_FILTER_KEY]
-	local estado = tbl[ESTADO_FILTER_KEY]
-	local tipo = tbl[TIPO_FILTER_KEY]
-	local pais = tbl[PAIS_FILTER_KEY]
-
-	--baseURL..listing.."?s="..encode([QUERY]).."&ixwpst[product_cat][]="..encode(data[CATEGORIA_FILTER_KEY])
-	local url = self.baseURL .. "".."index.php/lista-de-novela-ligera-novela-web".."/?s=" .. encode(query) .. "&post_type=product" ..
-			"&ixwpst[product_cat][]="..encode(cat) ..
-			"&ixwpst[pa_estado][]="..encode(estado) ..
-			"&ixwpst[pa_tipo][]="..encode(tipo) ..
-			"&ixwpst[pa_pais][]="..encode(pais)
-	--error(url)
-
-	if orderBy ~= nil then
-		url = url .. "&orderby=" .. ({
-			[0]="relevance" , --Orden por defecto (not during a search)
-			[1]="title-DESC", --Relevancia (during a search)
-			[2]="popularity", --Ordenar por popularidad
-			[3]="rating"    , --Ordenar por calificación media
-			[4]="date"      , --Ordenar por los últimos
-			[5]="price"     , --Ordenar por precio: bajo a alto
-			[6]="price-desc"  --Ordenar por precio: alto a bajo
-		})[orderBy]
-	end
-	--if tbl[STATUS_FILTER_KEY_COMPLETED] then
-	--	url = url .. "&status[]=end"
-	--end
-	--if tbl[STATUS_FILTER_KEY_ONGOING] then
-	--	url = url .. "&status[]=on-going"
-	--end
-	--if tbl[STATUS_FILTER_KEY_CANCELED] then
-	--	url = url .. "&status[]=canceled"
-	--end
-	--if tbl[STATUS_FILTER_KEY_ON_HOLD] then
-	--	url = url .. "&status[]=on-hold"
-	--end
-	--for key, value in pairs(self.genres_map) do
-	--	if tbl[key] then
-	--		url = url .. "&genre[]=" .. value
-	--	end
-	--end
-
-	--if self.searchHasOper then
-	--	url = url .. "&op=" .. (tbl[self.searchOperId] and "0" or "1")
-	--end
-
-	--return self.appendToSearchURL(url, tbl)
-	return url
+	--local url = self.createSearchString(data)
+	--local url = baseURL .. "/" .. "index.php/lista-de-novela-ligera-novela-web" .. "/"""?s=" .. encode(query)
+	--local url = "https://novelasligeras.net/?s="..encode(data[QUERY]).."&post_type=product&title=1&excerpt=1&content=0&categories=1&attributes=1&tags=1&sku=0&orderby=title-DESC&ixwps=1"
+	
+	return "https://novelasligeras.net/?s="..encode(data[QUERY])..
+	"&post_type=product".. --this keeps it from searching individual chapters and hiding search filter boxes
+	--"&title=1"..
+	--"&excerpt=1"..
+	--"&content=0"..
+	--"&categories=1"..
+	--"&attributes=1"..
+	--"&tags=1"..
+	--"&sku=0"..
+	--"&ixwps=1"..
+	createFilterString(data)
 end
 
 local function shrinkURL(url)
@@ -206,7 +179,7 @@ end
 local function listing(name, inc, url)
 	url = expandURL(url)
 	return Listing(name, inc, function(data)
-		return parseListing(GETDocument(inc and (url .. "/page/" .. data[PAGE]+1 .. "/") or url))
+		return parseListing(GETDocument(inc and (url .. "/page/" .. data[PAGE]+1 .. "/?" .. createFilterString(data)) or url))
 	end)
 end
 
@@ -282,28 +255,22 @@ return {
 -- '.wpb_wrapper' has left column whole chapters '.wpb_tabs_nav a' and right column chapter parts '.post-content a'
 		if loadChapters then
 			local i = 0
-			--novel:setChapters(AsList(map(doc:selectFirst(".wpb_wrapper"):children(), function(v)
-			--	local a = v:selectFirst(".post-content a")
-			--novel:setChapters(AsList(map(doc:select(".post-content"), function(v)
-			
---  R sidebar|:nth-child(2)                          List of chapters|individual chapters                                             |title without time
---div.wpb_tab div.wpb_text_column.wpb_content_element div.wpb_wrapper                                                                p a	- 86 prologue chapter
---div.wpb_tab div.wpb_text_column.wpb_content_element div.wpb_wrapper div.wf-cell.wf-1 article.post-format-standard div.post-content p a	- 86 other chapters
---div.wpb_tab div.wpb_text_column.wpb_content_element div.wpb_wrapper div.wf-cell.wf-1 article.post-format-standard div.post-content   a	- A Monster Who Levels Up prologue chapter
---div.wpb_tab div.wpb_text_column.wpb_content_element div.wpb_wrapper div.wf-cell.wf-1 article.post-format-standard div.post-content p a	- A Monster Who Levels Up other chapters
---div.wpb_tab section.items-grid.wf-container                         div.wf-cell.wf-1 article.post-format-standard div.post-content   a	- Abyss (NH), 10 nen 
+			--STRUCTURE OF CHAPTERS PAGE:
+			--  R sidebar|:nth-child(2)                          List of chapters|individual chapters                                             |title without time
+			--div.wpb_tab div.wpb_text_column.wpb_content_element div.wpb_wrapper                                                                p a	- 86 prologue chapter
+			--div.wpb_tab div.wpb_text_column.wpb_content_element div.wpb_wrapper div.wf-cell.wf-1 article.post-format-standard div.post-content p a	- 86 other chapters
+			--div.wpb_tab div.wpb_text_column.wpb_content_element div.wpb_wrapper div.wf-cell.wf-1 article.post-format-standard div.post-content   a	- A Monster Who Levels Up prologue chapter
+			--div.wpb_tab div.wpb_text_column.wpb_content_element div.wpb_wrapper div.wf-cell.wf-1 article.post-format-standard div.post-content p a	- A Monster Who Levels Up other chapters
+			--div.wpb_tab section.items-grid.wf-container                         div.wf-cell.wf-1 article.post-format-standard div.post-content   a	- Abyss (NH), 10 nen 
 			
 			--div.wpb_tab.ui-tabs-panel.wpb_ui-tabs-hide.vc_clearfix.ui-corner-bottom.ui-widget-content --right sidebar of single volume/section of chapters, including label
 			--div.dt-fancy-separator.h3-size.style-thick.accent-title-color.accent-border-color         --                                                              label
-			--section.items-grid.wf-container OR div.wpb_text_column.wpb_content_element div.wpb_wrapper--                               section of chapters
+			--section.items-grid.wf-container                                                           --                               section of chapters
+			--div.wpb_text_column.wpb_content_element div.wpb_wrapper                                   --                               section of chapters
 			
-			--<div id="tab-1528139322102-1-10" class="wpb_tab ui-tabs-panel wpb_ui-tabs-hide vc_clearfix ui-corner-bottom ui-widget-content--" aria-labelledby="ui-id-2" role="tabpanel" style="display: none;" aria-hidden="true">
-			
-			
---<div id="tab-1528139322102-1-10" class="wpb_tab ui-tabs-panel wpb_ui-tabs-hide vc_clearfix ui-corner-bottom ui-widget-content" aria-labelledby="ui-id-2" role="tabpanel" style="display: none;" aria-hidden="true">
---	<div class="dt-fancy-separator h3-size style-thick accent-title-color accent-border-color" style="width: 100%;"><div class="dt-fancy-title"><span class="separator-holder separator-left"></span>El Campo de Batalla con Cero Muertos<span class="separator-holder separator-right"></span></div></div>
---	<div class="wpb_text_column wpb_content_element ">
-			
+			--novel:setChapters(AsList(map(doc:selectFirst(".wpb_wrapper"):children(), function(v)
+			--	local a = v:selectFirst(".post-content a")
+			--novel:setChapters(AsList(map(doc:select(".post-content"), function(v)
 			--novel:setChapters(AsList(map(doc:select(".wpb_text_column.wpb_content_element .wpb_wrapper"), function(v) --missing some chapters
 				--local a = v:selectFirst("p a") --misses prologue on A Monster Who Levels Up
 			--novel:setChapters(AsList(map(doc:select(".wpb_tab:nth-child(2)"), function(v) --only prologue?
@@ -362,23 +329,7 @@ return {
 		--local url = baseURL .. "/" .. "index.php/lista-de-novela-ligera-novela-web" .. "/"""?s=" .. encode(query)
 		--local url = "https://novelasligeras.net/?s="..encode(data[QUERY]).."&post_type=product&title=1&excerpt=1&content=0&categories=1&attributes=1&tags=1&sku=0&orderby=title-DESC&ixwps=1"
 		
-		local url = "https://novelasligeras.net/?s="..encode(data[QUERY])..
-		"&post_type=product".. --this keeps it from searching individual chapters and hiding search filter boxes
-		--"&title=1"..
-		--"&excerpt=1"..
-		--"&content=0"..
-		--"&categories=1"..
-		--"&attributes=1"..
-		--"&tags=1"..
-		--"&sku=0"..
-		--"&ixwps=1"..
-		"&orderby="                                                    ..encode(ORDER_BY_FILTER_INT[data[ORDER_BY_FILTER_KEY]])..
-		(data[CATEGORIAS_FILTER_KEY]~=0 and "&ixwpst[product_cat][]="..encode(CATEGORIAS_FILTER_INT[data[CATEGORIAS_FILTER_KEY]]) or "")..
-		(data[CATEGORIAS_FILTER_KEY]~=0 and "&ixwpst[pa_estado][]="  ..encode(ESTADO_FILTER_INT[data[ESTADO_FILTER_KEY]])         or "")..
-		(data[CATEGORIAS_FILTER_KEY]~=0 and "&ixwpst[pa_tipo][]="    ..encode(TIPO_FILTER_INT[data[TIPO_FILTER_KEY]])             or "")..
-		(data[CATEGORIAS_FILTER_KEY]~=0 and "&ixwpst[pa_pais][]="    ..encode(PAIS_FILTER_INT[data[PAIS_FILTER_KEY]])             or "")
-		--other than orderby, filteres in url must not be empty
-		
+		local url = createSearchString(data)
 		return parseListing(GETDocument(url))
 	end,
 --	search = function(data)
