@@ -1,14 +1,14 @@
--- {"id":28505740,"ver":"1.0.37","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
+-- {"id":28505740,"ver":"1.0.38","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
 
 local baseURL = "https://novelasligeras.net" --WordPress site, plugins: WooCommerce, Yoast SEO, js_composer, user_verificat_front, avatar-privacy
 
-local ORDER_BY_FILTER_EXT = { "Orden por defecto", "Relevancia", "Ordenar por popularidad", "Ordenar por calificación media", "Ordenar por los últimos", "Ordenar por precio: bajo a alto"}--, "Ordenar por id", "Ordenar por slug", "Ordenar por include" }
+local ORDER_BY_FILTER_EXT = {"Ordenar por los últimos", "Orden alfabético", "Relevancia", "Ordenar por popularidad", "Ordenar por calificación media", "Ordenar por precio: bajo a alto"}--, "Ordenar por id", "Ordenar por slug", "Ordenar por include" }
 local ORDER_BY_FILTER_INT = {
-	[0]="title" , --Orden por defecto (Listing is title, webview search is title-DESC, selecting Orden por defecto is menu_order)
-	[1]="relevance", --Relevancia (webview search is title-DESC when it should be relevance)
-	[2]="popularity", --Ordenar por popularidad
-	[3]="rating"    , --Ordenar por calificación media
-	[4]="date"      , --Ordenar por los últimos
+	[0]="date"      , --Ordenar por los últimos
+	[1]="title"     , --Orden alfabético/Orden por defecto (Listing is title, webview search is title-DESC, selecting Orden por defecto is menu_order)
+	[2]="relevance" , --Relevancia (webview search is title-DESC when it should be relevance)
+	[3]="popularity", --Ordenar por popularidad
+	[4]="rating"    , --Ordenar por calificación media
 	[5]="price"     , --Ordenar por precio: bajo a alto
 	[6]="id"        , --id/slug/include are supported by WooCommerce, but not currently shown in the extension
 	[7]="slug"      , --id is different from slug
@@ -212,7 +212,7 @@ return {
 			--div.wpb_tab div.wpb_text_column.wpb_content_element div.wpb_wrapper div.wf-cell.wf-1 article.post-format-standard div.post-content p a	- 86 other chapters
 			--div.wpb_tab div.wpb_text_column.wpb_content_element div.wpb_wrapper div.wf-cell.wf-1 article.post-format-standard div.post-content   a	- A Monster Who Levels Up prologue chapter
 			--div.wpb_tab div.wpb_text_column.wpb_content_element div.wpb_wrapper div.wf-cell.wf-1 article.post-format-standard div.post-content p a	- A Monster Who Levels Up other chapters
-			--div.wpb_tab section.items-grid.wf-container                         div.wf-cell.wf-1 article.post-format-standard div.post-content   a	- Abyss (NH), 10 nen 
+			--div.wpb_tab section.items-grid.wf-container                         div.wf-cell.wf-1 article.post-format-standard div.post-content   a	- Abyss (NH), 10 nen
 			
 			--div.wpb_tab.ui-tabs-panel.wpb_ui-tabs-hide.vc_clearfix.ui-corner-bottom.ui-widget-content --right sidebar of single volume/section of chapters, including label
 			--div.dt-fancy-separator.h3-size.style-thick.accent-title-color.accent-border-color         --                                                              label
