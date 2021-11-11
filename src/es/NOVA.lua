@@ -1,4 +1,4 @@
--- {"id":28505740,"ver":"1.0.35","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
+-- {"id":28505740,"ver":"1.0.36","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
 
 local baseURL = "https://novelasligeras.net" --WordPress site, plugins: WooCommerce, Yoast SEO, js_composer, user_verificat_front, avatar-privacy
 
@@ -163,10 +163,10 @@ end
 
 return {
 	id = 28505740,
-	name = "Novelas Ligeras.net",
+	name = "NOVA",
 	baseURL = baseURL,
-	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/icons/NovelasLigeras.png",
-	imageURL = "https://github.com/khonkhortisan/extensions/raw/novelasligeras.net/icons/NovelasLigeras.png", --TODO
+	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/icons/NOVA.png",
+	imageURL = "https://github.com/khonkhortisan/extensions/raw/novelasligeras.net/icons/NOVA.png", --TODO
 	hasSearch = true,
 	chapterType = ChapterType.HTML,
 
