@@ -1,4 +1,4 @@
--- {"id":28505740,"ver":"1.0.43","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
+-- {"id":28505740,"ver":"1.0.44","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
 
 local baseURL = "https://novelasligeras.net" --WordPress site, plugins: WooCommerce, Yoast SEO, js_composer, user_verificat_front, avatar-privacy
 
@@ -240,10 +240,9 @@ return {
 			authors = map(page:select(".woocommerce-product-attributes-item--attribute_pa_escritor td p a"), text),
 			artists = map(page:select(".woocommerce-product-attributes-item--attribute_pa_ilustrador td p a"), text),
 			status = status,
-			genres = map(genres:select("a"), text),
-			tags = map(tags:select("a"), text),
-			description = page:selectFirst(".woocommerce-product-details__short-description"):text()..
-				"<br>Etiquetas: "..tostring(tags),
+			genres = map(genres:select("a"), text), --clicking a genre should filter the library or extension
+			tags = map(tags:select("a"), text), --if visible, clicking a tag should filter the library or extension
+			description = page:selectFirst(".woocommerce-product-details__short-description"):text()--.."<br>Etiquetas: "..tostring(tags)
 		}
 		-- '.wpb_wrapper' has left column whole chapters '.wpb_tabs_nav a' and right column chapter parts '.post-content a'
 		if loadChapters then
