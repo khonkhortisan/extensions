@@ -1,4 +1,4 @@
--- {"id":28505740,"ver":"1.0.32","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
+-- {"id":28505740,"ver":"1.0.33","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
 
 local baseURL = "https://novelasligeras.net" --WordPress site, plugins: WooCommerce, Yoast SEO, js_composer, user_verificat_front, avatar-privacy
 
@@ -220,7 +220,7 @@ return {
 			--div.wpb_text_column.wpb_content_element div.wpb_wrapper                                   --                               section of chapters
 			novel:setChapters(AsList(map(doc:select(".wpb_tab a"), function(v) --each volume has multiple tabs, each tab has one or more a, each a is a chapter title/link/before time
 				local a = v
-				local a_time = a:lastElementSibling()
+				local a_time = a:lastElementSibling() --it's possible this isn't the <time> element
 				i = i + 1
 				return NovelChapter {
 					order = i,
@@ -240,9 +240,13 @@ return {
 		local doc = GETDocument(url)
 		if adblock then
 			--block Publicidad Y-AR, Publicidad M-M4, etc.
-			doc:select(".wpb_text_column .wpb_wrapper div center"):matches("^Publicidad [A-Z0-9]-[A-Z0-9][A-Z0-9]"):remove()
-			--leave this image alone: "¡Ayudanos! A traducir novelas del japones ¡Suscribete! A NOVA" (86)
 			--leave any other possible <center> tags alone
+			--leave this image alone: "¡Ayudanos! A traducir novelas del japones ¡Suscribete! A NOVA" (86)
+			map(doc:select(".wpb_text_column .wpb_wrapper div center"), function(c)
+				if c:matches("^Publicidad [A-Z0-9]-[A-Z0-9][A-Z0-9]") then
+					c:remove()
+				end
+			end)
 		end
 		return pageOfElem(doc:selectFirst(".wpb_text_column .wpb_wrapper"), true, css)
 	end,
