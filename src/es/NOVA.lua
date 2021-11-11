@@ -1,8 +1,8 @@
--- {"id":28505740,"ver":"1.0.45","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
+-- {"id":28505740,"ver":"1.0.46","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
 
 local baseURL = "https://novelasligeras.net" --WordPress site, plugins: WooCommerce, Yoast SEO, js_composer, user_verificat_front, avatar-privacy
 
-local ORDER_BY_FILTER_EXT = {"Ordenar por los últimos", "Orden alfabético", "Relevancia", "Ordenar por popularidad", "Ordenar por calificación media", "Ordenar por precio: bajo a alto"}--, "Ordenar por id", "Ordenar por slug", "Ordenar por include" }
+local ORDER_BY_FILTER_EXT = {"Ordenar por los últimos", "Orden alfabético", "Relevancia", "Ordenar por popularidad", "Ordenar por calificación media", "Ordenar por precio: bajo a alto"}--, "Orden aleatorio", "Ordenar por id", "Ordenar por slug", "Ordenar por include"}
 local ORDER_BY_FILTER_INT = {
 	[0]="date"      , --Ordenar por los últimos
 	[1]="title"     , --Orden alfabético/Orden por defecto (Listing is title, webview search is title-DESC, selecting Orden por defecto is menu_order)
@@ -10,12 +10,13 @@ local ORDER_BY_FILTER_INT = {
 	[3]="popularity", --Ordenar por popularidad
 	[4]="rating"    , --Ordenar por calificación media
 	[5]="price"     , --Ordenar por precio: bajo a alto
-	[6]="id"        , --id/slug/include are supported by WooCommerce, but not currently shown in the extension
-	[7]="slug"      , --id is different from slug
-	[8]="include"     --is what? https://woocommerce.github.io/woocommerce-rest-api-docs/#list-all-products
+	[6]="rand"        --single-seed random order
+	[7]="id"        , --id/slug/include are supported by WooCommerce, but not currently shown in the extension
+	[8]="slug"      , --id is different from slug
+	[9]="include"   , --is what? https://woocommerce.github.io/woocommerce-rest-api-docs/#list-all-products
 	--only some of these can be descending
 }
-local ORDER_BY_FILTER_KEY = 678
+local ORDER_BY_FILTER_KEY = 789
 local ORDER_FILTER_KEY = 1010
 
 --can this be multi-select? https://stackoverflow.com/a/27898435 https://developer.wordpress.org/reference/classes/wp_query/
