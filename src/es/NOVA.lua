@@ -1,4 +1,4 @@
--- {"id":28505740,"ver":"1.0.41","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
+-- {"id":28505740,"ver":"1.0.42","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
 
 local baseURL = "https://novelasligeras.net" --WordPress site, plugins: WooCommerce, Yoast SEO, js_composer, user_verificat_front, avatar-privacy
 
@@ -83,6 +83,7 @@ local PAIS_FILTER_INT = {
 	[11]="2524"  --Venezuela
 }
 local PAIS_FILTER_KEY = 2121
+local TAG_FILTER_KEY = 2222
 
 local qs = Require("url").querystring
 
@@ -134,41 +135,47 @@ end
 
 local function createCategoryFilterString(data)
 	--(data[CATEGORIAS_FILTER_KEY]~=0 and "&ixwpst[product_cat][]="..encode(CATEGORIAS_FILTER_INT[data[CATEGORIAS_FILTER_KEY]]) or "")..
-	return	(data[40] and "&ixwpst[product_cat][40]=40" or "")..
-			(data[53] and "&ixwpst[product_cat][53]=53" or "")..
-			(data[52] and "&ixwpst[product_cat][52]=52" or "")..
-			(data[41] and "&ixwpst[product_cat][41]=41" or "")..
-			(data[59] and "&ixwpst[product_cat][59]=59" or "")..
-			(data[43] and "&ixwpst[product_cat][43]=43" or "")..
-			(data[68] and "&ixwpst[product_cat][68]=68" or "")..
-			(data[44] and "&ixwpst[product_cat][44]=44" or "")..
-			(data[45] and "&ixwpst[product_cat][45]=45" or "")..
-			(data[46] and "&ixwpst[product_cat][46]=46" or "")..
-			(data[47] and "&ixwpst[product_cat][47]=47" or "")..
-			(data[48] and "&ixwpst[product_cat][48]=48" or "")..
-			(data[49] and "&ixwpst[product_cat][49]=49" or "")..
-			(data[50] and "&ixwpst[product_cat][50]=50" or "")..
-			(data[54] and "&ixwpst[product_cat][54]=54" or "")..
-			(data[55] and "&ixwpst[product_cat][55]=55" or "")..
-			(data[56] and "&ixwpst[product_cat][56]=56" or "")..
-			(data[66] and "&ixwpst[product_cat][66]=66" or "")..
-			(data[57] and "&ixwpst[product_cat][57]=57" or "")..
-			(data[60] and "&ixwpst[product_cat][60]=60" or "")..
-			(data[62] and "&ixwpst[product_cat][62]=62" or "")..
-			(data[63] and "&ixwpst[product_cat][63]=63" or "")..
-			(data[64] and "&ixwpst[product_cat][64]=64" or "")..
-			(data[69] and "&ixwpst[product_cat][69]=69" or "")..
-			(data[70] and "&ixwpst[product_cat][70]=70" or "")..
-			(data[58] and "&ixwpst[product_cat][58]=58" or "")..
-			(data[73] and "&ixwpst[product_cat][73]=73" or "")
+	--ixwpst[product_cat] is fine being a sparse array, so no need to count up from 0
+	return	(data[40] and "&ixwpst[product_cat][40]=40" or "").. --Acción
+			(data[53] and "&ixwpst[product_cat][53]=53" or "").. --Adulto
+			(data[52] and "&ixwpst[product_cat][52]=52" or "").. --Artes Marciales
+			(data[41] and "&ixwpst[product_cat][41]=41" or "").. --Aventura
+			(data[59] and "&ixwpst[product_cat][59]=59" or "").. --Ciencia Ficción
+			(data[43] and "&ixwpst[product_cat][43]=43" or "").. --Comedia
+			(data[68] and "&ixwpst[product_cat][68]=68" or "").. --Deportes
+			(data[44] and "&ixwpst[product_cat][44]=44" or "").. --Drama
+			(data[45] and "&ixwpst[product_cat][45]=45" or "").. --Ecchi
+			(data[46] and "&ixwpst[product_cat][46]=46" or "").. --Fantasía
+			(data[47] and "&ixwpst[product_cat][47]=47" or "").. --Gender Bender
+			(data[48] and "&ixwpst[product_cat][48]=48" or "").. --Harem
+			(data[49] and "&ixwpst[product_cat][49]=49" or "").. --Histórico
+			(data[50] and "&ixwpst[product_cat][50]=50" or "").. --Horror
+			(data[54] and "&ixwpst[product_cat][54]=54" or "").. --Mechas (Robots Gigantes)
+			(data[55] and "&ixwpst[product_cat][55]=55" or "").. --Misterio
+			(data[56] and "&ixwpst[product_cat][56]=56" or "").. --Psicológico
+			(data[66] and "&ixwpst[product_cat][66]=66" or "").. --Recuentos de la Vida
+			(data[57] and "&ixwpst[product_cat][57]=57" or "").. --Romance
+			(data[60] and "&ixwpst[product_cat][60]=60" or "").. --Seinen
+			(data[62] and "&ixwpst[product_cat][62]=62" or "").. --Shojo
+			(data[63] and "&ixwpst[product_cat][63]=63" or "").. --Shojo Ai
+			(data[64] and "&ixwpst[product_cat][64]=64" or "").. --Shonen
+			(data[69] and "&ixwpst[product_cat][69]=69" or "").. --Sobrenatural
+			(data[70] and "&ixwpst[product_cat][70]=70" or "").. --Tragedia
+			(data[58] and "&ixwpst[product_cat][58]=58" or "").. --Vida Escolar
+			(data[73] and "&ixwpst[product_cat][73]=73" or "")   --Xuanhuan
 end
 local function createFilterString(data)
 	--  (data[CATEGORIAS_FILTER_KEY]~=0 and "&ixwpst[product_cat][]="..encode(CATEGORIAS_FILTER_INT[data[CATEGORIAS_FILTER_KEY]]) or "")..
 	return "orderby=" .. encode(ORDER_BY_FILTER_INT[data[ORDER_BY_FILTER_KEY]]) .. (data[ORDER_FILTER_KEY] and "-desc" or "") ..
 		createCategoryFilterString(data)..
-		(data[ESTADO_FILTER_KEY]~=0 and "&ixwpst[pa_estado][]="  ..encode(ESTADO_FILTER_INT[data[ESTADO_FILTER_KEY]])         or "")..
-		(data[TIPO_FILTER_KEY]~=0 and "&ixwpst[pa_tipo][]="    ..encode(TIPO_FILTER_INT[data[TIPO_FILTER_KEY]])             or "")..
-		(data[PAIS_FILTER_KEY]~=0 and "&ixwpst[pa_pais][]="    ..encode(PAIS_FILTER_INT[data[PAIS_FILTER_KEY]])             or "")
+		(data[ESTADO_FILTER_KEY]~=0 and "&ixwpst[pa_estado][]="..encode(ESTADO_FILTER_INT[data[ESTADO_FILTER_KEY]]) or "")..
+		(data[TIPO_FILTER_KEY]~=0   and "&ixwpst[pa_tipo][]="  ..encode(TIPO_FILTER_INT[data[TIPO_FILTER_KEY]])     or "")..
+		(data[PAIS_FILTER_KEY]~=0   and "&ixwpst[pa_pais][]="  ..encode(PAIS_FILTER_INT[data[PAIS_FILTER_KEY]])     or "")..
+		(data[TAG_FILTER_KEY]~=""   and "&product_tag="        ..encode(data[TAG_FILTER_KEY])                       or "")
+		--https://novelasligeras.net/?product_tag=guerras
+		--https://novelasligeras.net/index.php/?product_tag=guerras
+		--https://novelasligeras.net/index.php/lista-de-novela-ligera-novela-web/?product_tag=guerras
+		--https://novelasligeras.net/index.php/etiqueta-novela/guerras/
 		--other than orderby, filters in url must not be empty
 end
 local function createSearchString(data)
@@ -315,7 +322,8 @@ return {
 		SwitchFilter(73, "Xuanhuan"),
 		DropdownFilter(ESTADO_FILTER_KEY, "Estado", {"Cualquiera","Completado","En Proceso","Pausado"}),
 		DropdownFilter(TIPO_FILTER_KEY, "Tipo", {"Cualquiera","Novela Ligera","Novela Web"}),
-		DropdownFilter(PAIS_FILTER_KEY, "País", {"Cualquiera","Argentina","Chile","China","Colombia","Corea","Ecuador","Japón","México","Nicaragua","Perú","Venezuela"})
+		DropdownFilter(PAIS_FILTER_KEY, "País", {"Cualquiera","Argentina","Chile","China","Colombia","Corea","Ecuador","Japón","México","Nicaragua","Perú","Venezuela"}),
+		TextFilter(TAG_FILTER_KEY, "Etiqueta")
 	},
 
 	isSearchIncrementing = false,
