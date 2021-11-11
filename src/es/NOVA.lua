@@ -1,4 +1,4 @@
--- {"id":28505740,"ver":"1.0.36","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
+-- {"id":28505740,"ver":"1.0.37","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
 
 local baseURL = "https://novelasligeras.net" --WordPress site, plugins: WooCommerce, Yoast SEO, js_composer, user_verificat_front, avatar-privacy
 
@@ -122,6 +122,13 @@ local function img_src(image_element)
 	return image_element:attr("src")
 end
 
+local function shrinkURL(url)
+	return url:gsub("^.-novelasligeras%.net/?", "")
+end
+local function expandURL(url)
+	return baseURL .. (url:sub(1, 1) == "/" and "" or "/") .. url
+end
+
 local function createFilterString(data)
 	return "orderby=" .. encode(ORDER_BY_FILTER_INT[data[ORDER_BY_FILTER_KEY]]) .. (data[ORDER_FILTER_KEY] and "-desc" or "") ..
 		(data[CATEGORIAS_FILTER_KEY]~=0 and "&ixwpst[product_cat][]="..encode(CATEGORIAS_FILTER_INT[data[CATEGORIAS_FILTER_KEY]]) or "")..
@@ -131,14 +138,7 @@ local function createFilterString(data)
 		--other than orderby, filters in url must not be empty
 end
 local function createSearchString(data)
-	return "https://novelasligeras.net/?s="..encode(data[QUERY]).."&post_type=product&"..createFilterString(data)
-end
-
-local function shrinkURL(url)
-	return url:gsub("^.-novelasligeras%.net/?", "")
-end
-local function expandURL(url)
-	return baseURL .. (url:sub(1, 1) == "/" and "" or "/") .. url
+	return expandURL("?s="..encode(data[QUERY]).."&post_type=product&"..createFilterString(data))
 end
 
 local function parseListing(doc)
@@ -181,7 +181,7 @@ return {
 	expandURL = expandURL,
 
 	parseNovel = function(url, loadChapters)
-		local doc = GETDocument(baseURL..'/'..url.."") -- the quotes at the end matter
+		local doc = GETDocument(expandURL(url))
 
 		local page = doc:selectFirst(".content")
 		local header = page:selectFirst(".entry-summary")
@@ -245,7 +245,7 @@ return {
 			doc:select(".wpb_text_column .wpb_wrapper div center:matchesOwn(^Publicidad [A-Z0-9]-[A-Z0-9][A-Z0-9])"):remove()
 		end
 		--emoji svg is too big without css from head https://novelasligeras.net/index.php/2018/05/15/a-monster-who-levels-up-capitulo-2-novela-ligera/
-		return pageOfElem(doc:selectFirst(".wpb_text_column .wpb_wrapper"), true, "img.wp-smiley,img.emoji{width: 1em !important;}"..css)
+		return pageOfElem(doc:selectFirst(".wpb_text_column .wpb_wrapper"), true, "img.wp-smiley,img.emoji{height: 1em !important;}"..css)
 	end,
 
 	searchFilters = {
