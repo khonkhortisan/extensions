@@ -1,4 +1,4 @@
--- {"id":28505740,"ver":"1.0.39","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
+-- {"id":28505740,"ver":"1.0.40","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
 
 local baseURL = "https://novelasligeras.net" --WordPress site, plugins: WooCommerce, Yoast SEO, js_composer, user_verificat_front, avatar-privacy
 
@@ -15,8 +15,8 @@ local ORDER_BY_FILTER_INT = {
 	[8]="include"     --is what? https://woocommerce.github.io/woocommerce-rest-api-docs/#list-all-products
 	--only some of these can be descending
 }
-local ORDER_BY_FILTER_KEY = 40
-local ORDER_FILTER_KEY = 41
+local ORDER_BY_FILTER_KEY = 678
+local ORDER_FILTER_KEY = 1010
 
 --can this be multi-select? https://stackoverflow.com/a/27898435 https://developer.wordpress.org/reference/classes/wp_query/
 --https://novelasligeras.net/index.php/lista-de-novela-ligera-novela-web/?ixwpst[product_cat][0]=52&ixwpst[product_cat][1]=49&ixwpst[product_cat][2]=-45
@@ -51,7 +51,7 @@ local CATEGORIAS_FILTER_INT = {
 	[26]="58", --Vida Escolar
 	[27]="73"  --Xuanhuan
 }
-local CATEGORIAS_FILTER_KEY = 42
+local CATEGORIAS_FILTER_KEY = 4242
 
 local ESTADO_FILTER_INT = {
 	[0]=""   , --Cualquiera --NovelStatus.UNKNOWN
@@ -59,14 +59,14 @@ local ESTADO_FILTER_INT = {
 	[2]="16" , --En Proceso --NovelStatus.PUBLISHING
 	[3]="17"   --Pausado    --            On Hold/haitus
 }
-local ESTADO_FILTER_KEY = 43
+local ESTADO_FILTER_KEY = 407
 
 local TIPO_FILTER_INT = {
 	[0]=""  , --Cualquier
 	[1]="23", --Novela Ligera
 	[2]="24"  --Novela Web
 }
-local TIPO_FILTER_KEY = 44
+local TIPO_FILTER_KEY = 2324
 
 local PAIS_FILTER_INT = {
 	[0] =""    , --Cualquiera
@@ -82,7 +82,7 @@ local PAIS_FILTER_INT = {
 	[10]="4341", --Perú
 	[11]="2524"  --Venezuela
 }
-local PAIS_FILTER_KEY = 45
+local PAIS_FILTER_KEY = 2121
 
 local qs = Require("url").querystring
 
@@ -132,16 +132,43 @@ local function expandURL(url)
 	return baseURL .. (url:sub(1, 1) == "/" and "" or "/") .. url
 end
 
---local function createCategoryFilterString(data)
---
---	"&ixwpst[product_cat]["..i.."]="..CATEGORIAS_FILTER_INT[data[CATEGORIAS_FILTER_KEY[i]]]
---end
+local function createCategoryFilterString(data)
+	--(data[CATEGORIAS_FILTER_KEY]~=0 and "&ixwpst[product_cat][]="..encode(CATEGORIAS_FILTER_INT[data[CATEGORIAS_FILTER_KEY]]) or "")..
+	return	(data["40"] and "&ixwpst[product_cat][40]=40" or "")..
+			(data["53"] and "&ixwpst[product_cat][53]=53" or "")..
+			(data["52"] and "&ixwpst[product_cat][52]=52" or "")..
+			(data["41"] and "&ixwpst[product_cat][41]=41" or "")..
+			(data["59"] and "&ixwpst[product_cat][59]=59" or "")..
+			(data["43"] and "&ixwpst[product_cat][43]=43" or "")..
+			(data["68"] and "&ixwpst[product_cat][68]=68" or "")..
+			(data["44"] and "&ixwpst[product_cat][44]=44" or "")..
+			(data["45"] and "&ixwpst[product_cat][45]=45" or "")..
+			(data["46"] and "&ixwpst[product_cat][46]=46" or "")..
+			(data["47"] and "&ixwpst[product_cat][47]=47" or "")..
+			(data["48"] and "&ixwpst[product_cat][48]=48" or "")..
+			(data["49"] and "&ixwpst[product_cat][49]=49" or "")..
+			(data["50"] and "&ixwpst[product_cat][50]=50" or "")..
+			(data["54"] and "&ixwpst[product_cat][54]=54" or "")..
+			(data["55"] and "&ixwpst[product_cat][55]=55" or "")..
+			(data["56"] and "&ixwpst[product_cat][56]=56" or "")..
+			(data["66"] and "&ixwpst[product_cat][66]=66" or "")..
+			(data["57"] and "&ixwpst[product_cat][57]=57" or "")..
+			(data["60"] and "&ixwpst[product_cat][60]=60" or "")..
+			(data["62"] and "&ixwpst[product_cat][62]=62" or "")..
+			(data["63"] and "&ixwpst[product_cat][63]=63" or "")..
+			(data["64"] and "&ixwpst[product_cat][64]=64" or "")..
+			(data["69"] and "&ixwpst[product_cat][69]=69" or "")..
+			(data["70"] and "&ixwpst[product_cat][70]=70" or "")..
+			(data["58"] and "&ixwpst[product_cat][58]=58" or "")..
+			(data["73"] and "&ixwpst[product_cat][73]=73" or "")
+end
 local function createFilterString(data)
+	--  (data[CATEGORIAS_FILTER_KEY]~=0 and "&ixwpst[product_cat][]="..encode(CATEGORIAS_FILTER_INT[data[CATEGORIAS_FILTER_KEY]]) or "")..
 	return "orderby=" .. encode(ORDER_BY_FILTER_INT[data[ORDER_BY_FILTER_KEY]]) .. (data[ORDER_FILTER_KEY] and "-desc" or "") ..
-		(data[CATEGORIAS_FILTER_KEY]~=0 and "&ixwpst[product_cat][]="..encode(CATEGORIAS_FILTER_INT[data[CATEGORIAS_FILTER_KEY]]) or "")..
-		(data[CATEGORIAS_FILTER_KEY]~=0 and "&ixwpst[pa_estado][]="  ..encode(ESTADO_FILTER_INT[data[ESTADO_FILTER_KEY]])         or "")..
-		(data[CATEGORIAS_FILTER_KEY]~=0 and "&ixwpst[pa_tipo][]="    ..encode(TIPO_FILTER_INT[data[TIPO_FILTER_KEY]])             or "")..
-		(data[CATEGORIAS_FILTER_KEY]~=0 and "&ixwpst[pa_pais][]="    ..encode(PAIS_FILTER_INT[data[PAIS_FILTER_KEY]])             or "")
+		createCategoryFilterString(data)..
+		(data[ESTADO_FILTER_KEY]~=0 and "&ixwpst[pa_estado][]="  ..encode(ESTADO_FILTER_INT[data[ESTADO_FILTER_KEY]])         or "")..
+		(data[TIPO_FILTER_KEY]~=0 and "&ixwpst[pa_tipo][]="    ..encode(TIPO_FILTER_INT[data[TIPO_FILTER_KEY]])             or "")..
+		(data[PAIS_FILTER_KEY]~=0 and "&ixwpst[pa_pais][]="    ..encode(PAIS_FILTER_INT[data[PAIS_FILTER_KEY]])             or "")
 		--other than orderby, filters in url must not be empty
 end
 local function createSearchString(data)
@@ -258,7 +285,34 @@ return {
 	searchFilters = {
 		DropdownFilter(ORDER_BY_FILTER_KEY, "Pedido de la tienda", ORDER_BY_FILTER_EXT),
 		SwitchFilter(ORDER_FILTER_KEY, "Ascendiendo / Descendiendo"),
-		RadioGroupFilter(CATEGORIAS_FILTER_KEY, "Categorías", {"Cualquier Categoría","Acción","Adulto","Artes Marciales","Aventura","Ciencia Ficción","Comedia","Deportes","Drama","Ecchi","Fantasía","Gender Bender","Harem","Histórico","Horror","Mechas (Robots Gigantes)","Misterio","Psicológico","Recuentos de la Vida","Romance","Seinen","Shojo","Shojo Ai","Shonen","Sobrenatural","Tragedia","Vida Escolar","Xuanhuan"}),
+		--RadioGroupFilter(CATEGORIAS_FILTER_KEY, "Categorías", {"Cualquier Categoría","Acción","Adulto","Artes Marciales","Aventura","Ciencia Ficción","Comedia","Deportes","Drama","Ecchi","Fantasía","Gender Bender","Harem","Histórico","Horror","Mechas (Robots Gigantes)","Misterio","Psicológico","Recuentos de la Vida","Romance","Seinen","Shojo","Shojo Ai","Shonen","Sobrenatural","Tragedia","Vida Escolar","Xuanhuan"}),
+		SwitchFilter(40, "Acción"),
+		SwitchFilter(53, "Adulto"),
+		SwitchFilter(52, "Artes Marciales"),
+		SwitchFilter(41, "Aventura"),
+		SwitchFilter(59, "Ciencia Ficción"),
+		SwitchFilter(43, "Comedia"),
+		SwitchFilter(68, "Deportes"),
+		SwitchFilter(44, "Drama"),
+		SwitchFilter(45, "Ecchi"),
+		SwitchFilter(46, "Fantasía"),
+		SwitchFilter(47, "Gender Bender"),
+		SwitchFilter(48, "Harem"),
+		SwitchFilter(49, "Histórico"),
+		SwitchFilter(50, "Horror"),
+		SwitchFilter(54, "Mechas (Robots Gigantes)"),
+		SwitchFilter(55, "Misterio"),
+		SwitchFilter(56, "Psicológico"),
+		SwitchFilter(66, "Recuentos de la Vida"),
+		SwitchFilter(57, "Romance"),
+		SwitchFilter(60, "Seinen"),
+		SwitchFilter(62, "Shojo"),
+		SwitchFilter(63, "Shojo Ai"),
+		SwitchFilter(64, "Shonen"),
+		SwitchFilter(69, "Sobrenatural"),
+		SwitchFilter(70, "Tragedia"),
+		SwitchFilter(58, "Vida Escolar"),
+		SwitchFilter(73, "Xuanhuan"),
 		DropdownFilter(ESTADO_FILTER_KEY, "Estado", {"Cualquiera","Completado","En Proceso","Pausado"}),
 		DropdownFilter(TIPO_FILTER_KEY, "Tipo", {"Cualquiera","Novela Ligera","Novela Web"}),
 		DropdownFilter(PAIS_FILTER_KEY, "País", {"Cualquiera","Argentina","Chile","China","Colombia","Corea","Ecuador","Japón","México","Nicaragua","Perú","Venezuela"})
