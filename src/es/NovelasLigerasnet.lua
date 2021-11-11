@@ -1,4 +1,4 @@
--- {"id":28505740,"ver":"1.0.34","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
+-- {"id":28505740,"ver":"1.0.35","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
 
 local baseURL = "https://novelasligeras.net" --WordPress site, plugins: WooCommerce, Yoast SEO, js_composer, user_verificat_front, avatar-privacy
 
@@ -244,7 +244,8 @@ return {
 			--leave this image alone: "¡Ayudanos! A traducir novelas del japones ¡Suscribete! A NOVA" (86)
 			doc:select(".wpb_text_column .wpb_wrapper div center:matchesOwn(^Publicidad [A-Z0-9]-[A-Z0-9][A-Z0-9])"):remove()
 		end
-		return pageOfElem(doc:selectFirst(".wpb_text_column .wpb_wrapper"), true, css)
+		--emoji svg is too big without css from head https://novelasligeras.net/index.php/2018/05/15/a-monster-who-levels-up-capitulo-2-novela-ligera/
+		return pageOfElem(doc:selectFirst(".wpb_text_column .wpb_wrapper"), true, "img.wp-smiley,img.emoji{width: 1em !important;}"..css)
 	end,
 
 	searchFilters = {
