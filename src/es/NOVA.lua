@@ -1,4 +1,4 @@
--- {"id":28505740,"ver":"1.0.40","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
+-- {"id":28505740,"ver":"1.0.41","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
 
 local baseURL = "https://novelasligeras.net" --WordPress site, plugins: WooCommerce, Yoast SEO, js_composer, user_verificat_front, avatar-privacy
 
@@ -134,33 +134,33 @@ end
 
 local function createCategoryFilterString(data)
 	--(data[CATEGORIAS_FILTER_KEY]~=0 and "&ixwpst[product_cat][]="..encode(CATEGORIAS_FILTER_INT[data[CATEGORIAS_FILTER_KEY]]) or "")..
-	return	(data["40"] and "&ixwpst[product_cat][40]=40" or "")..
-			(data["53"] and "&ixwpst[product_cat][53]=53" or "")..
-			(data["52"] and "&ixwpst[product_cat][52]=52" or "")..
-			(data["41"] and "&ixwpst[product_cat][41]=41" or "")..
-			(data["59"] and "&ixwpst[product_cat][59]=59" or "")..
-			(data["43"] and "&ixwpst[product_cat][43]=43" or "")..
-			(data["68"] and "&ixwpst[product_cat][68]=68" or "")..
-			(data["44"] and "&ixwpst[product_cat][44]=44" or "")..
-			(data["45"] and "&ixwpst[product_cat][45]=45" or "")..
-			(data["46"] and "&ixwpst[product_cat][46]=46" or "")..
-			(data["47"] and "&ixwpst[product_cat][47]=47" or "")..
-			(data["48"] and "&ixwpst[product_cat][48]=48" or "")..
-			(data["49"] and "&ixwpst[product_cat][49]=49" or "")..
-			(data["50"] and "&ixwpst[product_cat][50]=50" or "")..
-			(data["54"] and "&ixwpst[product_cat][54]=54" or "")..
-			(data["55"] and "&ixwpst[product_cat][55]=55" or "")..
-			(data["56"] and "&ixwpst[product_cat][56]=56" or "")..
-			(data["66"] and "&ixwpst[product_cat][66]=66" or "")..
-			(data["57"] and "&ixwpst[product_cat][57]=57" or "")..
-			(data["60"] and "&ixwpst[product_cat][60]=60" or "")..
-			(data["62"] and "&ixwpst[product_cat][62]=62" or "")..
-			(data["63"] and "&ixwpst[product_cat][63]=63" or "")..
-			(data["64"] and "&ixwpst[product_cat][64]=64" or "")..
-			(data["69"] and "&ixwpst[product_cat][69]=69" or "")..
-			(data["70"] and "&ixwpst[product_cat][70]=70" or "")..
-			(data["58"] and "&ixwpst[product_cat][58]=58" or "")..
-			(data["73"] and "&ixwpst[product_cat][73]=73" or "")
+	return	(data[40] and "&ixwpst[product_cat][40]=40" or "")..
+			(data[53] and "&ixwpst[product_cat][53]=53" or "")..
+			(data[52] and "&ixwpst[product_cat][52]=52" or "")..
+			(data[41] and "&ixwpst[product_cat][41]=41" or "")..
+			(data[59] and "&ixwpst[product_cat][59]=59" or "")..
+			(data[43] and "&ixwpst[product_cat][43]=43" or "")..
+			(data[68] and "&ixwpst[product_cat][68]=68" or "")..
+			(data[44] and "&ixwpst[product_cat][44]=44" or "")..
+			(data[45] and "&ixwpst[product_cat][45]=45" or "")..
+			(data[46] and "&ixwpst[product_cat][46]=46" or "")..
+			(data[47] and "&ixwpst[product_cat][47]=47" or "")..
+			(data[48] and "&ixwpst[product_cat][48]=48" or "")..
+			(data[49] and "&ixwpst[product_cat][49]=49" or "")..
+			(data[50] and "&ixwpst[product_cat][50]=50" or "")..
+			(data[54] and "&ixwpst[product_cat][54]=54" or "")..
+			(data[55] and "&ixwpst[product_cat][55]=55" or "")..
+			(data[56] and "&ixwpst[product_cat][56]=56" or "")..
+			(data[66] and "&ixwpst[product_cat][66]=66" or "")..
+			(data[57] and "&ixwpst[product_cat][57]=57" or "")..
+			(data[60] and "&ixwpst[product_cat][60]=60" or "")..
+			(data[62] and "&ixwpst[product_cat][62]=62" or "")..
+			(data[63] and "&ixwpst[product_cat][63]=63" or "")..
+			(data[64] and "&ixwpst[product_cat][64]=64" or "")..
+			(data[69] and "&ixwpst[product_cat][69]=69" or "")..
+			(data[70] and "&ixwpst[product_cat][70]=70" or "")..
+			(data[58] and "&ixwpst[product_cat][58]=58" or "")..
+			(data[73] and "&ixwpst[product_cat][73]=73" or "")
 end
 local function createFilterString(data)
 	--  (data[CATEGORIAS_FILTER_KEY]~=0 and "&ixwpst[product_cat][]="..encode(CATEGORIAS_FILTER_INT[data[CATEGORIAS_FILTER_KEY]]) or "")..
