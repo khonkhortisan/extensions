@@ -1,4 +1,4 @@
--- {"id":28505740,"ver":"1.0.55","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
+-- {"id":28505740,"ver":"1.0.56","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
 
 local baseURL = "https://novelasligeras.net" --WordPress site, plugins: WooCommerce, Yoast SEO, js_composer, user_verificat_front, avatar-privacy
 
@@ -187,7 +187,7 @@ local function parseListing(doc)
 		return Novel {
 			title = a:text(),
 			link = a:attr("href"):match("(index.php/producto/[^/]+)/.-"),
-			imageURL = img_src(v:selectFirst("img"))
+			imageURL = img_src(v:selectFirst("img")),
 		}
 	end)
 end
@@ -212,7 +212,7 @@ return {
 		listing("Lista de Novelas", true, "index.php/lista-de-novela-ligera-novela-web"),
 		listing("Novelas Exclusivas", false, "index.php/etiqueta-novela/novela-exclusiva"),
 		listing("Novelas Completados", false, "index.php/filtro/estado/completado"),
-		listing("Autores Hispanos", false, "index.php/etiqueta-novela/autor-hispano")
+		listing("Autores Hispanos", false, "index.php/etiqueta-novela/autor-hispano"),
 	},
 
 	shrinkURL = shrinkURL,
@@ -239,7 +239,7 @@ return {
 			status = status,
 			genres = map(genres:select("a"), text), --clicking a genre should filter the library or extension
 			tags = map(tags:select("a"), text), --if visible, clicking a tag should filter the library or extension
-			description = page:selectFirst(".woocommerce-product-details__short-description"):text()--.."<br>Etiquetas: "..tostring(tags)
+			description = page:selectFirst(".woocommerce-product-details__short-description"):text(),--.."<br>Etiquetas: "..tostring(tags)
 		}
 		-- '.wpb_wrapper' has left column whole chapters '.wpb_tabs_nav a' and right column chapter parts '.post-content a'
 		if loadChapters then
@@ -330,13 +330,13 @@ return {
 	
 	settings = {
 		SwitchFilter(ADBLOCK_SETTING_KEY, "Mostrar publicidades"),
-		SwitchFilter(SUBSCRIBEBLOCK_SETTING_KEY, "Mostrar imagen de suscripción")
+		SwitchFilter(SUBSCRIBEBLOCK_SETTING_KEY, "Mostrar imagen de suscripción"),
 	},
 	setSettings = function(s) 
 		settings = s 
 	end,
 	updateSetting = function(id, value)
 		settings[id] = value
-	end
+	end,
 }
 --})
