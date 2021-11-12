@@ -1,4 +1,4 @@
--- {"id":28505740,"ver":"1.0.51","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
+-- {"id":28505740,"ver":"1.0.52","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
 
 local baseURL = "https://novelasligeras.net" --WordPress site, plugins: WooCommerce, Yoast SEO, js_composer, user_verificat_front, avatar-privacy
 
@@ -87,9 +87,8 @@ local PAIS_FILTER_KEY = 2121
 local TAG_FILTER_KEY = 2222
 
 local ADBLOCK_SETTING_KEY = 0
-local settings = {
-	ADBLOCK_SETTING_KEY = true
-}
+local SUBSCRIBEBLOCK_SETTING_KEY = 1
+local settings = {}
 
 local qs = Require("url").querystring
 
@@ -276,11 +275,12 @@ return {
 
 	getPassage = function(url)
 		local doc = GETDocument(url)
-		if settings[ADBLOCK_SETTING_KEY] then
-			--block Publicidad Y-AR, Publicidad M-M4, etc.
-			--leave any other possible <center> tags alone
-			--leave this image alone: "¡Ayudanos! A traducir novelas del japones ¡Suscribete! A NOVA" (86)
+		--leave any other possible <center> tags alone
+		if not settings[ADBLOCK_SETTING_KEY] then --block Publicidad Y-AR, Publicidad M-M4, etc.
 			doc:select(".wpb_text_column .wpb_wrapper div center:matchesOwn(^Publicidad [A-Z0-9]-[A-Z0-9][A-Z0-9])"):remove()
+		end
+		if not settings[SUBSCRIBEBLOCK_SETTING_KEY] then --hide "¡Ayudanos! A traducir novelas del japones ¡Suscribete! A NOVA" (86)
+			doc:select(".wpb_text_column .wpb_wrapper div center a[href*=index.php/nuestras-suscripciones/]"):remove()
 		end
 		--emoji svg is too big without css from head https://novelasligeras.net/index.php/2018/05/15/a-monster-who-levels-up-capitulo-2-novela-ligera/
 		return pageOfElem(doc:selectFirst(".wpb_text_column .wpb_wrapper"), true, "img.wp-smiley,img.emoji{height: 1em !important;}"..css)
@@ -329,7 +329,8 @@ return {
 	end,
 	
 	settings = {
-		SwitchFilter(ADBLOCK_SETTING_KEY, "Ocultar publicidades")
+		SwitchFilter(ADBLOCK_SETTING_KEY, "Mostrar publicidades"),
+		SwitchFilter(SUBSCRIBEBLOCK_SETTING_KEY, "Mostrar imagen de suscripción")
 	},
 	setSettings = function(s) 
 		settings = s 
