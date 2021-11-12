@@ -1,8 +1,8 @@
--- {"id":28505740,"ver":"1.0.46","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
+-- {"id":28505740,"ver":"1.0.47","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
 
 local baseURL = "https://novelasligeras.net" --WordPress site, plugins: WooCommerce, Yoast SEO, js_composer, user_verificat_front, avatar-privacy
 
-local ORDER_BY_FILTER_EXT = {"Ordenar por los últimos", "Orden alfabético", "Relevancia", "Ordenar por popularidad", "Ordenar por calificación media", "Ordenar por precio: bajo a alto"}--, "Orden aleatorio", "Ordenar por id", "Ordenar por slug", "Ordenar por include"}
+local ORDER_BY_FILTER_EXT = {"Ordenar por los últimos", "Orden alfabético", "Relevancia", "Ordenar por popularidad", "Ordenar por calificación media", "Ordenar por precio: bajo a alto", "Orden aleatorio", "Ordenar por id", "Ordenar por slug", "Ordenar por include"}
 local ORDER_BY_FILTER_INT = {
 	[0]="date"      , --Ordenar por los últimos
 	[1]="title"     , --Orden alfabético/Orden por defecto (Listing is title, webview search is title-DESC, selecting Orden por defecto is menu_order)
@@ -10,10 +10,10 @@ local ORDER_BY_FILTER_INT = {
 	[3]="popularity", --Ordenar por popularidad
 	[4]="rating"    , --Ordenar por calificación media
 	[5]="price"     , --Ordenar por precio: bajo a alto
-	[6]="rand"        --single-seed random order
+	[6]="rand"      , --single-seed random order
 	[7]="id"        , --id/slug/include are supported by WooCommerce, but not currently shown in the extension
 	[8]="slug"      , --id is different from slug
-	[9]="include"   , --is what? https://woocommerce.github.io/woocommerce-rest-api-docs/#list-all-products
+	[9]="include"     --is what? https://woocommerce.github.io/woocommerce-rest-api-docs/#list-all-products
 	--only some of these can be descending
 }
 local ORDER_BY_FILTER_KEY = 789
@@ -168,7 +168,7 @@ local function createFilterString(data)
 		(data[ESTADO_FILTER_KEY]~=0 and "&ixwpst[pa_estado][]="..encode(ESTADO_FILTER_INT[data[ESTADO_FILTER_KEY]]) or "")..
 		(data[TIPO_FILTER_KEY]~=0   and "&ixwpst[pa_tipo][]="  ..encode(TIPO_FILTER_INT[data[TIPO_FILTER_KEY]])     or "")..
 		(data[PAIS_FILTER_KEY]~=0   and "&ixwpst[pa_pais][]="  ..encode(PAIS_FILTER_INT[data[PAIS_FILTER_KEY]])     or "")..
-		(data[TAG_FILTER_KEY]~=""   and "&product_tag="        ..encode(data[TAG_FILTER_KEY])                       or "")
+		(data[TAG_FILTER_KEY]~=""   and "&product_tag[0]="     ..encode(data[TAG_FILTER_KEY])                       or "")
 		--https://novelasligeras.net/?product_tag[0]=guerras&product_tag[1]=Asesinatos
 		--other than orderby, filters in url must not be empty
 		--Logic is (cat1 OR cat2) AND (tag1 OR tag2)
