@@ -1,4 +1,4 @@
--- {"id":28505740,"ver":"1.0.54","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
+-- {"id":28505740,"ver":"1.0.55","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
 
 local baseURL = "https://novelasligeras.net" --WordPress site, plugins: WooCommerce, Yoast SEO, js_composer, user_verificat_front, avatar-privacy
 
@@ -13,7 +13,7 @@ local ORDER_BY_FILTER_INT = {
 	[6]="rand"      , --single-seed random order
 	[7]="id"        , --id/slug/include are supported by WooCommerce, but not currently shown in the extension
 	[8]="slug"      , --id is different from slug
-	[9]="include"     --is what? https://woocommerce.github.io/woocommerce-rest-api-docs/#list-all-products
+	[9]="include"   , --is what? https://woocommerce.github.io/woocommerce-rest-api-docs/#list-all-products
 	--only some of these can be descending
 }
 local ORDER_BY_FILTER_KEY = 789
@@ -50,14 +50,14 @@ local CATEGORIAS_FILTER_INT = {
 	[24]="69", --Sobrenatural
 	[25]="70", --Tragedia
 	[26]="58", --Vida Escolar
-	[27]="73"  --Xuanhuan
+	[27]="73", --Xuanhuan
 }
 local CATEGORIAS_FILTER_KEY = 4242
 
 local ESTADO_FILTER_INT = {
 	[0]=""   , --Cualquiera --NovelStatus.UNKNOWN
 	[1]="16" , --En Proceso --NovelStatus.PUBLISHING
-	[2]="17"   --Pausado    --            On Hold/haitus
+	[2]="17" , --Pausado    --            On Hold/haitus
 	[3]="407", --Completado --NovelStatus.COMPLETED
 }
 local ESTADO_FILTER_KEY = 407
@@ -65,7 +65,7 @@ local ESTADO_FILTER_KEY = 407
 local TIPO_FILTER_INT = {
 	[0]=""  , --Cualquier
 	[1]="23", --Novela Ligera
-	[2]="24"  --Novela Web
+	[2]="24", --Novela Web
 }
 local TIPO_FILTER_KEY = 2324
 
@@ -81,7 +81,7 @@ local PAIS_FILTER_INT = {
 	[8] ="1704", --México
 	[9] ="1657", --Nicaragua
 	[10]="4341", --Perú
-	[11]="2524"  --Venezuela
+	[11]="2524", --Venezuela
 }
 local PAIS_FILTER_KEY = 2121
 local TAG_FILTER_KEY = 2222
@@ -320,7 +320,7 @@ return {
 		DropdownFilter(ESTADO_FILTER_KEY, "Estado", {"⏯️ Cualquiera","▶️ En Proceso","⏸️ Pausado","⏹️ Completado"}),
 		DropdownFilter(TIPO_FILTER_KEY, "Tipo", {"Cualquiera","Novela Ligera","Novela Web"}),
 		DropdownFilter(PAIS_FILTER_KEY, "País", {"🌐 Cualquiera","🇦🇷 Argentina","🇨🇱 Chile","🇨🇳 China","🇨🇴 Colombia","🇰🇷 Corea","🇪🇨 Ecuador","🇯🇵 Japón","🇲🇽 México","🇳🇮 Nicaragua","🇵🇪 Perú","🇻🇪 Venezuela"}),
-		TextFilter(TAG_FILTER_KEY, "Etiqueta")
+		TextFilter(TAG_FILTER_KEY, "Etiqueta"),
 	},
 
 	isSearchIncrementing = false,
