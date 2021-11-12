@@ -1,4 +1,4 @@
--- {"id":28505740,"ver":"1.0.49","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
+-- {"id":28505740,"ver":"1.0.50","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
 
 local baseURL = "https://novelasligeras.net" --WordPress site, plugins: WooCommerce, Yoast SEO, js_composer, user_verificat_front, avatar-privacy
 
@@ -86,6 +86,9 @@ local PAIS_FILTER_INT = {
 local PAIS_FILTER_KEY = 2121
 local TAG_FILTER_KEY = 2222
 
+local ADBLOCK_SETTING_KEY = 0
+local settings = {}
+
 local qs = Require("url").querystring
 
 local css = Require("CommonCSS").table
@@ -94,8 +97,6 @@ local encode = Require("url").encode
 local text = function(v)
 	return v:text()
 end
-local settings = {}
-
 --This function was copied directly from lib/Madara.lua
 ---@param image_element Element An img element of which the biggest image shall be selected.
 ---@return string A link to the biggest image of the image_element.
@@ -272,9 +273,8 @@ return {
 	end,
 
 	getPassage = function(url)
-		local adblock = true
 		local doc = GETDocument(url)
-		if adblock then
+		if settings[ADBLOCK_SETTING_KEY] then
 			--block Publicidad Y-AR, Publicidad M-M4, etc.
 			--leave any other possible <center> tags alone
 			--leave this image alone: "¡Ayudanos! A traducir novelas del japones ¡Suscribete! A NOVA" (86)
@@ -326,7 +326,12 @@ return {
 		return parseListing(GETDocument(createSearchString(data)))
 	end,
 	
-	setSettings = function(s) settings = s end,
+	settings = {
+		SwitchFilter(ADBLOCK_SETTING_KEY, "Mostrar publicidades")
+	},
+	setSettings = function(s) 
+		settings = s 
+	end,
 	updateSetting = function(id, value)
 		settings[id] = value
 	end
