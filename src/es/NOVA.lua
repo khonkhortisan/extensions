@@ -1,4 +1,4 @@
--- {"id":28505740,"ver":"1.0.50","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
+-- {"id":28505740,"ver":"1.0.51","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
 
 local baseURL = "https://novelasligeras.net" --WordPress site, plugins: WooCommerce, Yoast SEO, js_composer, user_verificat_front, avatar-privacy
 
@@ -87,7 +87,9 @@ local PAIS_FILTER_KEY = 2121
 local TAG_FILTER_KEY = 2222
 
 local ADBLOCK_SETTING_KEY = 0
-local settings = {}
+local settings = {
+	ADBLOCK_SETTING_KEY = true
+}
 
 local qs = Require("url").querystring
 
@@ -327,7 +329,7 @@ return {
 	end,
 	
 	settings = {
-		SwitchFilter(ADBLOCK_SETTING_KEY, "Mostrar publicidades")
+		SwitchFilter(ADBLOCK_SETTING_KEY, "Ocultar publicidades")
 	},
 	setSettings = function(s) 
 		settings = s 
