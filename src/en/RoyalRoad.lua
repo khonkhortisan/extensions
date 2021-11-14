@@ -1,4 +1,12 @@
--- {"id":36833,"ver":"1.0.1","libVer":"1.0.0","author":"TechnoJo4","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
+-- {"id":36833,"ver":"1.999.1","libVer":"1.0.0","author":"TechnoJo4","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
+
+local crashattempt = {
+	[0] = "A",
+	[1] = "B",
+	[2] = "C"
+	[3] = "D",
+	[4] = "E",
+}
 
 local baseURL = "https://www.royalroad.com"
 local qs = Require("url").querystring
