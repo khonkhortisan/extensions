@@ -95,7 +95,7 @@ return {
 
 		local genres = {}
 		local tags = {}
-		table.insert(tags, novel_type)
+		table.insert(tags, novel_type:text())
 		mapNotNil(genres_tags:select("a"), function(a)
 			local genre_tag = a:text()
 			if tablecontains(GENRES_FILTER_EXT, genre_tag) then
